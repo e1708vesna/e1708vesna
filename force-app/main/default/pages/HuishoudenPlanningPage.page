@@ -1,0 +1,7 @@
+<apex:page showHeader="false" sidebar="false" standardcontroller="Account" lightningStylesheets="true">
+
+    <flow:interview name="HouseholdGuidenceFlow" finishLocation="/{!Account.Id} " buttonLocation="bottom">     
+        <apex:param name="recordId" value="{!Account.Id}"/>   
+    </flow:interview> 
+
+</apex:page>

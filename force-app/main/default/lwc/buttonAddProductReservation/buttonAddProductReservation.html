@@ -1,0 +1,8 @@
+<template>
+    <lightning-card>
+        <lightning-button label="Nieuwe Reservering" slot="actions" onclick={openModal} variant="brand"></lightning-button>
+    </lightning-card>
+    <template if:true={buttonPressed}>
+        <c-add-product-reservation in-community={inCommunity} onclosemodal={closeModal} record-id={recordId}></c-add-product-reservation>
+    </template>    
+</template>

@@ -1,0 +1,3 @@
+<apex:page standardController="Account" showHeader="true" sidebar="true">
+<iframe src="https://energiebanknederland.formtitan.com/ft058c9dee1628844759118?fld6={!Account.Id}" frameborder="0" width="1000" height="2000" />
+</apex:page>

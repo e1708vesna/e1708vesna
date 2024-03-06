@@ -1,0 +1,63 @@
+<template>
+    
+    {product}
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <!-- HEADER -->
+            <header class="slds-modal__header">
+                <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Voorraad beheren</h2>
+            </header>
+            <!-- BODY -->
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"> 
+                <template if:true={emptyProductList}>
+                    Er zijn geen producten die toegevoegd kunnen worden.
+                </template>
+                <template if:true={noAccountId}>
+                    Voorraden kunnen alleen worden beheerd via de account pagina.
+                </template>   
+                <template for:each={products} for:item="product" for:index="index">
+                    <div key={product.id}>
+                        <lightning-card>
+                            <div class="slds-grid">
+                                <div class="slds-col">
+                                    <lightning-input 
+                                        type="text" 
+                                        name="name" 
+                                        label="Product"
+                                        value={product.name} 
+                                        read-only>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col">
+                                    <lightning-input 
+                                        type="number" 
+                                        name="inventory" 
+                                        label="Huidige Voorraad" 
+                                        value={product.inventory} 
+                                        read-only>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-col">
+                                    <lightning-input 
+                                        type="number" 
+                                        name="quantity" 
+                                        label="Nieuwe Voorraad" 
+                                        value={product.quantity}
+                                        data-item={product.id}
+                                        onchange={handleValueChange}>
+                                    </lightning-input>
+                                </div>
+                              </div>
+                        </lightning-card>    
+                    </div>
+                </template>
+            </div>
+            <!-- FOOTER -->
+            <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick={handleCancel}>Cancel</button>
+                <button class="slds-button slds-button_brand" onclick={handleSave}>Save</button>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>
