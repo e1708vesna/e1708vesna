@@ -1,0 +1,45 @@
+<template>
+    <lightning-card icon-name="standard:product_item">
+        <template if:true={recordId}>
+            <span slot="title">{productName}</span>
+                <lightning-button-icon
+                    icon-name="utility:expand_alt"
+                    slot="actions"
+                    onclick={handleNavigateToRecord}
+                    ><label>Open Record</label></lightning-button-icon
+                >
+            <div class="slds-var-m-horizontal_medium">
+                <img
+                    if:true={productPictureUrl}
+                    src={productPictureUrl}
+                    class="product"
+                    alt="Product picture"
+                />
+                <lightning-record-view-form
+                    record-id={recordId}
+                    onload={handleRecordLoaded}
+                    object-api-name="Product2"
+                    density="compact"
+                >
+                    <lightning-output-field
+                        field-name={categoryField}
+                    ></lightning-output-field>
+                    <lightning-output-field
+                        field-name={genderField}
+                    ></lightning-output-field>
+                    <lightning-output-field
+                        field-name={typeField}
+                    ></lightning-output-field>
+                    <lightning-output-field
+                        field-name={msrpField}
+                    ></lightning-output-field>
+                </lightning-record-view-form>
+            </div>
+        </template>
+        <template if:false={recordId}>
+            <c-placeholder
+                message="Select a product to see details"
+            ></c-placeholder>
+        </template>
+    </lightning-card>
+</template>

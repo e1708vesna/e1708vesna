@@ -1,0 +1,36 @@
+lightning-layout .cart-item{
+    display:table;
+    width:100%;
+}
+
+img.cart {
+    width: 100px;
+    padding:5px;
+    pointer-events: none;
+    vertical-align: middle;
+}
+
+.cart-item-info{
+    padding-left: 15px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.cart-item-info p{
+    font-size: 17px;
+    margin-bottom: 1px;
+}
+
+.quantity-calcs{
+    display: flex;
+}
+
+.quantity-calcs p{
+    margin-right: 5px;
+}
+
+.quantity-calcs .quantity{
+    width: 60px;
+    margin-right: 5px;
+    display: flex;
+}

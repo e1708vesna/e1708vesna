@@ -1,0 +1,29 @@
+.content{
+    padding: 8px;
+    background-color: white;
+    border-radius: 0.25rem;
+}
+
+a {
+    color:inherit;
+}
+
+img .product{
+    height: 120px;
+    max-width: initial;
+    pointer-events: none;
+}
+
+.title{
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.addCart{
+    margin-top: 5px;
+    width: 17%;
+}
+
+.addCart svg{
+    margin-right: 0px;
+}

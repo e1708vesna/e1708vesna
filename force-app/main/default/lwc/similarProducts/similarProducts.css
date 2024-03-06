@@ -1,0 +1,6 @@
+img.productSimilar {
+    height: 80px;
+    padding:3px;
+    max-width: initial;
+    pointer-events: none;
+}

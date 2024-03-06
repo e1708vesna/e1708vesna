@@ -1,0 +1,42 @@
+<template>
+    <lightning-layout class="cart-item" vertical-align="center">
+        <lightning-layout-item
+            ><img
+                src={product.DisplayUrl}
+                class="cart"
+                alt="Product picture"
+        /></lightning-layout-item>
+        <lightning-layout-item
+            flexibility="grow"
+            class="slds-var-p-horizontal_small cart-item-info"
+        >
+            <p>{product.Name}</p>
+            <p>
+                <lightning-formatted-number
+                    format-style="currency"
+                    currency-code="USD"
+                    value={product.MSRP__c}
+                    class="price"
+                    maximum-fraction-digits="0"
+                ></lightning-formatted-number>
+            </p>
+            <lightning-layout-item 
+            class="quantity-calcs"
+        >
+            <p>Quantity</p>
+            <lightning-input
+                onchange={handleQuantityChange}
+                type="number"
+                max-length="3"
+                class="quantity"
+                value="1"
+                min="1"
+            ></lightning-input>
+            <lightning-button
+                label="Delete"
+                onclick={handleDeleteClick}
+            ></lightning-button>
+        </lightning-layout-item>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

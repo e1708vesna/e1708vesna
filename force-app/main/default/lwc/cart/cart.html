@@ -1,0 +1,34 @@
+<template>
+    <lightning-card title="Shopping cart" icon-name="standard:order_item">
+        <div class="slds-var-m-horizontal_medium slds-border_bottom">
+            <template if:true={recordArray.length}>
+                <template for:each={recordArray} for:item="record">
+                    <c-cart-item
+                        key={record.Id}
+                        product={record}
+                    ></c-cart-item>
+                </template>
+            </template>
+            <div class="dynamicallyLoaded">
+
+            </div>
+            <template if:false={recordArray.length}>
+                <c-placeholder
+                    message="No products added"
+                ></c-placeholder>
+            </template>
+            <template if:true={error}>
+                <c-error-panel
+                    friendly-message="An error has occurred while retrieving cart items"
+                    errors={error}
+                ></c-error-panel>
+            </template>
+        </div>
+        <div class="slds-var-m-horizontal_medium">
+            <!-- <template if:true={recordArray.length}>
+               
+            </template> -->
+            <p class="total">Total: ${total}</p>
+        </div>
+    </lightning-card>
+</template>

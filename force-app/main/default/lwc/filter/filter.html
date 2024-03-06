@@ -1,0 +1,79 @@
+<template>
+    <lightning-card title="Filters" icon-name="standard:calibration">
+        <div class="slds-var-m-horizontal_medium">
+            <lightning-input label="Search Key" type="search" onchange={handleSearchKeyChange}></lightning-input>
+            <section>
+                <lightning-slider label="Max Price" step="50" min="0" max="300" value="maxPrice" onchange={handleMaxPriceChange}></lightning-slider>
+            </section>
+            <section class="slds-var-m-top_medium">
+                <h1>{categoryField}</h1>
+                <template if:true={categories.data}>
+                    <template for:each={categories.data.values} for:item="category">
+                        <lightning-input
+                            key={category.value}
+                            label={category.label}
+                            data-filter="categories"
+                            data-value={category.value}
+                            type="checkbox"
+                            checked
+                            onchange={handleCheckboxChange}
+                        ></lightning-input>
+                    </template>
+                </template>
+                <template if:true={categories.error}>
+                    <c-error-panel
+                        type="inlineMessage"
+                        friendly-message="Error loading categories"
+                        errors={categories.error}
+                    ></c-error-panel>
+                </template>
+            </section>
+            <section class="slds-var-m-top_medium">
+                <h1>{genderField}</h1>
+                <template if:true={genders.data}>
+                    <template for:each={genders.data.values} for:item="gender">
+                        <lightning-input
+                            key={gender.value}
+                            label={gender.label}
+                            data-filter="genders"
+                            data-value={gender.value}
+                            type="checkbox"
+                            checked
+                            onchange={handleCheckboxChange}
+                        ></lightning-input>
+                    </template>
+                </template>
+                <template if:true={genders.error}>
+                    <c-error-panel
+                        type="inlineMessage"
+                        friendly-message="Error loading genders"
+                        errors={materials.error}
+                    ></c-error-panel>
+                </template>
+            </section>
+            <section class="slds-var-m-top_medium">
+                <h1>{typeField}</h1>
+                <template if:true={types.data}>
+                    <template for:each={types.data.values} for:item="type">
+                        <lightning-input
+                            key={type.value}
+                            label={type.label}
+                            data-filter="types"
+                            data-value={type.value}
+                            type="checkbox"
+                            checked
+                            onchange={handleCheckboxChange}
+                        ></lightning-input>
+                    </template>
+                </template>
+                <template if:true={types.error}>
+                    <c-error-panel
+                        type="inlineMessage"
+                        friendly-message="Error loading types"
+                        errors={levels.error}
+                    ></c-error-panel>
+                </template>
+            </section>
+        </div>
+    </lightning-card>
+</template>
