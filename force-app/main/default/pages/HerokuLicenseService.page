@@ -1,0 +1,9 @@
+<!--
+/**
+ * @author (s)    : BRITE
+ * @description   : Page for a button to retrieve the license.jar     
+ */ 
+-->
+<apex:page standardController="License__c" extensions="HerokuLicenseServiceCtrl" action="{!getLicenseJar}" tabStyle="License__c">
+    <!-- put label with Something went wrong -->
+</apex:page>

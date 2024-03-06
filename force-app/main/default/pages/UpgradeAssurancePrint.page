@@ -1,0 +1,129 @@
+<!--
+/**
+* @author (s)    : BRITE
+* @description   : Page to print a upgrade Assurance   
+* https://nedapsecurity--dev.lightning.force.com/apex/UpgradeAssurancePrint?id=a040D000002E6WIQA0  
+*/ 
+-->
+<apex:page standardController="UpgradeAssuranceContract__c" tabStyle="UpgradeAssuranceContract__c" renderAs="pdf">
+    <apex:form >
+        <apex:outputText value=" {!Now()}"/>
+        <br />
+        {!$User.FirstName}<br />
+        <br />
+        UPGRADE ASSURANCE CONTRACT
+        <table style="border:solid black 1px; border-collapse:collapse; border-spacing:0px;font-family:Arial Unicode MS,Arial,Helvetica,sans-serif; font-size:10pt; width:100%;" border="0" cellpadding="1" cellspacing="1" >
+            <tbody>
+                <tr>
+                    <td>UA Contract No.</td>
+                    <td>{!UpgradeAssuranceContract__c.name}</td>
+                    <td>Enduser</td>
+                    <td>{!UpgradeAssuranceContract__c.EndCustomer__r.customercode__c}</td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>{!UpgradeAssuranceContract__c.ChannelPartner__r.name}</td>
+                    <td>License Name</td>
+                    <td>{!UpgradeAssuranceContract__c.License__r.licenseename__c}</td>
+                </tr>
+                <tr>
+                    <td>Start Date Invoice</td>
+                    <td>
+                        <apex:outputText value="{0, date, dd-MM-yyyy}">
+                            <apex:Param value="{!UpgradeAssuranceContract__c.StartDateLine__c}"/>
+                        </apex:OutputText>
+                    </td>
+                    <td>License no.</td>
+                    <td>{!UpgradeAssuranceContract__c.License__r.name}</td>
+                </tr>
+                <tr>
+                    <td>End Date Invoice</td>
+                    <td>
+                        <apex:outputText value="{0, date, dd-MM-yyyy}">
+                            <apex:Param value="{!UpgradeAssuranceContract__c.EndDateLine__c}"/>
+                        </apex:OutputText>
+                    </td>
+                    <td>Version</td>
+                    <td>{!UpgradeAssuranceContract__c.License__r.version__c}</td>
+                </tr>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td>Currency</td>
+                    <td>{!UpgradeAssuranceContract__c.License__r.currency__c}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        
+        <table style="border:solid black 1px; border-collapse:collapse; border-spacing:0px;font-family:Arial Unicode MS,Arial,Helvetica,sans-serif; font-size:10pt; width:100%;" border="0" cellpadding="1" cellspacing="1" >
+            <thead>
+                <tr > 
+                    <th style="text-align:center;font-weight:bold;border:solid black 1px;color:#FFFFFF;background-color:#000000;">{!$Label.UacPrnt_ArticleNumber}</th>
+                    <th style="text-align:center;font-weight:bold;border:solid black 1px;color:#FFFFFF;background-color:#000000;">{!$Label.UacPrnt_ArticleDescription}</th>
+                    <th style="text-align:center;font-weight:bold;border:solid black 1px;color:#FFFFFF;background-color:#000000;">{!$Label.UacPrnt_UnitPrice}</th>
+                    <th style="text-align:center;font-weight:bold;border:solid black 1px;color:#FFFFFF;background-color:#000000;">{!$Label.UacPrnt_Quantity}</th>
+                    <th style="text-align:center;font-weight:bold;border:solid black 1px;color:#FFFFFF;background-color:#000000;">{!$Label.UacPrnt_TotalPrice}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:variable var="cnt" value="{!0}" />
+                <apex:repeat var="cx" value="{!UpgradeAssuranceContract__c.upgrade_assurance_contract_items__r}">
+                    <apex:variable var="cnt" value="{!cnt+1}"/>
+                    <tr style="width:100%;{!IF(mod(cnt,2)==0,'background-color:#cdcdcd;background-color:#a8a8a8;border:solid black 1px;','border:solid black 1px;')}">
+                        <td>{!cx.ArticleNumber__c}</td>
+                        <td>{!cx.ItemDescription__c}</td>
+                        <td>
+                             <apex:outputText value="{0, number, ###,###,###,##0.00}"  style="display:inline-block;width:100%;text-align:right;">
+                                <apex:Param value="{!IF((cx.AdjustedUnitPrice__c == null),cx.UnitPrice__c,cx.AdjustedUnitPrice__c)}"/>
+                            </apex:OutputText>
+                        </td>
+                        <td>
+                
+                            <apex:outputText value="{0, number, ###,###,###,##0.00}"  style="display:inline-block;width:100%;text-align:right;">
+                                <apex:Param value="{!IF((cx.AdjustedQuantity__c == null),cx.Quantity__c,cx.AdjustedQuantity__c)}"/>
+                            </apex:OutputText>
+                        </td>
+                        <td><span>
+                            <apex:outputText value="{0, number, ###,###,###,##0.00}" style="display: inline-block;width:100%;text-align:right;">
+                                <apex:Param value="{!IF(AND(cx.AdjustedUnitPrice__c == null, cx.AdjustedQuantity__c == null),cx.TotalPrice__c ,cx.AdjustedTotalPriceFormula__c)}"/>
+                            </apex:OutputText>
+                            </span></td>
+                    </tr>
+                </apex:repeat>                 
+            </tbody>
+        </table>
+        
+        <br />
+        <table style="border:solid black 1px; border-collapse:collapse; border-spacing:0px;font-family:Arial Unicode MS,Arial,Helvetica,sans-serif; font-size:10pt; width:100%;" border="0" cellpadding="1" cellspacing="1" >
+            <tbody>
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                    <td> </td>
+                </tr>
+                <tr>
+                    <td>License Value:</td>
+                    <td>
+                        <apex:outputText value="{0, number, ###,###,###,##0.00}" style="float:right;margin-right:10px;">
+                            <apex:Param value="{!UpgradeAssuranceContract__c.RecalculatedAdjustedLicenseValue__c}"/>
+                        </apex:OutputText>
+                    </td>
+                    <td>Billing Percentage:</td>
+                    <td>{!UpgradeAssuranceContract__c.BillingPercentage__c}</td>
+                </tr>
+                <tr>
+                    <td>Upgrade Assurance Value:</td>
+                    <td>
+                        <apex:outputText value="{0, number, ###,###,###,##0.00}" style="float:right;margin-right:10px;">
+                            <apex:Param value="{!UpgradeAssuranceContract__c.BillingValueUa__c}"/>
+                        </apex:OutputText>
+                    </td>
+                    <td>Additional Conditions:</td>
+                    <td>{!UpgradeAssuranceContract__c.AdditionalConditionsReason__c}</td>
+                </tr>
+            </tbody>
+        </table>
+    </apex:form>
+</apex:page>

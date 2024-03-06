@@ -1,0 +1,44 @@
+<aura:component controller="DeclineUACLghtCmpCtrl" implements="forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,force:hasRecordId" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <aura:attribute name="declined" type="Boolean" default="false"/>
+  <aura:attribute name="ready" type="Boolean" default="false"/>
+  <aura:attribute name="uac" type="UpgradeAssuranceContract__c" default="null"/>
+    
+  <div class="modal-header slds-modal__header"> 
+    <h2 class="slds-text-heading_medium">{!$Label.c.DeclineUACHeader}</h2>
+  </div>
+    
+    <aura:if isTrue="{!v.uac!=null}">
+        <div class="slds-modal__content slds-var-m-around_medium" id="modal-content-id-1">
+            <div class="slds-box">
+                <table class="slds-table--fixed-layout nopaddingandmargin">
+                    <tbody>
+                        <tr class="nopaddingandmargin">
+                            <td class="nopaddingandmargin">
+                                <aura:renderIf isTrue="{!v.uac.EndDate__c==null}">
+                                    <aura:renderIf isTrue="{!v.uac.Declined__c}">
+                                        <label class="slds-form-element__label slds-text-body_medium">{!$Label.c.AlreadyDeclinedUAC}</label>
+                                        <aura:set attribute="else">
+                                            <label class="slds-form-element__label slds-text-body_medium">{!$Label.c.DeclineUAC}</label>
+                                        </aura:set>                                    
+                                    </aura:renderIf>
+                                    <aura:set attribute="else">
+                                        <label class="slds-form-element__label slds-text-body_medium">{!$Label.c.NoDeclinedPossible}</label>
+                                    </aura:set>                                    
+                                </aura:renderIf>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>            
+            </div>  
+        </div>
+        <div class="modal-footer slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick="{!c.cancelButton}"><h1>{!$Label.c.Cancel}</h1></button>
+            <aura:renderIf isTrue="{!v.uac.EndDate__c==null}">
+                <aura:renderIf isTrue="{!v.uac.Declined__c==false}">
+                    <button class="slds-button slds-button_destructive" onclick="{!c.acceptButton}"><h1>{!$Label.c.Ok}</h1></button>
+                </aura:renderIf>
+            </aura:renderIf>
+        </div>
+    </aura:if>
+</aura:component>

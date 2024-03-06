@@ -1,0 +1,176 @@
+<aura:component controller="TermsConditionsLghtCmpCtrl" implements="forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,force:hasRecordId" access="global">
+    <aura:attribute name="name" type="String" default="Terms And Conditions File" access="global" />
+    <aura:attribute name="subject" type="String" default="Terms And Conditions" access="global" />
+    <aura:attribute name="termAndConditionsFileId" type="String" default="" access="global" />
+    <aura:attribute name="uac" type="UpgradeAssuranceContract__c"/>	
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:attribute name="uacFieldParamsMap" type="Map" />
+	<aura:attribute name="accepted" type="Boolean" />
+		
+	<style>
+	    .cuf-content {
+	    padding: 0 0rem !important;
+	    }
+	    .slds-p-around--medium {
+	    padding: 0rem !important;
+	    }
+	    .slds-modal__content {
+	    overflow-y: hidden !important;
+	    height: unset !important;
+	    max-height: unset !important;
+	    }        
+	</style>
+		
+	<div class="modal-header slds-modal__header">	
+		<h2 class="slds-text-heading_medium">{!$Label.c.UpgradeAssuranceTermsAndConditions}</h2>
+	</div>
+    
+    <div class="slds-modal__content slds-var-m-around_medium" id="modal-content-id-1">
+        <div class="slds-box">
+			<table class="slds-table--fixed-layout nopaddingandmargin">
+				<col width="40%"/>
+				<col width="60%"/>
+				<tbody>
+					<tr class="nopaddingandmargin">
+                        <td class="nopaddingandmargin">
+							<label class="slds-form-element__label">{!v.uacFieldParamsMap.Name.label}</label>
+                        </td>
+                        <td>
+                            <ui:outputText title="{!v.uac.Name}"
+                                   value="{!v.uac.Name}"/>
+                        </td>
+                    </tr>
+					<tr>
+                        <td>
+							<label class="slds-form-element__label">{!v.uacFieldParamsMap.ChannelPartner__c.label}</label>
+                        </td>
+                        <td>
+                            <ui:outputText title="{!v.uac.ChannelPartner__c}"
+                                   value="{!v.uac.ChannelPartner__r.Name}"/>
+                        </td>
+                    </tr>
+					<tr>
+                        <td>
+							<label class="slds-form-element__label">{!v.uacFieldParamsMap.YourOrder__c.label}</label>
+                        </td>
+                        <td>
+                            <ui:outputText title="{!v.uac.YourOrder__c}"
+                                   value="{!v.uac.YourOrder__c}"/>
+                        </td>
+                    </tr>
+					<tr>
+                        <td>
+							<label class="slds-form-element__label">{!v.uacFieldParamsMap.License__c.label}</label>
+                        </td>
+                        <td>
+                            <ui:outputText title="{!v.uac.License__r.Name}"
+                                   value="{!v.uac.License__r.Name}"/>
+                        </td>
+                    </tr>
+					<tr>
+                        <td>
+							<label class="slds-form-element__label">{!v.uacFieldParamsMap.LicenseeName__c.label}</label>
+                        </td>
+                        <td>
+                            <ui:outputText title="{!v.uac.LicenseeName__c}"
+                                   value="{!v.uac.LicenseeName__c}"/>
+                        </td>
+                    </tr>
+					<tr>
+                        <td>
+							<label class="slds-form-element__label">{!v.uacFieldParamsMap.EndCustomer__c.label}</label>
+                        </td>
+                        <td>
+                            <ui:outputText title="{!v.uac.EndCustomer__r.CustomerCode__c}"
+                                   value="{!v.uac.EndCustomer__r.CustomerCode__c}"/>
+                        </td>
+                    </tr>
+					<tr>
+                        <td style="opacity: 0">
+                            .
+                        </td>
+                        <td style="opacity: 0">
+                            .
+                        </td>
+                    </tr>
+					<tr>
+                        <td>
+							<label class="slds-form-element__label">{!v.uacFieldParamsMap.SignedBy__c.label}</label>
+                        </td>
+                        <td>
+							<aura:renderIf isTrue="{!v.accepted}">
+	                            <ui:outputText title="{!v.uac.SignedBy__c}"
+	                                   value="{!v.uac.SignedBy__c}"/>
+								<aura:set attribute="else">
+		                            <ui:inputText 
+		                                   class="slds-input"
+		                                   value="{!v.uac.SignedBy__c}" aura:id="inputSignedByCmp"/>
+							    </aura:set>	                                   
+			          		</aura:renderIf>
+                        </td>
+                    </tr>
+					<tr>
+                        <td>
+							<label class="slds-form-element__label">{!v.uacFieldParamsMap.Email__c.label}</label>
+                        </td>
+                        <td>
+							<aura:renderIf isTrue="{!v.accepted}">
+	                            <ui:outputText title="{!v.uac.Email__c}"
+	                                   value="{!v.uac.Email__c}"/>
+								<aura:set attribute="else">
+		                            <ui:inputEmail 
+		                                   class="slds-input"
+		                                   value="{!v.uac.Email__c}" aura:id="inputEmailCmp"/>
+							    </aura:set>	                                   
+			          		</aura:renderIf>
+                        </td>
+                    </tr>
+					<tr>
+                        <td>
+							<label class="slds-form-element__label">{!v.uacFieldParamsMap.SignedDate__c.label}</label>
+                        </td>
+                        <td>
+                            <ui:outputDate 
+                                   value="{!v.uac.SignedDate__c}"/>
+                        </td>
+                    </tr>
+					<tr>
+                        <td>
+							<label class="slds-form-element__label">{!v.uacFieldParamsMap.AcceptTermsAndConditions__c.label}</label>
+                        </td>
+                        <td>
+							<aura:renderIf isTrue="{!v.accepted}">
+	                            <ui:outputCheckbox 
+	                                   value="{!v.uac.AcceptTermsAndConditions__c}"/>
+								<aura:set attribute="else">
+	                        		<ui:inputCheckbox value="{!v.uac.AcceptTermsAndConditions__c}" aura:id="inputAcceptCmp"/>
+							    </aura:set>	                                   
+			          		</aura:renderIf>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>            
+		</div>	
+		<aura:renderIf isTrue="{!v.termAndConditionsFileId != ''}">
+	    <div class="slds-box">
+            <table>
+                <tr>
+                    <td>
+                        <lightning:buttonIcon iconName="utility:file" size="medium" alternativeText="{!$Label.c.TermsAndConditions}" variant="bare" onclick="{!c.openSingleFile}" />
+                    </td>
+                    <td>
+                        <a title="{!$Label.c.ClickToDownload}" href="javascript:void(0);" onclick="{!c.openSingleFile}">
+                            <p class="imageText">{!$Label.c.TermsAndConditions}</p>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </aura:renderIf>
+	   	<!-- lightning:flow aura:id="flowData" onstatuschange="{!c.handleFlowStatusChange}"/ -->    	
+	</div>
+	<div class="modal-footer slds-modal__footer">
+		<button class="slds-button slds-button--neutral" onclick="{!c.cancelButton}"><h1>{!$Label.c.Cancel}</h1></button>
+		<button class="slds-button slds-button--neutral" onclick="{!c.acceptButton}"><h1>{!$Label.c.Accept}</h1></button>
+	</div>
+</aura:component>

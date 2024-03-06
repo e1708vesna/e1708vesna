@@ -1,0 +1,70 @@
+<apex:page controller="BatchSchedulerCtrl" action="{!init}" >
+<apex:sectionHeader />
+	<apex:form >
+    <apex:actionPoller action="{!getStatus}" rerender="counter" interval="7"/>	
+    	<apex:pageBlock title="Restart Scheduler  (auto refresh every ~7 sec)" id="counter">
+        	<apex:pageMessages escape="false"/>
+			<apex:outputPanel id="block">
+				<table>
+				<col width='220px'/>
+				<col width='70px'/>
+				<col width='70px'/>
+				<col width='70px'/>
+				<col width='70px'/>
+				<col width='100px'/>
+				<col width='100px'/>
+				<col width='100px'/>
+				<col width='100px'/>
+				<col width='100px'/>
+				<col width='100px'/>
+				<col width='100px'/>
+				<col width='220px'/>
+				<thead>
+					<tr>
+					<th><apex:outputText value="Service"/></th>
+					<th><apex:outputText value="Reschedule"/></th>
+					<th><apex:outputText value="Solo"/></th>
+					<th><apex:outputText value="Direct"/></th>
+					<th><apex:outputText value="Stop"/></th>
+					<th><apex:outputText value="SchedState"/></th>
+					<th><apex:outputText value="JobState"/></th>
+					<th><apex:outputText value="Next Run"/></th>
+					<th><apex:outputText value="AutoReschedule"/></th>
+					<th><apex:outputText value="More Available"/></th>
+					<th><apex:outputText value="Last Processed"/></th>
+					<th><apex:outputText value="Last Processed Id"/></th>
+					<th><apex:outputText value="Linked Scheduler"/></th>
+					</tr>
+				</thead>
+				<tbody>
+				<apex:repeat value="{!sbj}" var="sbjItem">
+					<tr>
+						<td><apex:outputText value="{!sbjItem.name}" title="{!sbjItem.description}"/></td>
+				   		<td><apex:commandButton value="(Re)Start" action="{!scheduleWakeup}" reRender="block" immediate="true" style="color:green;" rendered="{!sbjItem.autoReschedule=='Yes'}" disabled="{!sbjItem.autoReschedule=='No' || buttonLock}" >
+	                 		<apex:param name="param1" value="{!sbjItem.name}" assignTo="{!inputValue}"/>
+		            	</apex:commandButton></td>
+				   		<td><apex:commandButton value="Solo Start" action="{!scheduleSolo}"  reRender="block" immediate="true" style="color:orange;" rendered="{!NOT(ISNULL(sbjItem.linkedScheduler))}" disabled="{!ISNULL(sbjItem.linkedScheduler)  || buttonLock}" >
+							<apex:param name="param1" value="{!sbjItem.name}" assignTo="{!inputValue}"/>
+				   		</apex:commandButton></td>
+				   		<td><apex:commandButton value="Direct Start" action="{!scheduleWakeupDirect}"  reRender="block" immediate="true" style="color:red;" rendered="false" disabled="{!buttonLock}">
+							<apex:param name="param1" value="{!sbjItem.name}" assignTo="{!inputValue}"/>
+			   			</apex:commandButton></td>
+						<td><apex:commandButton value="Stop" action="{!scheduleStop}"  reRender="block" immediate="true" style="color:green;" >
+							<apex:param name="param1" value="{!sbjItem.name}" assignTo="{!inputValue}"/>
+				    	</apex:commandButton></td>
+						<td><apex:outputText value="{!sbjItem.state}"/></td>
+						<td><apex:outputText value="{!sbjItem.jobStatus}"/></td>
+						<td><apex:outputText value="{!sbjItem.nextRun}"/></td>
+						<td><apex:outputText value="{!sbjItem.autoReschedule}"/></td>
+						<td><apex:outputText value="{!sbjItem.moreHitsAvailableIndicator}"/></td>
+						<td><apex:outputText value="{!sbjItem.lastProcessedDateTime}"/></td>
+						<td><apex:outputText value="{!sbjItem.lastProcessedId}"/></td>
+						<td><apex:outputText value="{!sbjItem.linkedScheduler}" title="{!'Starts direct after ' + sbjItem.name}"/></td>
+					</tr>
+				</apex:repeat>
+				</tbody>
+			</table>
+		</apex:outputPanel>
+	</apex:pageBlock>
+	</apex:form>
+</apex:page>

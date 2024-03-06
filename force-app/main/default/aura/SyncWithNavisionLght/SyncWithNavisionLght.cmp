@@ -1,0 +1,44 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:lightningQuickAction"
+                access="global"
+                controller="SyncWithNavisionLghtCtrl">
+
+    <aura:attribute name="messsage" type="String" default=""/>
+    <aura:attribute name="syncDateAccount" type="DateTime" default=""/>
+    <aura:attribute name="syncDateLicense" type="DateTime" default=""/>
+    <aura:attribute name="syncDateLicenseItems" type="DateTime" default=""/>
+	<aura:attribute name="ScrollTime" type="Integer" default="7000" access="global" />
+    <aura:attribute name="sbjList" type="Object[]" default=""/>
+	<aura:attribute name="syncOk" type="Boolean" default="true"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <lightning:card variant="Narrow" iconName="" title="{!$Label.c.SynchronisationWithNavision}"  class="boldheader">
+        <div class="slds-modal__content slds-p-around--small slds-scrollable--y slds-scrollable--x">
+            <aura:if isTrue="{!v.sbj.length != 0}">
+                <table class="slds-table slds-table--fixed-layout slds-text-body_small">
+                    <col width="20%"/>
+                    <col width="40%"/>
+                    <col width="40%"/>
+                    <thead>
+                        <tr class="boldheader">
+                        <th scope="col"><div class="slds-truncate" title="Item">Item</div></th>
+                        <th scope="col"><div class="slds-truncate" title="Updated Date Time">Updated</div></th>
+                        <th scope="col"><div class="slds-truncate" title="Next Run">Next Run</div></th>
+                        </tr>    
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.sbjList}" var="sbj">
+                            <tr>
+                                <td><div class="slds-item--detail slds-truncate recordCell" title="{!sbj.name + ' last processed'}">{!sbj.name}</div></td>
+                                <td><div class="slds-item--detail slds-truncate recordCell" title="Last processed">{!sbj.LastProcessedDateTime}</div></td>
+                                <td><div class="slds-item--detail slds-truncate recordCell" title="Next Run">{!sbj.nextRun}</div></td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </aura:if>
+        </div>            
+        <center>
+            <lightning:buttonIcon iconName="utility:sync" size="large" alternativeText="{!$Label.c.SyncWithNavision}" variant="bare" onclick="{!c.syncNav}" />
+        </center>
+    </lightning:card>
+</aura:component>

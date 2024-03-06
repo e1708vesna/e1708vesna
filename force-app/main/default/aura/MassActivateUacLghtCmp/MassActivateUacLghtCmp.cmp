@@ -1,0 +1,38 @@
+<aura:component controller="TermsConditionsLghtCmpCtrl">	 
+	<aura:attribute name="errorMessage" type="String" default="" />
+    <aura:attribute name="selectedList" type="List" default="[]" />
+	
+    <div class="slds-box">
+        <div class="page-header">
+            <center>
+                <h2 class="slds-text-heading--medium font14">{!$Label.c.ActivateUac}</h2>
+            </center>
+        </div>
+		
+        <div class="slds-modal__footer">
+            <center>
+                <button class="slds-button slds-button--neutral font14" onclick="{!c.activateUac}"><h1>{!$Label.c.Ok}</h1></button>
+                <button class="slds-button slds-button--neutral font14" onclick="{!c.cancelUpdate}"><h1>{!$Label.c.Cancel}</h1></button>
+            </center>
+        </div>
+
+    </div>
+    
+	<div id="{!globalId + '_messageDiv1'}" style="display:none;">
+	  	<div role="dialog" tabindex="-1" aria-labelledby="header43" class="slds-modal slds-fade-in-open">
+	  		<div class="slds-modal__container" >
+		  		<div>
+		    		<div class="slds-modal__header">
+		    			<button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close">
+		    				<lightning:buttonIcon iconName="utility:close" variant="bare" onclick="{!c.disagreeMessage}" alternativeText="Close window." />
+		      			</button>
+		      			<h2 class="slds-text-heading--medium font14">{!v.errorMessage}</h2>
+		    		</div>
+				</div>
+				<div class="slds-modal__footer"><center>
+					<button class="slds-button slds-button--neutral font14" onclick="{!c.disagreeMessage}"><h1>{!$Label.c.Ok}</h1></button>
+				</center></div>
+			</div>
+		</div>
+	</div>    
+</aura:component>

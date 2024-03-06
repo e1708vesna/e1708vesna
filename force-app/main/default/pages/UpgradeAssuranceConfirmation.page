@@ -1,0 +1,212 @@
+<!--
+/**
+ * @author (s)    : BRITE
+ * @description   : Page send as PDF on confirmation   
+ * https://nedapsecurity--dev--c.cs106.visual.force.com/apex/UpgradeAssuranceConfirmation?id=a040D0000037uRVQAY
+ */ 
+-->
+<apex:page controller="UpgradeAssuranceConfirmationCtrl" tabStyle="UpgradeAssuranceContract__c" renderAs="pdf">
+    <apex:form >
+        <div style="margin-left: 1.7cm;">
+            <apex:image value="{!URLfor($Resource.NedapLogo)}" width="300"/>
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">{!upgradeAssuranceContract.ChannelPartner__r.Name}<br />
+                {!upgradeAssuranceContract.signedby__c}</span></p>
+            
+            <p> </p>
+            
+            <table border="1" style="height: 76px; width: 100%; border-collapse: collapse; border-style: none;">
+                <tbody>
+                    <tr style="height: 19px;">
+                        <td style="width: 300px; border-style: none; height: 19px;"><span style="font-size: 11pt; font-family: arial, helvetica, sans-serif;">Date:</span></td>
+                        <td style="width: 1700px; border-style: none; height: 19px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">
+                            <apex:outputText value="{0, date, dd-MM-yyyy}">
+                                <apex:Param value="{!upgradeAssuranceContract.SignedDate__c}" />
+                            </apex:OutputText>
+                        </span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 300px; border-style: none; height: 19px;"> </td>
+                        <td style="width: 1700px; border-style: none; height: 19px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 300px; border-style: none; height: 19px;"><span style="font-size: 11pt; font-family: arial, helvetica, sans-serif;">Subject:</span></td>
+                        <td style="width: 1700px; border-style: none; height: 19px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;"> Upgrade Assurance</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 300px; border-style: none; height: 19px;"><span style="font-size: 11pt; font-family: arial, helvetica, sans-serif;">UA number:</span></td>
+                        <td style="width: 1700px; border-style: none; height: 19px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">{!upgradeAssuranceContract.Name}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p> </p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;"><br />
+            Dear {!upgradeAssuranceContract.signedby__c},</span></p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Thank you for concluding an Upgrade Assurance contract.&nbsp;We hereby sent you a copy for your administration. </span></p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">You have ordered an Upgrade Assurance for the following license:</span></p>
+            
+            <table border="1" style="height: 76px; width: 100%; border-collapse: collapse; border-style: none;">
+                <tbody>
+                    <tr style="height: 19px;">
+                        <td style="width: 300px; border-style: none; height: 18px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">License code:</span></td>
+                        <td style="width: 1700px; border-style: none; height: 18px;"><span style="font-size: 11pt; font-family: arial, helvetica, sans-serif;">{!upgradeAssuranceContract.License__r.name}</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 300px; border-style: none; height: 18px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Licensee:</span></td>
+                        <td style="width: 1700px; border-style: none; height: 18px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">{!upgradeAssuranceContract.licenseename__c}</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 300px; border-style: none; height: 18px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">UA number:</span></td>
+                        <td style="width: 1700px; border-style: none; height: 18px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">{!upgradeAssuranceContract.name}</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 300px; border-style: none; height: 18px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Start date:</span></td>
+                        <td style="width: 1700px; border-style: none; height: 18px;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">
+                            <apex:outputText value="{0, date, dd-MM-yyyy}">
+                                <apex:Param value="{!upgradeAssuranceContract.StartDate__c}"/>
+                            </apex:OutputText>
+                        </span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">For upgrading this license, please contact our order desk by sending an email to orders-ideas@nedap.com.</span></p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">On the following pages the content of the Upgrade Assurance agreement and the applicable terms and conditions as accepted by {!upgradeAssuranceContract.signedby__c} on behalf of&nbsp;<span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">{!upgradeAssuranceContract.ChannelPartner__r.name} on</span>
+            <apex:outputText value=" {0, date, dd-MM-yyyy} can be found.">
+                <apex:Param value="{!upgradeAssuranceContract.SignedDate__c}"/>
+            </apex:OutputText>
+            </span></p>
+            
+            <p> </p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Best regards,</span></p>
+            
+            <p> </p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Nedap Security Management</span></p>
+
+            <p style="page-break-after:always;"> </p>
+
+            <apex:image value="{!URLfor($Resource.NedapLogo)}"/>
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;"><strong>Upgrade Assurance Terms &amp; Conditions</strong></span></p>
+            
+            <p><strong><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">1.&nbsp;Definitions</span></strong></p>
+            
+            <table border="1" style="height: 361px; width: 100%; border-collapse: collapse; border-style: none;">
+                <tbody>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 15px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Agreement</span></td>
+                        <td style="width: 1800px; height: 15px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Shall mean these Upgrade Assurance Terms &amp; Conditions as agreed by Channel Partner.</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                        <td style="width: 1800px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Channel Partner</span></td>
+                        <td style="width: 1800px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Shall mean a non-exclusive reseller appointed by Nedap, under the terms &amp; conditions set forth in the Channel Partner agreement, authorised to purchase, re-sell, install, commission and service the Product, as an independent party, in its own name, for its own risk, expense and account.</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                        <td style="width: 1800px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">End-user</span></td>
+                        <td style="width: 1800px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Shall mean the operational user of the Product.</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                        <td style="width: 1800px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Manufacturer</span></td>
+                        <td style="width: 1800px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Shall mean N.V. Nederlandsche Apparatenfabriek ‘Nedap’.</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                        <td style="width: 1800px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">MSRP prices</span></td>
+                        <td style="width: 1800px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Shall mean manufacturer suggested retail prices as listed in the current AEOS price lists</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                        <td style="width: 1800px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">New Version(s)</span></td>
+                        <td style="width: 1800px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Shall mean (a) new major release(s) of the Product in which significant elements have been subject to change or in which functional or technical improvements have been implemented. In a New Version all interim Service Packs are incorporated.</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                        <td style="width: 1800px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Price lists AEOS</span></td>
+                        <td style="width: 1800px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Shall mean the annually released AEOS Classic Price list and the AEOS Blue Price list</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                        <td style="width: 1800px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Product</span></td>
+                        <td style="width: 1800px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Shall mean all the related server software and embedded software manufactured by, or on behalf of Manufacturer under the Nedap AEOS brand name.</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                        <td style="width: 1800px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Service Packs</span></td>
+                        <td style="width: 1800px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Shall mean a software update that contains critical bug fixes and solutions to specific problems in a certain version of the Product.</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                        <td style="width: 1800px; height: 19px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">&nbsp;</span></td>
+                    </tr>
+                    <tr style="height: 19px;">
+                        <td style="width: 200px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Upgrade Assurance</span></td>
+                        <td style="width: 1800px; height: 18px; border-style: none;"><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;"> Shall mean the right of End-users to use the latest New Version of the Product.</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p style="page-break-after:always;"> </p>
+            
+            <apex:image value="{!URLfor($Resource.NedapLogo)}"/>
+            <p><strong><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">2.&nbsp;Subject of the Agreement</span></strong></p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Manufacturer incorporates new functionality and technical improvements into New Versions of the Product.</span></p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">During the term of the Agreement, End-user is entitled to the latest version of the Product. Service Packs are supplied free of charge.</span></p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Licensed Products for the production environment of End-users are subject to Upgrade Assurance. Commercial releases needed for test and acceptance environments will be supported free of charge whenever Upgrade Assurance for the production license is procured.<br />
+            <br />
+            <strong>3.&nbsp;</strong></span><strong><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Agreement Term</span></strong></p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">The Agreement will come into force upon agreement by Channel Partner of its terms and conditions by clicking the submit button. The Agreement term is one (1) calendar year and will be automatically extended with one (1) calendar year terms unless terminated by giving two (2) months’ written notice prior to the expiration of a term.</span></p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Termination by Channel Partner of the Agreement includes termination of any special agreed conditions between Channel Partner and Manufacturer. Upon re-entering by Channel Partner into an Agreement the standard terms and conditions thereof shall apply unless agreed otherwise in writing between Channel Partner and Manufacturer. Termination by Channel Partner of the Agreement entitles Manufacturer to exclude End-user(s) from future Upgrade Assurances.<br />
+            <br />
+            4.&nbsp;</span><strong style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Prices and payment</strong></p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Manufacturer will charge Channel Partner for Upgrade Assurance an annual amount based on a fixed percentage of the actual license value at the invoicing date, according to the current MSRP prices as mentioned in the actual AEOS Price lists. The applicable percentage is listed on the contract overview.</span></p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Channel Partner will receive a discount on the amount mentioned in the previous paragraph. The applicable discount is listed in the Channel Partner Agreement.</span></p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">Whenever Channel Partner does not (timely) meet its above stated payment obligations, Manufacturer will suspend its obligation to release a commercial and / or associated license until such payment has been made. Untimely payment or non-payment by End-user does not relieve Channel Partner of settling the invoice, plus interest and costs.</span></p>
+            
+            <p><span style="font-family: arial, helvetica, sans-serif; font-size: 11pt;">All amounts are net and excluding VAT. The currency depends on the location of the Channel Partner. </span></p>
+            
+            <p><span style="font-family: Aller;">&nbsp;</span></p>
+        </div>   
+    </apex:form>
+</apex:page>

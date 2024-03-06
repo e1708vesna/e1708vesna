@@ -1,0 +1,4 @@
+<design:component label="Terms And Conditions">
+    <design:attribute name="subject" label="Terms And Conditions File" description="Terms And Conditions File And Acceptance" />
+    <design:attribute name="name" label="Terms And Conditions" />
+</design:component>
