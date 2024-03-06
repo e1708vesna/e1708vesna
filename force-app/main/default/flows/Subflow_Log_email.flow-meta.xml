@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <assignments>
+        <name>Assign_EmailMessage_fields</name>
+        <label>Assign EmailMessage fields</label>
+        <locationX>182</locationX>
+        <locationY>158</locationY>
+        <assignmentItems>
+            <assignToReference>EmailMessage.ToAddress</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseRecord.SuppliedEmail</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EmailMessage.TextBody</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Subject</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EmailMessage.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Subject</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EmailMessage.ParentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseRecord.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EmailMessage.HtmlBody</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Subject</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EmailMessage.FromAddress</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>insertEmailMessage</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>insertEmailMessage</name>
+        <label>Should EmailMessage be inserted?</label>
+        <locationX>182</locationX>
+        <locationY>278</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>InsertEmailMessagerecord</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Insert_Email_Message</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>This flow logs an email: It creates an EmailMessage record that shows as an acitivity on the feed.</description>
+    <environments>Default</environments>
+    <interviewLabel>Subflow - Log email {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Subflow - Log email</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Insert_Email_Message</name>
+        <label>Insert Email Message</label>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
+        <inputReference>EmailMessage</inputReference>
+    </recordCreates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Assign_EmailMessage_fields</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Case Record to which the email will be linked</description>
+        <name>CaseRecord</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <description>EmailMessage Record that is populated within the subflow.</description>
+        <name>EmailMessage</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>EmailMessage</objectType>
+    </variables>
+    <variables>
+        <description>If set to false, the email message is not inserted within the subflow. 
+Use this to bulkify the flow. Store the EmailMessage in a collection in your main flow and insert all records at once.</description>
+        <name>InsertEmailMessagerecord</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Message that will show up on the case feed.</description>
+        <name>Subject</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

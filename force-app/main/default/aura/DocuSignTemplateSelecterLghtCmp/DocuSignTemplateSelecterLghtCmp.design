@@ -1,0 +1,7 @@
+<design:component label="DocuSign Template Selector">
+	<design:attribute name="templateId" label="Output: TemplateId" />
+    <design:attribute name="region" label="Default filter for Region" /> 
+    <design:attribute name="contractType" label="Default filter for Contract Type" /> 
+    <design:attribute name="salesChannel" label="Default filter for Sales Channel" />
+    <design:attribute name="queryLimit" label="Amount of records to show" /> 
+</design:component>

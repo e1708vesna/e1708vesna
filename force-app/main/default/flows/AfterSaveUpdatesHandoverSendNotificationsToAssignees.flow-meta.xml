@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>EmailAssignedAM</name>
+        <label>Email Assigned AM</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <actionName>Handover__c.EmailToHandoverAm</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>AccountOwnershipUpdated</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>EmailAssignedAMPool</name>
+        <label>Email Assigned AM</label>
+        <locationX>182</locationX>
+        <locationY>1031</locationY>
+        <actionName>Handover__c.EmailToHandoverAm</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>CanAccountOwnershipbeupdated</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>EmailAssignedIM</name>
+        <label>Email Assigned IM</label>
+        <locationX>204</locationX>
+        <locationY>2339</locationY>
+        <actionName>Handover__c.Handover_notification_IM</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>AssignedToPOM</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>EmailAssignedOS</name>
+        <label>Email Assigned OS</label>
+        <locationX>204</locationX>
+        <locationY>2939</locationY>
+        <actionName>Handover__c.Handover_notification_OS</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>AnyResourceUnassigned</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>EmailAssignedPOM</name>
+        <label>Email Assigned POM</label>
+        <locationX>204</locationX>
+        <locationY>2639</locationY>
+        <actionName>Handover__c.Handover_notification_POM</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>AssignedToOS</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>EmailAssignedSalesManager</name>
+        <label>Email Assigned Sales Manager</label>
+        <locationX>204</locationX>
+        <locationY>1631</locationY>
+        <actionName>Handover__c.EmailToHandoverSales</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>UpdateLeadOwner</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>EmailToOwner</name>
+        <label>Email To Owner</label>
+        <locationX>204</locationX>
+        <locationY>3239</locationY>
+        <actionName>Handover__c.EmailToHandoverOwner</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>SendnotificationtoPartnerAssignee</name>
+        <label>Send notification to Partner Assignee</label>
+        <locationX>204</locationX>
+        <locationY>2039</locationY>
+        <actionName>Handover__c.HandoverNewPartnerManagerassigned</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>AssignedToIM</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <description>Checks whether the Opportunity is already on Closed Won and therefore whether the Assigned AM can become the Account Owner</description>
+        <name>AccountOwnershipUpdated</name>
+        <label>Can Account Ownership be updated?</label>
+        <locationX>182</locationX>
+        <locationY>539</locationY>
+        <defaultConnector>
+            <targetReference>AMPoolisAssigned</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>YesAccountOwnershipUpdated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Opportunity__r.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Transacting</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account__r.OwnerId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Assigned_AM__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateAccountOwnership</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>AMPoolisAssigned</name>
+        <label>AM Pool is Assigned</label>
+        <locationX>336</locationX>
+        <locationY>923</locationY>
+        <defaultConnector>
+            <targetReference>AssignedToSales</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>YesAMPoolisassigned</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.AMPool__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Assigned_AM__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Assigned_AM__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>EmailAssignedAMPool</targetReference>
+            </connector>
+            <label>Yes, AM Pool is assigned</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Check if the number of resources requested was changed, if it is now smaller than before, notify the handover owner</description>
+        <name>AnyResourceUnassigned</name>
+        <label>Any Resource Unassigned?</label>
+        <locationX>336</locationX>
+        <locationY>3131</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NotifyOwner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CountOfResourcesRequested__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.CountOfResourcesRequested__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <elementReference>$Record.CountOfResourcesRequested__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>EmailToOwner</targetReference>
+            </connector>
+            <label>Notify Owner</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>AssignedToAM</name>
+        <label>Handover has been assigned to AM?</label>
+        <locationX>336</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>AMPoolisAssigned</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>YesToAM</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Assigned_AM__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AccountManager__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Assigned_AM__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>EmailAssignedAM</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>AssignedToIM</name>
+        <label>Handover has been assigned to IM?</label>
+        <locationX>336</locationX>
+        <locationY>2231</locationY>
+        <defaultConnector>
+            <targetReference>AssignedToPOM</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>YesToIM</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.IM__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ImplementationManager__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IM__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>EmailAssignedIM</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>AssignedToOS</name>
+        <label>Handover has been assigned to OS?</label>
+        <locationX>336</locationX>
+        <locationY>2831</locationY>
+        <defaultConnector>
+            <targetReference>AnyResourceUnassigned</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>YesToOS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Assigned_OS__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OnboardingSpecialist__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Assigned_OS__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>EmailAssignedOS</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>AssignedToPOM</name>
+        <label>Handover has been assigned to POM?</label>
+        <locationX>336</locationX>
+        <locationY>2531</locationY>
+        <defaultConnector>
+            <targetReference>AssignedToOS</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>YesToPOM</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.AssignedPom__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ProjectOperationsManager__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AssignedPom__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>EmailAssignedPOM</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>AssignedToSales</name>
+        <label>Handover has been assigned to Sales?</label>
+        <locationX>336</locationX>
+        <locationY>1523</locationY>
+        <defaultConnector>
+            <targetReference>PartnerManagerPoolorDedicatedPartnerManagerisAssigned</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>YesToSales</name>
+            <conditionLogic>1 AND 3 AND (2 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Sales__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Sales_Manager__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Sales_Manager__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ISNEW</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>EmailAssignedSalesManager</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks whether the Opportunity is already on Closed Won and therefore whether the AM Pool can become the Account Owner</description>
+        <name>CanAccountOwnershipbeupdated</name>
+        <label>Can Account Ownership be updated?</label>
+        <locationX>182</locationX>
+        <locationY>1139</locationY>
+        <defaultConnector>
+            <targetReference>AssignedToSales</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>YesPool</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Opportunity__r.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Transacting</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account__r.OwnerId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.HandoverPoolUser__r.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateAccountOwnershipPool</targetReference>
+            </connector>
+            <label>Yes Pool</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>PartnerManagerPoolorDedicatedPartnerManagerisAssigned</name>
+        <label>Partner Manager Pool or Dedicated Partner Manager is Assigned</label>
+        <locationX>336</locationX>
+        <locationY>1931</locationY>
+        <defaultConnector>
+            <targetReference>AssignedToIM</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>YesAMisassigned</name>
+            <conditionLogic>(1 AND 2 AND 3) OR (4 AND 5 AND 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.PartnerPool__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AssignedPartnerManager__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AssignedPartnerManager__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.DedicatedPartnerManager__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AssignedPartnerManager__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AssignedPartnerManager__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SendnotificationtoPartnerAssignee</targetReference>
+            </connector>
+            <label>Yes, Partner Manager is assigned</label>
+        </rules>
+    </decisions>
+    <description>Gon 07/09: Added the update for new ownership for pool.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>ForChangeToRejected</name>
+        <dataType>Number</dataType>
+        <expression>{!$Record.CountOfResourcesRequested__c} - ({!ForCountOfRejected} + {!$Record.CountOfResourcesAssigned__c})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>ForCountOfMissingInfo</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISPICKVAL({!$Record.AMRejectionReason__c}, &quot;Need More Information&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.AMPoolRejectionReason__c}, &quot;Need More Information&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.IMRejectionReason__c}, &quot;Need More Information&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.OSRejectionReason__c}, &quot;Need More Information&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.POMRejectionReason__c}, &quot;Need More Information&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.SalesRejectionReason__c}, &quot;Need More Information&quot;) = true, 1, 0)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>ForCountOfRejected</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISPICKVAL({!$Record.AMRejectionReason__c}, &quot;Reject Resource Request&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.AMPoolRejectionReason__c}, &quot;Reject Resource Request&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.IMRejectionReason__c}, &quot;Reject Resource Request&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.OSRejectionReason__c}, &quot;Reject Resource Request&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.POMRejectionReason__c}, &quot;Reject Resource Request&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.SalesRejectionReason__c}, &quot;Reject Resource Request&quot;) = true, 1, 0)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>ISNEW</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <interviewLabel>After Save Updates Handover - {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>After Save Updates Handover - Send out notifications to Assignees</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>UpdateAccountOwnership</name>
+        <label>Update Account Ownership</label>
+        <locationX>50</locationX>
+        <locationY>647</locationY>
+        <connector>
+            <targetReference>AMPoolisAssigned</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Account__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>$Record.Assigned_AM__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>UpdateAccountOwnershipPool</name>
+        <label>Update Account Ownership - Pool</label>
+        <locationX>50</locationX>
+        <locationY>1247</locationY>
+        <connector>
+            <targetReference>AssignedToSales</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Account__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>$Record.HandoverPoolUser__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>UpdateLeadOwner</name>
+        <label>Update Lead Owner</label>
+        <locationX>204</locationX>
+        <locationY>1739</locationY>
+        <connector>
+            <targetReference>PartnerManagerPoolorDedicatedPartnerManagerisAssigned</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Lead__r.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>$Record.Sales_Manager__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Lead</object>
+    </recordUpdates>
+    <start>
+        <locationX>210</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>AssignedToAM</targetReference>
+        </connector>
+        <filterFormula>AND(
+{!$Record.RecordType.DeveloperName} = &apos;Handover&apos;,
+OR(
+AND(
+ISNEW(),
+!ISBLANK({!$Record.Sales_Manager__c})),
+
+AND(
+!ISBLANK({!$Record.Sales_Manager__c}),
+ISCHANGED({!$Record.Sales_Manager__c})),
+
+ISCHANGED({!$Record.Assigned_AM__c}),
+ISCHANGED({!$Record.IM__c}),
+ISCHANGED({!$Record.AssignedPom__c}),
+ISCHANGED({!$Record.Assigned_OS__c}),
+ISCHANGED({!$Record.AssignedPartnerManager__c})
+)
+)</filterFormula>
+        <object>Handover__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

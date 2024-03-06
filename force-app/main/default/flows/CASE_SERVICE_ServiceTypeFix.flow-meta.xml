@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <assignments>
+        <name>Set_Case_Service_Topic</name>
+        <label>Set Case Service Topic</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forCaseServiceType</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Corrects Type value from &apos;Screening And Application&apos; to &apos;Screening &amp; Application&apos;.
+*To be deprecated after BO fix.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>forCaseServiceType</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!$Record.Type}) =&apos;Screening And Application&apos;, &apos;Screening &amp; Application&apos;,TEXT({!$Record.Type}))</expression>
+    </formulas>
+    <interviewLabel>CASE_SERVICE_ServiceTypeFix {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CASE_SERVICE_ServiceTypeFix</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_Case_Service_Topic</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Screening And Application</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

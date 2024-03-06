@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <name>pageNamesInOrder_Assignment</name>
+        <label>pageNamesInOrder_Assignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>pageNamesInOrder</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>welcome_page</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>pageNamesInOrder</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>p_a877607b_5321_4f10_9e5b_e0931858adb5</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>pageNamesInOrder</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>thank_you_page</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>welcome_page</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <name>c_0e52b6f4_19b4_46b6_abfb_801d82f229a4</name>
+        <choiceText>Synchronizing your Calendar with Salesforce, to create planned events/reminders from Salesforce or vice versa</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Synchronizing your Calendar with Salesforce, to create planned events/reminders from Salesforce or vice versa</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_10bbd4e0_8721_4c22_94eb_9d54ca9d0600</name>
+        <choiceText>Synchronizing contacts with Linkedin profiles to be notified of merchant&apos;s news</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Synchronizing contacts with Linkedin profiles to be notified of merchant&apos;s news</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_11ae8a8a_743c_47d9_9554_3555ad0b2cef</name>
+        <choiceText>In-person training / refresher training with my local team</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>In-person training / refresher training with my local team</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_14cac8da_1a70_4e1f_944d_6cd5e55a04fc</name>
+        <choiceText>Everyday</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Everyday</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_162cb8b7_8975_44f0_9006_96ad595d9e0d</name>
+        <choiceText>4</choiceText>
+        <dataType>Number</dataType>
+        <value>
+            <numberValue>4.0</numberValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_1a1fd4a7_e634_42cf_bf5f_f6028c38c8f8</name>
+        <choiceText>4</choiceText>
+        <dataType>Number</dataType>
+        <value>
+            <numberValue>4.0</numberValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_2f601cea_0142_4f9b_aadf_59485ec32b17</name>
+        <choiceText>Love it</choiceText>
+        <dataType>Number</dataType>
+        <value>
+            <numberValue>5.0</numberValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_3416002c_0f2c_45b4_be9a_4b2f6a9d6a79</name>
+        <choiceText>Synchronizing volumes and margins with billing data</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Synchronizing volumes and margins with billing data</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_3955b699_1212_4488_9d74_6af74268e0c7</name>
+        <choiceText>I often run into errors when trying to update things</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>I often run into errors when trying to update things</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_458867df_e315_42a8_911f_e9e9a41163fe</name>
+        <choiceText>Having suggestions of commercial material to use (useful keynotes, merchant stories...) depending on the opportunity type</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Having suggestions of commercial material to use (useful keynotes, merchant stories...) depending on the opportunity type</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_4a6f20f5_a250_4660_9e2d_cdc9b9335323</name>
+        <choiceText>EMEA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>EMEA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_4b32ee0b_f2d1_4646_a951_8c1348966d10</name>
+        <choiceText>Customer Success Manager</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Customer Success Manager</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_4bf63310_25fe_415d_820e_4e4c004e4d25</name>
+        <choiceText>Less than a year</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Less than a year</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_4cd793e0_0355_455b_b379_4d503d050dd9</name>
+        <choiceText>Here and there</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Here and there</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_53ac595e_3194_461a_865e_6573898abbcf</name>
+        <choiceText>2</choiceText>
+        <dataType>Number</dataType>
+        <value>
+            <numberValue>2.0</numberValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_53ee43eb_9864_4df6_a968_b3cb8fe6713d</name>
+        <choiceText>Expert</choiceText>
+        <dataType>Number</dataType>
+        <value>
+            <numberValue>5.0</numberValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_5dcdbc62_c9df_44bc_8eb8_e05ec39a25b4</name>
+        <choiceText>To log merchant demand for new products</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>To log merchant demand for new products</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_6ea3ff8e_f60b_42f7_9edf_bda2f1976e3e</name>
+        <choiceText>Snapshot view of all deployed terminals / pending forecast on the account</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Snapshot view of all deployed terminals / pending forecast on the account</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_71bbbfa7_201a_4254_95c7_2b9eca0babd2</name>
+        <choiceText>Account Manager</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Account Manager</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_7276b941_86ed_49c3_b372_29ebb5136f74</name>
+        <choiceText>Too much manual work to update</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Too much manual work to update</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_7b5f3568_c850_4d67_9bd3_3b611b5712f3</name>
+        <choiceText>More than 3 years</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>More than 3 years</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_7bd6bb44_e195_4730_a8d2_9adcef730c9c</name>
+        <choiceText>I don&apos;t get enough automatic reminders (e.g. to update go-live dates)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>I don&apos;t get enough automatic reminders (e.g. to update go-live dates)</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_81c42412_fd84_427d_b0a1_4bdd2d39e0eb</name>
+        <choiceText>MyTrailHead self-service online trainings</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>MyTrailHead self-service online trainings</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_81c69c38_95b9_428b_9c56_65e1533e4c45</name>
+        <choiceText>To keep track of merchant contacts</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>To keep track of merchant contacts</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_84213e87_1a79_4157_ba08_d94da5d6a827</name>
+        <choiceText>2</choiceText>
+        <dataType>Number</dataType>
+        <value>
+            <numberValue>2.0</numberValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_84a31c6e_3b37_45ad_93af_4f9597be9adb</name>
+        <choiceText>To keep track of my goals and claim them</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>To keep track of my goals and claim them</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_8c5eb207_24cb_427d_a946_a7e38d65ac67</name>
+        <choiceText>Latin America</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Latin America</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_8ee842f6_5307_4509_9755_305996955b2c</name>
+        <choiceText>Creating a merchant&apos;s contacts map based on hierarchy, influence, opinion about Adyen based on NPS history...</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Creating a merchant&apos;s contacts map based on hierarchy, influence, opinion about Adyen based on NPS history...</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_a0621042_9556_4fd3_8954_a80bd392c502</name>
+        <choiceText>Beginner</choiceText>
+        <dataType>Number</dataType>
+        <value>
+            <numberValue>1.0</numberValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_a5270642_d4d1_40ca_9aeb_06f7aeb6d18c</name>
+        <choiceText>To plan my own commercial activity and work strategically</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>To plan my own commercial activity and work strategically</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_a8afd6ab_58fe_4a6b_bf65_224e0d2deebd</name>
+        <choiceText>To forecast my merchant&apos;s POS terminals orders</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>To forecast my merchant&apos;s POS terminals orders</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_b04ccaaa_aa03_4d0b_a15e_0bc8b566e1ef</name>
+        <choiceText>To know what others are working on</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>To know what others are working on</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_b27309f1_fdd4_4786_a6a6_727a96648e4a</name>
+        <choiceText>a Zoom webinar</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>a Zoom webinar</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_b54c14a6_3948_47e1_8f81_c84b222c1f62</name>
+        <choiceText>3</choiceText>
+        <dataType>Number</dataType>
+        <value>
+            <numberValue>3.0</numberValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_b64013c2_dac0_4d65_9fee_289e17b66ae8</name>
+        <choiceText>Using the iOS / Android app version</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Using the iOS / Android app version</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_b75d20f9_386f_4699_93b5_784af3596018</name>
+        <choiceText>A monthly newsletter</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>A monthly newsletter</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_be8cc4e1_0a5f_4004_b5c2_d699279bdf78</name>
+        <choiceText>Having an automatic margin calculator on an opportunity</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Having an automatic margin calculator on an opportunity</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_c08353b6_e907_4516_8d80_023552945f60</name>
+        <choiceText>I don&apos;t really need it to organize myself - if you tick this box please type how you do it under &amp;quot;Other&amp;quot;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>I don&apos;t really need it to organize myself - if you tick this box please type how you do it under &quot;Other&quot;</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_c0d4dc56_b674_4f6a_836a_e2d4b1effa50</name>
+        <choiceText>Keeping your meeting notes in Calendar / Synchronizing Notes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Keeping your meeting notes in Calendar / Synchronizing Notes</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_c1015550_832b_4053_bd10_6988fc37aab1</name>
+        <choiceText>Once a week</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Once a week</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_c72985fe_1cc3_4c90_a5df_5c8e6fc9b13c</name>
+        <choiceText>Keeping a record of &amp;quot;account milestones&amp;quot; to highlight what has happened in the merchant&apos;s lifecycle</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Keeping a record of &quot;account milestones&quot; to highlight what has happened in the merchant&apos;s lifecycle</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_ca219355_8e29_435c_bed7_6b97132c6590</name>
+        <choiceText>Not enough dashboards to help me know how i&apos;m doing</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Not enough dashboards to help me know how i&apos;m doing</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_d6ee024e_3656_4caf_98fb_721d51c358f3</name>
+        <choiceText>Getting alerts about my team&apos;s go lives</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Getting alerts about my team&apos;s go lives</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_d8de91ea_ad47_4d81_9ae6_1470fd9850ab</name>
+        <choiceText>Too many fields, the interface should be simplified</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Too many fields, the interface should be simplified</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_dcd00b55_fb94_4246_88d5_a3fd630e1dcc</name>
+        <choiceText>Try to avoid it</choiceText>
+        <dataType>Number</dataType>
+        <value>
+            <numberValue>1.0</numberValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_e0bd63c1_cf97_46d3_b77d_af16f07b2df9</name>
+        <choiceText>Team Lead / Head of Region</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Team Lead / Head of Region</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_e9c78011_b797_4bc2_af3e_d7d90bb54ede</name>
+        <choiceText>Between 1 and 3 years</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Between 1 and 3 years</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_e9eea0f2_4c91_49ff_9705_971044e6335e</name>
+        <choiceText>3</choiceText>
+        <dataType>Number</dataType>
+        <value>
+            <numberValue>3.0</numberValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_ec8648b1_b136_4498_aed5_a551316643f3</name>
+        <choiceText>To report to my manager</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>To report to my manager</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_f0280eda_0853_4f05_8af1_aaeab275d881</name>
+        <choiceText>North America</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>North America</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>c_f1c1341e_a3a2_44fa_9453_38ecdc9c4ea4</name>
+        <choiceText>APAC</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>APAC</stringValue>
+        </value>
+    </choices>
+    <interviewLabel>Salesforce Feedback</interviewLabel>
+    <label>Salesforce Feedback</label>
+    <processMetadataValues>
+        <name>BrandingSet</name>
+        <value>
+            <stringValue>sb_salesforce_feedback_2_ae30121e_0599_4baa_a9c6_b882ac03bdf9</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>advanceThankYouPageEnabled</name>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>autoProgressEnabled</name>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>hasWelcomePage</name>
+        <value>
+            <booleanValue>true</booleanValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>overrideActiveVersion</name>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </processMetadataValues>
+    <processType>Survey</processType>
+    <screens>
+        <name>p_a877607b_5321_4f10_9e5b_e0931858adb5</name>
+        <label>Questions</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <processMetadataValues>
+                <name>autoProgressAction</name>
+                <value>
+                    <stringValue>NONE</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>q_cf0c1dae_cafd_447d_8617_59cd1e5f97d5</name>
+            <choiceReferences>c_71bbbfa7_201a_4254_95c7_2b9eca0babd2</choiceReferences>
+            <choiceReferences>c_4b32ee0b_f2d1_4646_a951_8c1348966d10</choiceReferences>
+            <choiceReferences>c_e0bd63c1_cf97_46d3_b77d_af16f07b2df9</choiceReferences>
+            <dataType>String</dataType>
+            <extensionName>survey:runtimePicklist</extensionName>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;What is yo&lt;span class=&quot;ql-cursor&quot;&gt;&lt;/span&gt;ur role?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>ComponentChoice</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <processMetadataValues>
+                <name>autoProgressAction</name>
+                <value>
+                    <stringValue>NONE</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>q_e391c3db_cdf4_4f3a_83d7_d8bffa862b6b</name>
+            <choiceReferences>c_f1c1341e_a3a2_44fa_9453_38ecdc9c4ea4</choiceReferences>
+            <choiceReferences>c_4a6f20f5_a250_4660_9e2d_cdc9b9335323</choiceReferences>
+            <choiceReferences>c_8c5eb207_24cb_427d_a946_a7e38d65ac67</choiceReferences>
+            <choiceReferences>c_f0280eda_0853_4f05_8af1_aaeab275d881</choiceReferences>
+            <dataType>String</dataType>
+            <extensionName>survey:runtimePicklist</extensionName>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;In which region are you based?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>ComponentChoice</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <processMetadataValues>
+                <name>autoProgressAction</name>
+                <value>
+                    <stringValue>NONE</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>q_1af59ab9_f919_4b9d_8620_27f000a8f8f4</name>
+            <choiceReferences>c_4bf63310_25fe_415d_820e_4e4c004e4d25</choiceReferences>
+            <choiceReferences>c_e9c78011_b797_4bc2_af3e_d7d90bb54ede</choiceReferences>
+            <choiceReferences>c_7b5f3568_c850_4d67_9bd3_3b611b5712f3</choiceReferences>
+            <dataType>String</dataType>
+            <extensionName>survey:runtimePicklist</extensionName>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;How long have you been working at Ady&lt;span class=&quot;ql-cursor&quot;&gt;&lt;/span&gt;en?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>ComponentChoice</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <processMetadataValues>
+                <name>autoProgressAction</name>
+                <value>
+                    <stringValue>NONE</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>defaultValue</name>
+                <value>
+                    <elementReference>var_q_79119eab_5aff_490b_a942_6839c74b7afb_defaultValue</elementReference>
+                </value>
+            </processMetadataValues>
+            <name>q_79119eab_5aff_490b_a942_6839c74b7afb</name>
+            <choiceReferences>c_a0621042_9556_4fd3_8954_a80bd392c502</choiceReferences>
+            <choiceReferences>c_53ac595e_3194_461a_865e_6573898abbcf</choiceReferences>
+            <choiceReferences>c_e9eea0f2_4c91_49ff_9705_971044e6335e</choiceReferences>
+            <choiceReferences>c_1a1fd4a7_e634_42cf_bf5f_f6028c38c8f8</choiceReferences>
+            <choiceReferences>c_53ee43eb_9864_4df6_a968_b3cb8fe6713d</choiceReferences>
+            <dataType>Number</dataType>
+            <extensionName>survey:runtimeRating</extensionName>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: &amp;quot;Google Sans&amp;quot;, Roboto, Helvetica, Arial, sans-serif; font-size: 14px;&quot;&gt;What is your level of experience wit&lt;span class=&quot;ql-cursor&quot;&gt;&lt;/span&gt;h Salesforce?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>ComponentChoice</fieldType>
+            <isRequired>false</isRequired>
+            <scale>0</scale>
+        </fields>
+        <fields>
+            <processMetadataValues>
+                <name>autoProgressAction</name>
+                <value>
+                    <stringValue>NONE</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>defaultValue</name>
+                <value>
+                    <elementReference>var_q_e7c53b66_3b08_4f18_bf6c_72b514a09d62_defaultValue</elementReference>
+                </value>
+            </processMetadataValues>
+            <name>q_e7c53b66_3b08_4f18_bf6c_72b514a09d62</name>
+            <choiceReferences>c_dcd00b55_fb94_4246_88d5_a3fd630e1dcc</choiceReferences>
+            <choiceReferences>c_84213e87_1a79_4157_ba08_d94da5d6a827</choiceReferences>
+            <choiceReferences>c_b54c14a6_3948_47e1_8f81_c84b222c1f62</choiceReferences>
+            <choiceReferences>c_162cb8b7_8975_44f0_9006_96ad595d9e0d</choiceReferences>
+            <choiceReferences>c_2f601cea_0142_4f9b_aadf_59485ec32b17</choiceReferences>
+            <dataType>Number</dataType>
+            <extensionName>survey:runtimeRating</extensionName>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: &amp;quot;Google Sans&amp;quot;, Roboto, Helvetica, Arial, sans-serif; font-size: 14px;&quot;&gt;How would you describe your perception of Salesforce as a comm&lt;span class=&quot;ql-cursor&quot;&gt;&lt;/span&gt;ercial tool?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>ComponentChoice</fieldType>
+            <isRequired>false</isRequired>
+            <scale>0</scale>
+        </fields>
+        <fields>
+            <processMetadataValues>
+                <name>autoProgressAction</name>
+                <value>
+                    <stringValue>NONE</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>q_caa6143e_9f82_4b10_8734_3cdc8bf907a8</name>
+            <choiceReferences>c_c1015550_832b_4053_bd10_6988fc37aab1</choiceReferences>
+            <choiceReferences>c_14cac8da_1a70_4e1f_944d_6cd5e55a04fc</choiceReferences>
+            <choiceReferences>c_4cd793e0_0355_455b_b379_4d503d050dd9</choiceReferences>
+            <dataType>String</dataType>
+            <extensionName>survey:runtimeRadioButton</extensionName>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: &amp;quot;Google Sans&amp;quot;, Roboto, Helvetica, Arial, sans-serif; font-size: 14px;&quot;&gt;How often do you use &lt;span class=&quot;ql-cursor&quot;&gt;&lt;/span&gt;Salesforce?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>ComponentChoice</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <processMetadataValues>
+                <name>autoProgressAction</name>
+                <value>
+                    <stringValue>NONE</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>q_25d96321_d4f0_4df7_b0d4_ebd63d1565f5</name>
+            <choiceReferences>c_ec8648b1_b136_4498_aed5_a551316643f3</choiceReferences>
+            <choiceReferences>c_a5270642_d4d1_40ca_9aeb_06f7aeb6d18c</choiceReferences>
+            <choiceReferences>c_b04ccaaa_aa03_4d0b_a15e_0bc8b566e1ef</choiceReferences>
+            <choiceReferences>c_81c69c38_95b9_428b_9c56_65e1533e4c45</choiceReferences>
+            <choiceReferences>c_5dcdbc62_c9df_44bc_8eb8_e05ec39a25b4</choiceReferences>
+            <choiceReferences>c_a8afd6ab_58fe_4a6b_bf65_224e0d2deebd</choiceReferences>
+            <choiceReferences>c_84a31c6e_3b37_45ad_93af_4f9597be9adb</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: &amp;quot;Google Sans&amp;quot;, Roboto, Helvetica, Arial, sans-serif;&quot;&gt;What do you find Salesforce useful for? (multiple choice)&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>MultiSelectCheckboxes</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <processMetadataValues>
+                <name>autoProgressAction</name>
+                <value>
+                    <stringValue>NONE</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>q_d73b7ba3_73b5_4afa_85f1_8c590c59515d</name>
+            <dataType>String</dataType>
+            <fieldText>&lt;p&gt;If you have other use cases add here:&lt;/p&gt;</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <processMetadataValues>
+                <name>autoProgressAction</name>
+                <value>
+                    <stringValue>NONE</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>q_80c7b85a_9f82_48af_b79b_a1d61c373674</name>
+            <choiceReferences>c_7276b941_86ed_49c3_b372_29ebb5136f74</choiceReferences>
+            <choiceReferences>c_d8de91ea_ad47_4d81_9ae6_1470fd9850ab</choiceReferences>
+            <choiceReferences>c_ca219355_8e29_435c_bed7_6b97132c6590</choiceReferences>
+            <choiceReferences>c_3955b699_1212_4488_9d74_6af74268e0c7</choiceReferences>
+            <choiceReferences>c_c08353b6_e907_4516_8d80_023552945f60</choiceReferences>
+            <choiceReferences>c_7bd6bb44_e195_4730_a8d2_9adcef730c9c</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: &amp;quot;Google Sans&amp;quot;, Roboto, Helvetica, Arial, sans-serif;&quot;&gt;On the other hand, what are your main pain points with Salesforce? Be creative and constructive.&lt;/span&gt;&lt;strong style=&quot;font-family: &amp;quot;Google Sans&amp;quot;, Roboto, Helvetica, Arial, sans-serif;&quot;&gt; &lt;/strong&gt;&lt;span style=&quot;font-family: &amp;quot;Google Sans&amp;quot;, Roboto, Helvetica, Arial, sans-serif;&quot;&gt;(multiple choice)&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>MultiSelectCheckboxes</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <processMetadataValues>
+                <name>autoProgressAction</name>
+                <value>
+                    <stringValue>NONE</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>q_d0287f59_1b63_4bf1_b7e0_bf0670db1bcd</name>
+            <dataType>String</dataType>
+            <fieldText>&lt;p&gt;If you have other pain points  add below:&lt;/p&gt;</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <processMetadataValues>
+                <name>autoProgressAction</name>
+                <value>
+                    <stringValue>NONE</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>q_35e1d136_0c27_4700_bf84_a82a7a338114</name>
+            <choiceReferences>c_81c42412_fd84_427d_b0a1_4bdd2d39e0eb</choiceReferences>
+            <choiceReferences>c_b75d20f9_386f_4699_93b5_784af3596018</choiceReferences>
+            <choiceReferences>c_11ae8a8a_743c_47d9_9554_3555ad0b2cef</choiceReferences>
+            <choiceReferences>c_b27309f1_fdd4_4786_a6a6_727a96648e4a</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: &amp;quot;Google Sans&amp;quot;, Roboto, Helvetica, Arial, sans-serif;&quot;&gt;What is your preferred way of learning about our new Salesforce features?&lt;/span&gt;&lt;strong style=&quot;font-family: &amp;quot;Google Sans&amp;quot;, Roboto, Helvetica, Arial, sans-serif;&quot;&gt; &lt;/strong&gt;&lt;span style=&quot;font-family: &amp;quot;Google Sans&amp;quot;, Roboto, Helvetica, Arial, sans-serif;&quot;&gt;(multiple choice)&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>MultiSelectCheckboxes</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <processMetadataValues>
+                <name>autoProgressAction</name>
+                <value>
+                    <stringValue>NONE</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>q_93c1ceac_c8f8_474f_83b7_08ac24e26fbb</name>
+            <dataType>String</dataType>
+            <fieldText>&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;&lt;/span&gt;Add any other ideas here:&lt;/p&gt;</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <processMetadataValues>
+                <name>autoProgressAction</name>
+                <value>
+                    <stringValue>NONE</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>q_a56bdf82_e708_474d_a583_28cf32c6165f</name>
+            <choiceReferences>c_0e52b6f4_19b4_46b6_abfb_801d82f229a4</choiceReferences>
+            <choiceReferences>c_c0d4dc56_b674_4f6a_836a_e2d4b1effa50</choiceReferences>
+            <choiceReferences>c_be8cc4e1_0a5f_4004_b5c2_d699279bdf78</choiceReferences>
+            <choiceReferences>c_458867df_e315_42a8_911f_e9e9a41163fe</choiceReferences>
+            <choiceReferences>c_8ee842f6_5307_4509_9755_305996955b2c</choiceReferences>
+            <choiceReferences>c_10bbd4e0_8721_4c22_94eb_9d54ca9d0600</choiceReferences>
+            <choiceReferences>c_d6ee024e_3656_4caf_98fb_721d51c358f3</choiceReferences>
+            <choiceReferences>c_3416002c_0f2c_45b4_be9a_4b2f6a9d6a79</choiceReferences>
+            <choiceReferences>c_c72985fe_1cc3_4c90_a5df_5c8e6fc9b13c</choiceReferences>
+            <choiceReferences>c_b64013c2_dac0_4d65_9fee_289e17b66ae8</choiceReferences>
+            <choiceReferences>c_6ea3ff8e_f60b_42f7_9edf_bda2f1976e3e</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;&lt;/span&gt;&lt;span style=&quot;font-family: &amp;quot;Google Sans&amp;quot;, Roboto, Helvetica, Arial, sans-serif;&quot;&gt;We can still add a lot of new features to Salesforce. Which of the following would you find useful? (multiple choice)&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>MultiSelectCheckboxes</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <processMetadataValues>
+                <name>autoProgressAction</name>
+                <value>
+                    <stringValue>NONE</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>q_f806315b_1611_4f9f_ba7f_ea91951a0afd</name>
+            <dataType>String</dataType>
+            <fieldText>&lt;p&gt;Add any other ideas here:&lt;/p&gt;</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <pausedText>To pick up where you left off, refresh this page, or open the survey again.</pausedText>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>welcome_page</name>
+        <label>Welcome Page</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>p_a877607b_5321_4f10_9e5b_e0931858adb5</targetReference>
+        </connector>
+        <fields>
+            <name>welcome_question</name>
+            <extensionName>survey:runtimeWelcome</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>{!welcome_question_lref_tt}</stringValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <startElementReference>pageNamesInOrder_Assignment</startElementReference>
+    <status>Active</status>
+    <textTemplates>
+        <name>thankYouDescriptionTextTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text></text>
+    </textTemplates>
+    <textTemplates>
+        <name>thankYouLabelTextTemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong&gt;Thanks for filling out the surve&lt;span class=&quot;ql-cursor&quot;&gt;&lt;/span&gt;y! We will make sure to iterate based on your feedback!&lt;/strong&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>welcome_question_lref_tt</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;As Adyen keeps growing, it is becoming more and more important for us to improve the way we &lt;/span&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;plan&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;, &lt;/span&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;collaborate&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; and &lt;/span&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;share strategic information&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; about our merchants, and &lt;/span&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Salesforce&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; plays a &lt;/span&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;key role&lt;/strong&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt; in this.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;To help us get there, please fill out this short survey.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Won&apos;t take more than 5 minutes!&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <name>guestUserLang</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>invitationId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>pageNamesInOrder</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>previewMode</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>thankYouDescription</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>{!thankYouDescriptionTextTemplate}</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>thankYouLabel</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue>{!thankYouLabelTextTemplate}</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>var_q_79119eab_5aff_490b_a942_6839c74b7afb_defaultValue</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>var_q_e7c53b66_3b08_4f18_bf6c_72b514a09d62_defaultValue</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

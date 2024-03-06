@@ -1,0 +1,5 @@
+<design:component label='Share of Wallet Summary'>
+	<sfdc:objects>
+        <sfdc:object>AccountPlan__c</sfdc:object>
+    </sfdc:objects>
+</design:component>

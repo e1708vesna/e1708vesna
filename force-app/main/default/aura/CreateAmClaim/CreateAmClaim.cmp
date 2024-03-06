@@ -1,0 +1,9 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,lightning:actionOverride,force:lightningQuickAction" access="global" >
+	<aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+    <div style="margin-bottom:40px;"><!--Utility bar has a height of 40px-->
+        <lightning:flow aura:id="flowData" />
+    </div>
+    <div style="height:1px"> <!--Need a dummy element to get the marging-bottom to render-->
+    </div>
+</aura:component>

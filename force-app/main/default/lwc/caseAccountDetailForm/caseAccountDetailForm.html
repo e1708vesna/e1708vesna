@@ -1,0 +1,17 @@
+<template lwc:render-mode="light">
+    <lightning-card variant="base" icon-name="standard:account" title={title}>
+        <div class="slds-card__body slds-card__body--inner">
+            <div lwc:if={accountId}>
+                <lightning-record-view-form object-api-name="Account" record-id={accountId} density="auto">
+                    <lightning-output-field field-name={businessAsUsualField}> </lightning-output-field>
+                </lightning-record-view-form>
+            </div>
+            <div lwc:else>
+                {label.NoAccountLinkedLabel}
+            </div>
+            <div class="error-message" lwc:if={errors}>
+                {errors}
+            </div>
+        </div>
+    </lightning-card>
+</template>

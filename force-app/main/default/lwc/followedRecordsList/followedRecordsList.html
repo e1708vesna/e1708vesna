@@ -1,0 +1,165 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-card class="empty-state-card">
+        <!-- Initial Loading Spinner -->
+        <template if:true={loading}>
+            <div class="spinnerWrapper">
+                <lightning-spinner variant="brand" alternative-text="Loading"></lightning-spinner>
+            </div>
+        </template>
+        <!-- Object Type Selection -->
+        <template if:false={loading}>
+            <template if:false={objectType}>
+                <div class="slds-p-around_medium">
+                    <p>{label.followedRecordsObjectSelection}</p>
+                    <lightning-combobox name="objectType"
+                                        label-when-hidden="Select Object Type"
+                                        variant="label-hidden"
+                                        placeholder="Select Object..."
+                                        value={objectType}
+                                        options={objectOptions}
+                                        onchange={handleObjectTypeChange}>
+                    </lightning-combobox>
+                </div>
+                <div class="slds-grid slds-grid_align-end slds-m-bottom_xx-small">
+                    <div class="slds-col slds-align_absolute-center">
+                        <lightning-button-icon icon-name="utility:refresh" 
+                                               alternative-text="Refresh" 
+                                               title="Refresh" 
+                                               tooltip="Refresh" 
+                                               class="refresh-button-empty-state" 
+                                               onclick={handleRefresh}>
+                        </lightning-button-icon>
+                    </div>
+                </div>
+            </template>
+            <!-- Display Controls when Object Type is Selected -->
+            <template if:true={showControls}>
+                <!-- Approaching Limit Warning -->
+                <template if:true={isApproachingLimit}>
+                    <div class="slds-grid slds-wrap slds-grid_vertical-align-center slds-p-horizontal_medium slds-p-vertical_small slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning" role="alert">
+                        <p>{label.followedRecordsApproachingLimit} {totalFollowedRecordsCount}.</p>
+                    </div>
+                </template>
+                <!-- Limit Approached Warning -->
+                <template if:true={isLimitApproached}>
+                    <div class="slds-grid slds-wrap slds-grid_vertical-align-center slds-p-horizontal_medium slds-p-vertical_small slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="alert">
+                        <p>{label.followedRecordsLimit}</p>
+                    </div>
+                </template>
+                <!-- Object Type Selection, Search Bar, Bulk Unfollow, and Refresh Button -->
+                <div class="slds-grid slds-wrap slds-grid_vertical-align-center slds-p-horizontal_medium slds-p-vertical_small">
+                    <!-- Combo Box with Helptext and Search Bar -->
+                    <div class="slds-col slds-size_4-of-5">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_2-of-5 combo-box-container">
+                                <lightning-helptext content="Select Object" class="slds-m-right_xx-small"></lightning-helptext>
+                                <lightning-combobox class="custom-combo-input"
+                                                    name="objectType"
+                                                    label-when-hidden="Select Object Type"
+                                                    variant="label-hidden"
+                                                    value={objectType}
+                                                    options={objectOptions}
+                                                    onchange={handleObjectTypeChange}>
+                                </lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-size_3-of-5 search-bar-container">
+                                <lightning-helptext content="Search records" class="slds-m-right_xx-small"></lightning-helptext>
+                                <lightning-input class="custom-search-input"
+                                                 type="search"
+                                                 name="search"
+                                                 label-when-hidden="Search"
+                                                 variant="label-hidden"
+                                                 placeholder="Search"
+                                                 value={searchKeyword}
+                                                 onchange={handleSearchChange}
+                                                 onkeydown={handleSearchKeydown}
+                                                 onsearch={refreshData}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Bulk Unfollow Button & Refresh Button -->
+                    <div class="slds-col slds-size_1-of-5 button-container">
+                        <lightning-button class="custom-bulk-unfollow"
+                                          label="Bulk Unfollow"
+                                          onclick={handleBulkUnfollow}
+                                          variant="brand"
+                                          disabled={isBulkUnfollowDisabled}>
+                        </lightning-button>
+                        <lightning-button-icon icon-name="utility:refresh" 
+                                               alternative-text="Refresh" 
+                                               title="Refresh" 
+                                               tooltip="Refresh" 
+                                               class="refresh-button" 
+                                               onclick={handleRefresh}>
+                        </lightning-button-icon>
+                    </div>  
+                </div>
+            </template>
+            <!-- Datatable and Loading Spinner for Datatable Section -->
+            <template if:true={isDatatableLoaded}>
+                <div class="spinnerWrapper">
+                    <lightning-spinner variant="brand" alternative-text="Loading"></lightning-spinner>
+                </div>
+            </template>
+            <template if:false={isDatatableLoaded}>
+                <template if:true={followedRecords.length}>
+                    <div class="slds-grid slds-wrap slds-grid_vertical-align-center slds-p-horizontal_medium slds-p-vertical_small">
+                        <!-- {totalRecordsFollowed} -->
+                        <div class="total-records-container total-records-followed slds-text-heading_medium">
+                            <span>{label.totalRecordsFollowed} {totalRecordsFollowed}</span>
+                            <template if:true={recordMismatchInfo}>
+                                <lightning-helptext content={recordMismatchInfo} class="info-icon"></lightning-helptext>
+                            </template>
+                        </div>
+                        <template lwc:if={errorMsg}>
+                            <div class="text-color-red">{errorMsg}</div>
+                        </template>                                                                                                               
+                        <div class="datatable-container">
+                            <lightning-datatable key-field="id"
+                                                 data={paginatedRecords}
+                                                 columns={columns}
+                                                 onrowselection={handleRowSelection}
+                                                 selection-mode="multiple"
+                                                 onsort={handleSort}
+                                                 sorted-by={sortBy}
+                                                 sorted-direction={sortDirection}
+                                                 show-row-number-column>
+                            </lightning-datatable>
+                        </div>
+                        <!-- Pagination Controls -->
+                        <template if:true={showPaginationControls}>
+                            <div class="pagination-controls">
+                                <lightning-button class="pagination-button" label="First" onclick={handleFirstPage} disabled={isFirstPage}></lightning-button>
+                                <lightning-button class="pagination-button" label="Previous" onclick={handlePreviousPage} disabled={isPrevDisabled}></lightning-button>
+    
+                                <span class="page-number-display">
+                                    Page {currentPage} of {totalPages}
+                                </span>
+    
+                                <lightning-button class="pagination-button" label="Next" onclick={handleNextPage} disabled={isNextDisabled}></lightning-button>
+                                <lightning-button class="pagination-button" label="Last" onclick={handleLastPage} disabled={isLastPage}></lightning-button>
+                            </div>  
+                        </template>                                      
+                    </div>
+                </template>
+                <!-- Conditional rendering for empty state -->
+                <template if:true={noFollowedRecordsFound}>
+                    <c-reusable-empty-state
+                        message-body={label.noFollowedRecords}
+                        image-name="no_data:desert"
+                        image-size="small">
+                    </c-reusable-empty-state>
+                </template>            
+                <template if:true={showNoMatchFound}>
+                    <c-reusable-empty-state 
+                        message-body={label.searchNoMatchFound}
+                        image-name="no_data:desert"
+                        image-size="small">
+                    </c-reusable-empty-state>
+                </template>
+            </template>
+        </template>
+    </lightning-card>
+</template>

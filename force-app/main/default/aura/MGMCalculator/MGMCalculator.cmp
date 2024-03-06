@@ -1,0 +1,96 @@
+<aura:component controller='MGMController' implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:appHostable" access="global" >
+    <aura:attribute name="recordId" type="String" default=""/>
+    <aura:attribute name="shopperInteraction" type="String" default=""/>
+    <aura:attribute name="pillar" type="String" default=""/>
+    
+    <aura:attribute name="errorMessage" type="String" default=""/>
+    <aura:attribute name="loading" type="Boolean" default="True"/>
+    <aura:attribute name="controllerAccess" type="Boolean" default="True"/>
+    <aura:attribute name="currencyIsoCode" type="String" default="EUR"/>
+    <aura:attribute name="returnedCurrencyIsoCode" type="String" default="EUR"/>
+    <aura:attribute name="monthlyProcessingVolume" type="Decimal" default="0"/>
+    
+    
+    <aura:attribute name="ExpectedMonthlyMargin" type="Decimal" default="null"/>
+    
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    <div>
+        <div class="slds-grid slds-wrap">
+            <p style="color: red;">{!v.errorMessage}</p>
+            <aura:if isTrue="{!v.loading}">
+                <div class="exampleHolder">
+                    <lightning:spinner alternativeText="Loading" size="medium"  />
+                </div>
+            </aura:if>
+            <div class="slds-col slds-size_1-of-1">
+                <lightning:select name="shopperInteractionInput" label="Sales Channel" required="true" value="{!v.shopperInteraction}" disabled="{! v.recordId.length > 0 || NOT(v.controllerAccess)}">
+                    <option value="">choose one...</option>
+                    <option value="Adyen for Platforms">Adyen for Platforms</option>
+                    <option value="Ecom">Ecom</option>
+                    <option value="POS">POS</option>
+                    <option value="Mobile">Mobile</option>
+                    <option value="Omnichannel">Omnichannel</option>
+                    <option value="Issuing">Issuing</option>
+                </lightning:select>
+            </div>
+            <div class="slds-col slds-size_1-of-1">
+                <lightning:select name="pillarInput" label="Merchant Core Business Model" required="true" value="{!v.pillar}" disabled="{! v.recordId.length > 0 || NOT(v.controllerAccess)}">
+                    <option value="">choose one...</option>
+                    <option value="Digital">Digital</option>
+                    <option value="Platforms">Platforms</option>
+                    <option value="Unified Commerce">Unified Commerce</option>
+                </lightning:select>
+                
+            </div>
+            
+            <div class="slds-col slds-size_1-of-8">
+                <lightning:select name="CurrencyIsoCode" label="Currency" required="true" value="{!v.currencyIsoCode}" disabled="{! v.recordId.length > 0 || NOT(v.controllerAccess)}">
+                    <option value="AED">AED</option>
+                    <option value="AUD">AUD</option>
+                    <option value="BRL">BRL</option>
+                    <option value="CAD">CAD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="HKD">HKD</option>
+                    <option value="JPY">JPY</option>
+                    <option value="MYR">MYR</option>
+                    <option value="NZD">NZD</option>
+                    <option value="SGD">SGD</option>
+                    <option value="USD">USD</option>
+                </lightning:select>
+                
+            </div>
+            <div class="slds-col slds-size_1-of-8">
+            </div>
+            <div class="slds-col slds-size_6-of-8">
+                <lightning:input disabled="{! v.recordId.length > 0 || NOT(v.controllerAccess)}" type="number" fieldLevelHelp="Average transaction value x number of transaction in a month" name="monthlyProcessingVolumeInput" label="Monthly Processing Volume" value="{!v.monthlyProcessingVolume}" step="0.01"/>
+            </div>
+            <div class="slds-col slds-size_1-of-1">
+                <br/>
+                <span>
+                    <p>
+                        Expected Monthly Gross Margin in 1 Year: <lightning:formattedNumber label="Expected Monthly Gross Margin in 1 Year" value="{!v.ExpectedMonthlyMargin}" style="currency" currencyCode="{!v.returnedCurrencyIsoCode}" />
+                    </p>
+                </span>
+                
+                <br/>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+                <lightning:button disabled="{! NOT(v.controllerAccess)}" variant="Neutral" label="Calculate Expected Monthly Gross Margin" title="Calculate" onclick="{! c.retrieveMargin }"/>
+            </div>
+            
+            
+            <aura:if isTrue="{! v.recordId.length > 0}">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:button variant="Neutral" disabled = "{!v.ExpectedMonthlyMargin == null}" label="Update opportunity" title="Update opportunity" onclick="{! c.saveOpportunity }"/>
+                </div>
+            </aura:if>
+            
+        </div>
+    </div>
+    
+</aura:component>

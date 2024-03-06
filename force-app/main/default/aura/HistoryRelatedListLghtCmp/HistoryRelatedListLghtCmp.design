@@ -1,0 +1,5 @@
+<design:component label="Custom History">
+    <design:attribute name="relatedListLabel" label="Label of Component" description="Label you want the related list to have."/>
+    <design:attribute name="historyType" label="History Type" description="Comma seperated list of HistoryTypes. These types correspond with the ObjectName__c field. Leave blank, or use 'All' if you want to show all history types." />
+    <design:attribute name="includeStandardHistory" label="Include standard Salesforce History" description="Check this if you want to show the Salesforce History in this component.."/>
+</design:component>

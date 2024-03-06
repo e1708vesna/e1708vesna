@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>SubmitMargin</name>
+        <label>Submit Margin</label>
+        <locationX>1106</locationX>
+        <locationY>566</locationY>
+        <actionName>submit</actionName>
+        <actionType>submit</actionType>
+        <connector>
+            <targetReference>ScrMarginSubmitted</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorScreen</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>objectId</name>
+            <value>
+                <elementReference>recordId.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>processDefinitionNameOrId</name>
+            <value>
+                <stringValue>NewMargin</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>57.0</apiVersion>
+    <decisions>
+        <name>decValidateDateAndMargin</name>
+        <label>dec Validate Date and Margin</label>
+        <locationX>710</locationX>
+        <locationY>350</locationY>
+        <defaultConnector>
+            <targetReference>UpdateOpportunity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Correct</defaultConnectorLabel>
+        <rules>
+            <name>BothDateAndMargin</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>NewFullMarginExpectedDate</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>recordId.CloseDate</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NewFullExpectedMonthlyGrossMargin</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>NewExpectedMonthlyGrossMargin</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>ScrEnterNewMargin</targetReference>
+            </connector>
+            <label>Both Date and Margin</label>
+        </rules>
+        <rules>
+            <name>Date</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>NewFullMarginExpectedDate</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>recordId.CloseDate</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>ScrEnterNewMargin</targetReference>
+            </connector>
+            <label>Date</label>
+        </rules>
+        <rules>
+            <name>Margin</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>NewFullExpectedMonthlyGrossMargin</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>NewExpectedMonthlyGrossMargin</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>ScrEnterNewMargin</targetReference>
+            </connector>
+            <label>Margin</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>ManagerAssigned</name>
+        <label>Manager Assigned?</label>
+        <locationX>380</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>ScrEnterNewMargin</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Manager Assigned</defaultConnectorLabel>
+        <rules>
+            <name>NoManagerAssigned</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$User.ManagerId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ScrWarningNoManager</targetReference>
+            </connector>
+            <label>No Manager Assigned</label>
+        </rules>
+    </decisions>
+    <description>DGR 10/7 - Refactor + Date and Margin validations</description>
+    <dynamicChoiceSets>
+        <name>pcsMarginRecoverable</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>MarginRecoverable__c</picklistField>
+        <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>pcsReasonToChangeTheExpectedMargins</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>ReasonToChangeTheExpectedMargin__c</picklistField>
+        <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <interviewLabel>Expected Margin Update {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Screen - Expected Margin Update</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordUpdates>
+        <name>UpdateOpportunity</name>
+        <label>Update Opportunity</label>
+        <locationX>1106</locationX>
+        <locationY>458</locationY>
+        <connector>
+            <targetReference>SubmitMargin</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>ErrorScreen</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>AdditionalInformation__c</field>
+            <value>
+                <elementReference>AdditionalInformation</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Dependencies__c</field>
+            <value>
+                <elementReference>Dependencies</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>MarginRecoverable__c</field>
+            <value>
+                <elementReference>AretheExpectedMarginsstillrecoverable</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NewExpectedMonthlyGrossMargin__c</field>
+            <value>
+                <elementReference>NewExpectedMonthlyGrossMargin</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NewFullExpectedMonthlyGrossMargin__c</field>
+            <value>
+                <elementReference>NewFullExpectedMonthlyGrossMargin</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NewFullMarginExpectedDate__c</field>
+            <value>
+                <elementReference>NewFullMarginExpectedDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ReasonToChangeTheExpectedMargin__c</field>
+            <value>
+                <elementReference>ReasonToChangeTheExpectedMargin</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <screens>
+        <name>ErrorScreen</name>
+        <label>Error Screen</label>
+        <locationX>1634</locationX>
+        <locationY>566</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorText</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Something went wrong during this process due to the following error:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(192, 1, 1); background-color: rgb(255, 255, 255);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Please retry if you understand what went wrong, otherwise reach out to commercialtools@adyen.com.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>ScrEnterNewMargin</name>
+        <label>Enter New Margin</label>
+        <locationX>710</locationX>
+        <locationY>242</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>decValidateDateAndMargin</targetReference>
+        </connector>
+        <fields>
+            <name>ApprovalSubmitionDisclaimer</name>
+            <fieldText>&lt;p&gt;The Expected Monthly Gross Margins can only be changed &lt;strong&gt;once&lt;/strong&gt; and will be submitted for your manager approval!&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>AretheExpectedMarginsstillrecoverable</name>
+            <choiceReferences>pcsMarginRecoverable</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>AretheExpectedMarginsstillrecoverable</elementReference>
+            </defaultValue>
+            <fieldText>Are the Expected Margins still recoverable?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>ReasonToChangeTheExpectedMargin</name>
+            <choiceReferences>pcsReasonToChangeTheExpectedMargins</choiceReferences>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>ReasonToChangeTheExpectedMargin</elementReference>
+            </defaultValue>
+            <fieldText>Reason to change the Expected Margins</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <helpText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Please indicate why the new full Margins (both 12 Month as Full) need to be updated for this specific Opportunity&lt;/span&gt;&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>NewExpectedMonthlyGrossMargin</name>
+            <dataType>Currency</dataType>
+            <defaultValue>
+                <elementReference>NewExpectedMonthlyGrossMargin</elementReference>
+            </defaultValue>
+            <fieldText>New Expected Monthly Gross Margin in 1 Year</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Please indicate what the new Margin 1 year after &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;the&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt; &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;first shopper transaction &lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;could be for this specific Opportunity&lt;/span&gt;&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+            <scale>2</scale>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Oops, we can&apos;t have a deal with no margin, New Expected Monthly Gross Margin in 1 Year should be higher than zero!&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!NewExpectedMonthlyGrossMargin} &gt; 0</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>NewFullExpectedMonthlyGrossMargin</name>
+            <dataType>Currency</dataType>
+            <defaultValue>
+                <elementReference>NewFullExpectedMonthlyGrossMargin</elementReference>
+            </defaultValue>
+            <fieldText>New Total Expected Monthly Gross Margin</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;Please indicate what the new full Margin could be for this specific Opportunity&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+            <scale>2</scale>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;Oops, we can&apos;t have a deal with no margin, &lt;/span&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;New Total Expected Monthly Gross Margin&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt; should be higher than zero!&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>{!NewFullExpectedMonthlyGrossMargin} &gt; 0</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>dtValidationMargin</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(255, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;New Total Expected Monthly Gross Margin &lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(255, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;should be equal to or greater then New Expected Monthly Gross Margin&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 OR 2</conditionLogic>
+                <conditions>
+                    <leftValueReference>BothDateAndMargin</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Margin</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>dtCurrentExpectedFirstTransactionDate</name>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Current Expected First Transaction Date: {!recordId.CloseDate}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NewFullMarginExpectedDate</name>
+            <dataType>Date</dataType>
+            <defaultValue>
+                <elementReference>NewFullMarginExpectedDate</elementReference>
+            </defaultValue>
+            <fieldText>New Total Margin Expected Date</fieldText>
+            <fieldType>InputField</fieldType>
+            <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Please indicate when the new full Margin could be reached for this specific Opportunity&lt;/span&gt;&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>dtValidationDate</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;New Total Margin Expected Date&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;should be equal to or greater then ﻿Expected First Transaction Date&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 OR 2</conditionLogic>
+                <conditions>
+                    <leftValueReference>BothDateAndMargin</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Date</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Dependencies</name>
+            <defaultValue>
+                <stringValue>{!Dependencies}</stringValue>
+            </defaultValue>
+            <fieldText>Dependencies</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <helpText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Please indicate whether there are any dependencies to reach the new set Expected Margins&lt;/span&gt;&lt;/p&gt;</helpText>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>AdditionalInformation</name>
+            <defaultValue>
+                <stringValue>{!AdditionalInformation}</stringValue>
+            </defaultValue>
+            <fieldText>Additional Information</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <helpText>&lt;p&gt;Please provide any additional information on why the Expected Margins need to be updated&lt;/p&gt;</helpText>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>ScrMarginSubmitted</name>
+        <label>Margin Submitted</label>
+        <locationX>1106</locationX>
+        <locationY>674</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>MarginSubmitted</name>
+            <fieldText>&lt;p&gt;Your Expected Margins change request was submitted!&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Your Manager was notified and will approve/reject soon.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;You can always check the current status or recall your change request from the from the &lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;&lt;em&gt;Approval History&lt;/em&gt;&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt; in your &lt;/span&gt;Opportunity &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Related List Quick Links &lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>ScrWarningNoManager</name>
+        <label>Warning No Manager</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>NoManagerAssignedYet</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0); font-size: 14px;&quot;&gt;No Manager Found&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Unfortunately, we could not find an active manager for your user in Salesforce. You are only allowed to start this process if you have an active manager in Salesforce. Please reach out to&amp;nbsp;&lt;/span&gt;&lt;a href=&quot;mailto:commercialtools@adyen.com&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 12px; color: rgb(2, 169, 219); background-color: rgb(255, 255, 255);&quot;&gt;commercialtools@adyen.com&lt;/a&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;&amp;nbsp;to set an active manager for your user.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>254</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>ManagerAssigned</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+</Flow>

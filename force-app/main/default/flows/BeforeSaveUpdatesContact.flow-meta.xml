@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <assignments>
+        <name>AssignBcFields</name>
+        <label>Assign BC Fields</label>
+        <locationX>314</locationX>
+        <locationY>995</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.InitialLeadSource__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Referral</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Initial_Lead_Source_Detail__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Partner</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.InitialPartnerSource__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>BigCommerce</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CurrentLeadSource__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Referral</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Current_Lead_Source_Detail__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Partner</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.PartnerSource__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>BigCommerce</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.LastPointOfEntry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>BigCommerce self onboarding</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IsLastPointOfEntryUpdated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>CommercialOperationalType</name>
+        <label>Commercial &amp; Operational Type</label>
+        <locationX>578</locationX>
+        <locationY>2195</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CommercialContact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.OperationalContact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NPSUpdateRequired</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>CommercialType</name>
+        <label>Commercial Type</label>
+        <locationX>50</locationX>
+        <locationY>2195</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CommercialContact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.OperationalContact__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>NPSUpdateRequired</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>OperationalType</name>
+        <label>Operational Type</label>
+        <locationX>314</locationX>
+        <locationY>2195</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OperationalContact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CommercialContact__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>NPSUpdateRequired</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>SetLeadSource</name>
+        <label>Set Lead Source</label>
+        <locationX>314</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Current_Lead_Source_Detail__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forCurrentLeadSourceDetail</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CurrentLeadSource__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forCurrentLeadSource</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Initial_Lead_Source_Detail__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forCurrentLeadSourceDetail</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.InitialLeadSource__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forCurrentLeadSource</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.LastPointOfEntry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forLastPointOfEntry</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NewOrUpdatedPartnerReferralContact</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>SetPartnerReferralContactOwner</name>
+        <label>Set Partner Referral Contact Owner</label>
+        <locationX>314</locationX>
+        <locationY>695</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.PartnerReferralContactOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.PartnerReferralContact__r.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>NewBcContact</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>UpdateMessagesToSales</name>
+        <label>Update Messages to Sales</label>
+        <locationX>314</locationX>
+        <locationY>1595</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.MessagesToSales__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forMessagesToSales</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IsLastUtmArrayUpdated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>UpdatePointsOfEntry</name>
+        <label>Update Points of Entry</label>
+        <locationX>314</locationX>
+        <locationY>1295</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.PointsOfEntry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forPointsOfEntry</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IsMessageToSalesUpdated</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>UpdateTotalUtmArray</name>
+        <label>Update Total UTM Array</label>
+        <locationX>314</locationX>
+        <locationY>1895</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.TotalUTMArray__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forTotalUtmArray</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ContactType</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Decision to verify the field &apos;Contact Type&apos; and fill the lookup fields used to filter the contacts by Commercial, Operational or Both on account level related lists.</description>
+        <name>ContactType</name>
+        <label>Contact Type</label>
+        <locationX>446</locationX>
+        <locationY>2087</locationY>
+        <defaultConnector>
+            <targetReference>NPSUpdateRequired</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Commercial</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ContactType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Commercial</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CommercialType</targetReference>
+            </connector>
+            <label>Commercial</label>
+        </rules>
+        <rules>
+            <name>Operational</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ContactType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Operational</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>OperationalType</targetReference>
+            </connector>
+            <label>Operational</label>
+        </rules>
+        <rules>
+            <name>CommercialOperational</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.ContactType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Commercial &amp; Operational</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CommercialOperationalType</targetReference>
+            </connector>
+            <label>Commercial &amp; Operational</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>IsLastPointOfEntryUpdated</name>
+        <label>Is Last Point Of Entry Updated?</label>
+        <locationX>446</locationX>
+        <locationY>1187</locationY>
+        <defaultConnector>
+            <targetReference>IsMessageToSalesUpdated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>LastPointOfEntryIsUpdated</name>
+            <conditionLogic>(1 AND 3 AND 5) OR (2 AND 4 AND 5)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ConvertedFromLead__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastPointOfEntry__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.LastPointOfEntry__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastPointOfEntry__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdatePointsOfEntry</targetReference>
+            </connector>
+            <label>Last Point of Entry is updated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>IsLastUtmArrayUpdated</name>
+        <label>Is Last UTM Array Updated?</label>
+        <locationX>446</locationX>
+        <locationY>1787</locationY>
+        <defaultConnector>
+            <targetReference>ContactType</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>LastUtmArrayIsUpdated</name>
+            <conditionLogic>(1 AND 3 AND 5) OR (2 AND 4 AND 5)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ConvertedFromLead__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastUTMArray__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.LastUTMArray__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastUTMArray__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateTotalUtmArray</targetReference>
+            </connector>
+            <label>Last UTM Array is updated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>IsMessageToSalesUpdated</name>
+        <label>Is Last Message To Sales Updated?</label>
+        <locationX>446</locationX>
+        <locationY>1487</locationY>
+        <defaultConnector>
+            <targetReference>IsLastUtmArrayUpdated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>LastMessageToSalesIsUpdated</name>
+            <conditionLogic>(1 AND 3 AND 5) OR (2 AND 4 AND 5)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ConvertedFromLead__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastMessageToSales__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.LastMessageToSales__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastMessageToSales__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateMessagesToSales</targetReference>
+            </connector>
+            <label>Last Message to Sales is updated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>IsNewContactCreatedByUser</name>
+        <label>Is New Contact Created By User?</label>
+        <locationX>446</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>NewOrUpdatedPartnerReferralContact</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ContactIsCreatedByInternalUser</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>forCurrentUserProfileName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Adyen v2 Marketo Integration</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>forCurrentUserProfileName</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Adyen v2 Partner Community User</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ConvertedFromLead__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetLeadSource</targetReference>
+            </connector>
+            <label>Contact Is Created By Internal User</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>NewBcContact</name>
+        <label>New BC Contact</label>
+        <locationX>446</locationX>
+        <locationY>887</locationY>
+        <defaultConnector>
+            <targetReference>IsLastPointOfEntryUpdated</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>IsNewBcContact</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Referralby__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>forBigCommerceAccountId</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignBcFields</targetReference>
+            </connector>
+            <label>Is New BC Contact</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>NewOrUpdatedPartnerReferralContact</name>
+        <label>New or Updated Partner Referral Contact?</label>
+        <locationX>446</locationX>
+        <locationY>587</locationY>
+        <defaultConnector>
+            <targetReference>NewBcContact</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesNewOrUpdatedPartnerReferralContact</name>
+            <conditionLogic>(1 AND 2) OR 3</conditionLogic>
+            <conditions>
+                <leftValueReference>forIsNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.PartnerReferralContact__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.PartnerReferralContact__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetPartnerReferralContactOwner</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Decision node moved from After save to Before save flow.</description>
+        <name>NPSUpdateRequired</name>
+        <label>NPS Update Required</label>
+        <locationX>446</locationX>
+        <locationY>2387</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesUpdateNPS</name>
+            <conditionLogic>1 AND (2 OR 3 )</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Eligible_for__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>NPS</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ContactStatus__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No Longer There</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.HasOptedOutOfEmail</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateEligiblefor</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Clear Operational Contact field when Contact Type changes to Commercial Contact and other way round.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>forBigCommerceAccountId</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.BigCommerceAccountId}</expression>
+    </formulas>
+    <formulas>
+        <name>forCurrentLeadSource</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK(TEXT({!$Record.CurrentLeadSource__c}))),TEXT({!$Record.CurrentLeadSource__c}),
+IF(OR({!forCurrentUserProfileName}=&quot;Adyen v2 Partnership&quot;,{!forCurrentUserProfileName}=&quot;Adyen v2 Partnership Lead&quot;),&quot;PM Generated&quot;,
+IF({!forCurrentUserProfileName}=&quot;Adyen v2 Account Manager&quot;,&quot;AM Generated&quot;,
+&quot;Sales Generated&quot;)))</expression>
+    </formulas>
+    <formulas>
+        <name>forCurrentLeadSourceDetail</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK(TEXT({!$Record.CurrentLeadSource__c}))),{!$Record.Current_Lead_Source_Detail__c},
+{!$User.FirstName} &amp; &quot; &quot; &amp; {!$User.LastName})</expression>
+    </formulas>
+    <formulas>
+        <name>forCurrentUserProfileName</name>
+        <dataType>String</dataType>
+        <expression>{!$Profile.Name}</expression>
+    </formulas>
+    <formulas>
+        <description>Remove NPS from Multi-Select when Contact becomes inactive</description>
+        <name>ForEligibleForNPSRemoval</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(
+{!ForIncludesCaseStudy}=True,{!ForIncludesEventSpeaker}=True,{!ForIncludesNPS}=True,{!ForIncludesRiskReview}=True)
+,&quot;Risk Review;Case Study;Event Speaker&quot;, 
+
+IF(AND(
+{!ForIncludesCaseStudy}=True, {!ForIncludesEventSpeaker}=True,{!ForIncludesNPS}=True,{!ForIncludesRiskReview}=False)
+,&quot;Case Study;Event Speaker&quot;,
+
+IF(AND(
+{!ForIncludesCaseStudy}=True,{!ForIncludesEventSpeaker}=False,{!ForIncludesNPS}=True,{!ForIncludesRiskReview}=True)
+,&quot;Risk Review;Case Study&quot;,
+
+IF(AND(
+{!ForIncludesCaseStudy}=False,{!ForIncludesEventSpeaker}=True,{!ForIncludesNPS}=True,{!ForIncludesRiskReview}=True)
+,&quot;Risk Review;Event Speaker&quot;,
+
+IF(AND(
+{!ForIncludesCaseStudy}=True,{!ForIncludesEventSpeaker}=False,{!ForIncludesNPS}=True,{!ForIncludesRiskReview}=False)
+,&quot;Case Study&quot;,
+
+
+IF(AND(
+{!ForIncludesCaseStudy}=False,{!ForIncludesEventSpeaker}=True,{!ForIncludesNPS}=True,{!ForIncludesRiskReview}=False)
+,&quot;Event Speaker&quot;, 
+
+
+IF(AND(
+{!ForIncludesCaseStudy}=False,{!ForIncludesEventSpeaker}=False,{!ForIncludesNPS}=True,{!ForIncludesRiskReview}=True)
+,&quot;Risk Review&quot;,&quot; &quot;)
+))))))</expression>
+    </formulas>
+    <formulas>
+        <description>Moving the logic from After save to Before save.</description>
+        <name>ForIncludesCaseStudy</name>
+        <dataType>Boolean</dataType>
+        <expression>INCLUDES({!$Record.Eligible_for__c}, &apos;Case Study&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>ForIncludesEventSpeaker</name>
+        <dataType>Boolean</dataType>
+        <expression>INCLUDES({!$Record.Eligible_for__c}, &apos;Event Speaker&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>ForIncludesNPS</name>
+        <dataType>Boolean</dataType>
+        <expression>INCLUDES({!$Record.Eligible_for__c}, &apos;NPS&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>ForIncludesRiskReview</name>
+        <dataType>Boolean</dataType>
+        <expression>INCLUDES({!$Record.Eligible_for__c}, &apos;Risk Review&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>forIsNew</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <formulas>
+        <name>forLastPointOfEntry</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.LastPointOfEntry__c})),{!$Record.LastPointOfEntry__c},
+IF(OR({!forCurrentUserProfileName}=&quot;Adyen v2 Partnership&quot;,{!forCurrentUserProfileName}=&quot;Adyen v2 Partnership Lead&quot;),&quot;PM Generated&quot;,
+IF({!forCurrentUserProfileName}=&quot;Adyen v2 Account Manager&quot;,&quot;AM Generated&quot;,
+&quot;Sales Generated&quot;)))</expression>
+    </formulas>
+    <formulas>
+        <name>forLoggedInUser</name>
+        <dataType>String</dataType>
+        <expression>CASESAFEID({!$User.Id})</expression>
+    </formulas>
+    <formulas>
+        <name>forMessagesToSales</name>
+        <dataType>String</dataType>
+        <expression>TEXT(YEAR({!$Flow.CurrentDate}))&amp;&quot;-&quot;&amp;LPAD(TEXT(MONTH({!$Flow.CurrentDate})),2,&quot;0&quot;)&amp;&quot;-&quot;&amp;LPAD(TEXT(DAY({!$Flow.CurrentDate})),2,&quot;0&quot;)&amp;&quot;: &quot;&amp; {!$Record.LastMessageToSales__c} &amp; 
+SUBSTITUTE({!$Label.NewLine},&quot;-&quot;,&quot;&quot;) &amp;
+{!$Record.MessagesToSales__c}</expression>
+    </formulas>
+    <formulas>
+        <name>forPointsOfEntry</name>
+        <dataType>String</dataType>
+        <expression>TEXT(YEAR({!$Flow.CurrentDate}))&amp;&quot;-&quot;&amp;LPAD(TEXT(MONTH({!$Flow.CurrentDate})),2,&quot;0&quot;)&amp;&quot;-&quot;&amp;LPAD(TEXT(DAY({!$Flow.CurrentDate})),2,&quot;0&quot;)&amp;&quot;: &quot;&amp; {!$Record.LastPointOfEntry__c} &amp; 
+SUBSTITUTE({!$Label.NewLine},&quot;-&quot;,&quot;&quot;) &amp;
+{!$Record.PointsOfEntry__c}</expression>
+    </formulas>
+    <formulas>
+        <name>forPreferredLanguage</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.MailingCountry})),
+CASE({!$Record.MailingCountry},
+&apos;Japan&apos;, &apos;Japanese&apos;,
+&apos;France&apos;, &apos;French&apos;,
+&apos;Germany&apos;, &apos;German&apos;,
+&apos;Switzerland&apos;, &apos;German&apos;,
+&apos;Austria&apos;, &apos;German&apos;,
+&apos;Italy&apos;, &apos;Italian&apos;,
+&apos;Brazil&apos;, &apos;Portuguese&apos;,
+&apos;Mexico&apos;, &apos;Spanish&apos;,
+&apos;Sweden&apos;, &apos;Swedish&apos;,
+&apos;Denmark&apos;, &apos;Danish&apos;,
+&apos;Norway&apos;, &apos;Norwegian&apos;,
+&apos;Poland&apos;, &apos;Polish&apos;,
+&apos;Portugal&apos;, &apos;Portuguese&apos;,
+&apos;Netherlands&apos;, &apos;Dutch&apos;,
+&apos;Spain&apos;, &apos;Spanish&apos;,
+&apos;English&apos;),
+&apos;English&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>forTotalUtmArray</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE(SUBSTITUTE({!$Record.LastUTMArray__c},&quot;[&quot;,&quot;&quot;),&quot;]&quot;,&quot;&quot;) &amp; 
+&quot;,&quot; &amp;
+{!$Record.TotalUTMArray__c}</expression>
+    </formulas>
+    <interviewLabel>Before-Save Updates Contact {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Before-Save Updates Contact</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Moving the logic from After Save Update to here</description>
+        <name>UpdateEligiblefor</name>
+        <label>Update Eligible for</label>
+        <locationX>314</locationX>
+        <locationY>2495</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Eligible_for__c</field>
+            <value>
+                <elementReference>ForEligibleForNPSRemoval</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>320</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>IsNewContactCreatedByUser</targetReference>
+        </connector>
+        <object>Contact</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

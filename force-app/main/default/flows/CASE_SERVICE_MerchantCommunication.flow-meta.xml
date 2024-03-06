@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>This email is sent to the merchant as confirmation that a case has been created via CA form or Email-to-Case.</description>
+        <name>EmailMerchantCAFormOrE2CCaseCreated</name>
+        <label>Email Merchant CA Form or E2C Case Created</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <actionName>Case.CaseCreatedCAForm</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Shopper</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <description>Notify the shopper by email that the case has been closed.</description>
+        <name>EmailShopperCaseClosed</name>
+        <label>Email Shopper Case Closed</label>
+        <locationX>50</locationX>
+        <locationY>731</locationY>
+        <actionName>Case.CaseClosed</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>QueryEmailTemplate</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>55.0</apiVersion>
+    <decisions>
+        <description>Is this case created via a webform or Email-to-Case?
+Don&apos;t send if the case is from a blocked sender, shopper case or Originates from Zendesk</description>
+        <name>DecSendAutoResponse</name>
+        <label>Send Auto Response?</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>Shopper</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>YesCreatedViaWebform</name>
+            <conditionLogic>5 AND 6 AND 7 AND 8 AND 9 AND 10 AND ((1 AND (2 OR 3)) OR (4 AND (2 OR 3)) )</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Webform</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SuppliedEmail</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ContactEmail</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Origin</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Email</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SuppliedEmail</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>mailer-daemon@salesforce.com</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AutoCloseReason__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Blocked Email</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.AutoCloseReason__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Shopper Case</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Origin</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>ZD - Transfer</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Origin</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>ZD - Collaboration</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>EmailMerchantCAFormOrE2CCaseCreated</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if the Case Contact is known. If it&apos;s not, filter it out cause it&apos;s a Shopper.</description>
+        <name>Shopper</name>
+        <label>Shopper?</label>
+        <locationX>182</locationX>
+        <locationY>623</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesShopper</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.IsShopperCase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Autoclosed__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>EmailShopperCaseClosed</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>29-12-2023 | Bug Fix: When checking Case Origin for Email Cases, check that the Origin Contains &apos;Email&apos; rather than Equals &apos;Email&apos;.</description>
+    <environments>Default</environments>
+    <interviewLabel>CASE_SERVICE_MerchantCommunication {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CASE_SERVICE_MerchantCommunication</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Create FeedItem to show an email has been send on the Case feed.</description>
+        <name>CreateFeedItemAutomatedResponse</name>
+        <label>Create Feed Item Automated Response</label>
+        <locationX>50</locationX>
+        <locationY>947</locationY>
+        <inputAssignments>
+            <field>Body</field>
+            <value>
+                <elementReference>feedItemContent</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IsRichText</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Visibility</field>
+            <value>
+                <stringValue>InternalUsers</stringValue>
+            </value>
+        </inputAssignments>
+        <object>FeedItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>Queries the subject to be used in the feedItem creation</description>
+        <name>QueryEmailTemplate</name>
+        <label>Query Email Template</label>
+        <locationX>50</locationX>
+        <locationY>839</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CreateFeedItemAutomatedResponse</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Shopper_e_mail_Address_1669822809155</stringValue>
+            </value>
+        </filters>
+        <object>EmailTemplate</object>
+        <outputAssignments>
+            <assignToReference>varEmailTemplateSubject</assignToReference>
+            <field>Subject</field>
+        </outputAssignments>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>DecSendAutoResponse</targetReference>
+        </connector>
+        <filterFormula>AND (
+    {!$Permission.BypassCaseTriggerValidationMigration} = false,
+    {!$Record.SuppressAutomatedEmails__c} = false,
+    {!$Record.IsVisibleInPortal__c} = true,
+    OR ({!$Record.RecordType.DeveloperName} == &apos;ServiceCase&apos;, {!$Record.RecordType.DeveloperName} == &apos;InternalCase&apos;)
+)</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>feedItemContent</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Automated Email Sent: {!varEmailTemplateSubject}</text>
+    </textTemplates>
+    <variables>
+        <name>varEmailTemplateSubject</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

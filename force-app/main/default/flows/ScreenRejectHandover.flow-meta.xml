@@ -1,0 +1,1260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <choices>
+        <name>NeedMoreInformation</name>
+        <choiceText>Need More Information</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Need More Information</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RejectResourceRequest</name>
+        <choiceText>Reject Resource Request</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Reject Resource Request</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <name>Is_the_handover_rejected_or_completed</name>
+        <label>Is the handover rejected or completed?</label>
+        <locationX>314</locationX>
+        <locationY>242</locationY>
+        <defaultConnector>
+            <targetReference>Handover_is_Completed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>It&apos;s completed or rejected.</defaultConnectorLabel>
+        <rules>
+            <name>No_it_s_not_rejected_or_completed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetHandover.Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Rejected</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetHandover.Status__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ScrRejectResource</targetReference>
+            </connector>
+            <label>No, it&apos;s not rejected or completed.</label>
+        </rules>
+    </decisions>
+    <description>Gon 22/06: Added new values for PM rejection.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>forAM</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+{!CheckAM} = TRUE,
+FALSE,
+{!GetHandover.AccountManager__c})</expression>
+    </formulas>
+    <formulas>
+        <name>forAMComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckAM} = TRUE,
+{!CommentsAM},
+{!GetHandover.CommentsAM__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forAMPool</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+{!CheckAMPool} = TRUE,
+FALSE,
+{!GetHandover.AMPool__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forAMPoolComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckAMPool} = TRUE,
+{!CommentsAMPool},
+{!GetHandover.CommentsAMPool__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forAMPoolRejection</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckAMPool} = TRUE,
+{!AMPoolRejection},
+TEXT ({!GetHandover.AMPoolRejectionReason__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forAMRejection</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckAM} = TRUE,
+{!AMRejection},
+TEXT({!GetHandover.AMRejectionReason__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ForDedicatedPM</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+{!CheckDedicatedPM} = TRUE,
+FALSE,
+{!GetHandover.DedicatedPartnerManager__c})</expression>
+    </formulas>
+    <formulas>
+        <name>ForDedicatedPMComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckDedicatedPM} = TRUE,
+{!ForDedicatedPMComment},
+{!GetHandover.CommentDedicatedPartnerManager__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ForDedicatedPMRejection</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckDedicatedPM} = TRUE,
+{!DedicatedPMRejection},
+TEXT ({!GetHandover.PartnerManagerRejectionReason__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forIM</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+{!CheckIM} = TRUE,
+FALSE,
+{!GetHandover.ImplementationManager__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forIMComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckIM} = TRUE,
+{!CommentsIM},
+{!GetHandover.CommentsIM__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forIMRejection</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckIM} = TRUE,
+{!IMRejection},
+TEXT ({!GetHandover.IMRejectionReason__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forOS</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+{!CheckOS} = TRUE,
+FALSE,
+{!GetHandover.OnboardingSpecialist__c})</expression>
+    </formulas>
+    <formulas>
+        <name>forOSComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckOS} = TRUE,
+{!CommentsOS},
+{!GetHandover.CommentsOS__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forOSRejection</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckOS} = TRUE,
+{!OSRejection},
+TEXT({!GetHandover.OSRejectionReason__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ForPartnerManagerPool</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+{!CheckPartnerManagerPool} = TRUE,
+FALSE,
+{!GetHandover.PartnerPool__c})</expression>
+    </formulas>
+    <formulas>
+        <name>ForPartnerManagerPoolComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckPartnerManagerPool} = TRUE,
+{!CommentPartnerManagerPool},
+{!GetHandover.CommentsPartnerPool__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ForPartnerManagerPoolRejection</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckPartnerManagerPool} = TRUE,
+{!PartnerManagerPoolRejectionReason},
+TEXT({!GetHandover.PartnerPoolRejectionReason__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forPOM</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+{!CheckPOM} = TRUE,
+FALSE,
+{!GetHandover.ProjectOperationsManager__c})</expression>
+    </formulas>
+    <formulas>
+        <name>forPOMComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckPOM} = TRUE,
+{!CommentsPOM},
+{!GetHandover.CommentsPOM__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forPOMRejection</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckPOM} = TRUE,
+{!POMRejection},
+TEXT({!GetHandover.POMRejectionReason__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forSales</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+{!CheckSales} = TRUE,
+FALSE,
+{!GetHandover.Sales__c})</expression>
+    </formulas>
+    <formulas>
+        <name>forSalesComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckSales} = TRUE,
+{!CommentsSales},
+{!GetHandover.CommentsSales__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forSalesRejection</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!CheckSales} = TRUE,
+{!SalesRejection},
+TEXT({!GetHandover.SalesRejectionReason__c})
+)</expression>
+    </formulas>
+    <interviewLabel>Screen - Reject Handover {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Screen - Reject Handover</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>GetHandover</name>
+        <label>Get Handover</label>
+        <locationX>314</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_the_handover_rejected_or_completed</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Handover__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>UpdateHandover</name>
+        <label>Update Handover</label>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
+        <faultConnector>
+            <targetReference>ErrorScreen</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>AMPoolRejectionReason__c</field>
+            <value>
+                <elementReference>forAMPoolRejection</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AMPool__c</field>
+            <value>
+                <elementReference>forAMPool</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AMRejectionReason__c</field>
+            <value>
+                <elementReference>forAMRejection</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AccountManager__c</field>
+            <value>
+                <elementReference>forAM</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CommentDedicatedPartnerManager__c</field>
+            <value>
+                <elementReference>ForDedicatedPMComment</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CommentsAMPool__c</field>
+            <value>
+                <elementReference>forAMPoolComment</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CommentsAM__c</field>
+            <value>
+                <elementReference>forAMComment</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CommentsIM__c</field>
+            <value>
+                <elementReference>forIMComment</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CommentsOS__c</field>
+            <value>
+                <elementReference>forOSComment</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CommentsPOM__c</field>
+            <value>
+                <elementReference>forPOMComment</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CommentsPartnerPool__c</field>
+            <value>
+                <elementReference>ForPartnerManagerPoolComment</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CommentsSales__c</field>
+            <value>
+                <elementReference>forSalesComment</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DedicatedPartnerManager__c</field>
+            <value>
+                <elementReference>ForDedicatedPM</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IMRejectionReason__c</field>
+            <value>
+                <elementReference>forIMRejection</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ImplementationManager__c</field>
+            <value>
+                <elementReference>forIM</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OSRejectionReason__c</field>
+            <value>
+                <elementReference>forOSRejection</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OnboardingSpecialist__c</field>
+            <value>
+                <elementReference>forOS</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>POMRejectionReason__c</field>
+            <value>
+                <elementReference>forPOMRejection</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PartnerManagerRejectionReason__c</field>
+            <value>
+                <elementReference>ForDedicatedPMRejection</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PartnerPoolRejectionReason__c</field>
+            <value>
+                <elementReference>ForPartnerManagerPoolRejection</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PartnerPool__c</field>
+            <value>
+                <elementReference>ForPartnerManagerPool</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ProjectOperationsManager__c</field>
+            <value>
+                <elementReference>forPOM</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SalesRejectionReason__c</field>
+            <value>
+                <elementReference>forSalesRejection</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Sales__c</field>
+            <value>
+                <elementReference>forSales</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Handover__c</object>
+    </recordUpdates>
+    <screens>
+        <name>ErrorScreen</name>
+        <label>ErrorScreen</label>
+        <locationX>314</locationX>
+        <locationY>566</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorText</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Something went wrong during this process due to the following error:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(192, 1, 1); background-color: rgb(255, 255, 255);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Please retry if you understand what went wrong, otherwise reach out to commercialtools@adyen.com.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Handover_is_Completed</name>
+        <label>Handover is Completed</label>
+        <locationX>578</locationX>
+        <locationY>350</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Handoveriscompleted</name>
+            <fieldText>&lt;p&gt;Hey! The handover that you are trying to reject is &lt;strong&gt;Completed.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;You can&apos;t reject Handovers that are already completed, if you have any question, please contact the Team Lead of the Assigned Resource.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>ScrRejectResource</name>
+        <label>Screen Reject Resource</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>UpdateHandover</targetReference>
+        </connector>
+        <fields>
+            <name>SelectResource</name>
+            <fieldText>&lt;p&gt;Please select the resource(s) that you would &lt;strong&gt;like to Reject&lt;/strong&gt;. Only unassigned resources can be rejected.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>CheckAM</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Account Manager</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.AccountManager__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.Assigned_AM__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AMRejection</name>
+            <choiceReferences>NeedMoreInformation</choiceReferences>
+            <choiceReferences>RejectResourceRequest</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>AM Rejection Reason</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.AccountManager__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.Assigned_AM__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckAM</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CommentsAM</name>
+            <dataType>String</dataType>
+            <fieldText>Comments AM</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.AccountManager__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.Assigned_AM__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckAM</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CheckAMPool</name>
+            <dataType>Boolean</dataType>
+            <fieldText>AM Pool</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.AMPool__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.Assigned_AM__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AMPoolRejection</name>
+            <choiceReferences>NeedMoreInformation</choiceReferences>
+            <choiceReferences>RejectResourceRequest</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>AM Pool Rejection Reason</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.AMPool__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.Assigned_AM__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckAMPool</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CommentsAMPool</name>
+            <dataType>String</dataType>
+            <fieldText>Comments AM Pool</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.AMPool__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.Assigned_AM__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckAMPool</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CheckIM</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Implementation Manager</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.ImplementationManager__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.IM__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>IMRejection</name>
+            <choiceReferences>NeedMoreInformation</choiceReferences>
+            <choiceReferences>RejectResourceRequest</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>IM Rejection Reason</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.ImplementationManager__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.IM__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckIM</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CommentsIM</name>
+            <dataType>String</dataType>
+            <fieldText>Comments IM</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.ImplementationManager__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.IM__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckIM</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CheckPOM</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Project Operations Manager</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.ProjectOperationsManager__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.AssignedPom__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>POMRejection</name>
+            <choiceReferences>NeedMoreInformation</choiceReferences>
+            <choiceReferences>RejectResourceRequest</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>POM Rejection Reason</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.ProjectOperationsManager__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.AssignedPom__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckPOM</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CommentsPOM</name>
+            <dataType>String</dataType>
+            <fieldText>Comments POM</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.ProjectOperationsManager__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.AssignedPom__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckPOM</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CheckSales</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Sales</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.Sales__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.Sales_Manager__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>SalesRejection</name>
+            <choiceReferences>NeedMoreInformation</choiceReferences>
+            <choiceReferences>RejectResourceRequest</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Sales Rejection Reason</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.Sales__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.Sales_Manager__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckSales</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CommentsSales</name>
+            <dataType>String</dataType>
+            <fieldText>Comments Sales</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.Sales__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.Sales_Manager__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckSales</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CheckOS</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Onboarding Specialist</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.OnboardingSpecialist__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.Assigned_OS__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>OSRejection</name>
+            <choiceReferences>NeedMoreInformation</choiceReferences>
+            <choiceReferences>RejectResourceRequest</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>OS Rejection Reason</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.OnboardingSpecialist__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.Assigned_OS__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckOS</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CommentsOS</name>
+            <dataType>String</dataType>
+            <fieldText>Comments OS</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.OnboardingSpecialist__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.Assigned_OS__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckOS</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CheckPartnerManagerPool</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Partner Manager Pool</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.PartnerPool__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.AssignedPartnerManager__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PartnerManagerPoolRejectionReason</name>
+            <choiceReferences>NeedMoreInformation</choiceReferences>
+            <choiceReferences>RejectResourceRequest</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Partner Manager Pool Rejection Reason</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.PartnerPool__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.AssignedPartnerManager__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckPartnerManagerPool</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CommentPartnerManagerPool</name>
+            <dataType>String</dataType>
+            <fieldText>Comment Partner Manager Pool</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.PartnerPool__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.AssignedPartnerManager__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckPartnerManagerPool</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CheckDedicatedPM</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Dedicated Partner Manager</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.DedicatedPartnerManager__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.AssignedPartnerManager__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>DedicatedPMRejection</name>
+            <choiceReferences>NeedMoreInformation</choiceReferences>
+            <choiceReferences>RejectResourceRequest</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Dedicated Partner Manager Rejection Reason</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.DedicatedPartnerManager__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.AssignedPartnerManager__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckDedicatedPM</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CommentDedicatedPM</name>
+            <dataType>String</dataType>
+            <fieldText>Comment Dedicated Partner Manager</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.DedicatedPartnerManager__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.AssignedPartnerManager__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>CheckDedicatedPM</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NothingToReject</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Ooops! There are &lt;/span&gt;&lt;strong style=&quot;color: rgb(255, 0, 0);&quot;&gt;&lt;u&gt;no resources&lt;/u&gt;&lt;/strong&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt; to be rejected as all have been assigned or non are requested.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetHandover.CountOfResourcesRequested__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>GetHandover.CountOfResourcesAssigned__c</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetHandover.CountOfResourcesRequested__c</leftValueReference>
+                    <operator>LessThan</operator>
+                    <rightValue>
+                        <numberValue>1.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>GetHandover</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,35 @@
+<aura:component implements="lightning:recordHomeTemplate" description="Full-width header above a main column and collapsible left and right sidebar.">
+
+    <aura:attribute name="main" type="Aura.Component[]" description="Main region"/>
+    <aura:attribute name="leftsidebar" type="Aura.Component[]" description="Collapsible sidebar region"/>
+    <aura:attribute name="rightsidebar" type="Aura.Component[]" description="Collapsible sidebar region"/>
+
+    <aura:attribute name="isLeftSidebarCollapsed" type="Boolean" access="PRIVATE" default="false" />
+    <aura:attribute name="isRightSidebarCollapsed" type="Boolean" access="PRIVATE" default="false" />
+
+    <div>
+        <lightning:layout>
+            <lightning:layoutItem class="{! v.isLeftSidebarCollapsed ? ' slds-hide' : '' }" size="3">
+                {!v.leftsidebar}
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="no-flex" class="collapseButton">
+                <lightning:buttonIcon onclick ="{!c.toggleLeftSection}"
+                                      variant="border-filled"
+                                      iconName="{! v.isLeftSidebarCollapsed ? 'utility:right' : 'utility:left' }" 
+                                      alternativeText="{! v.isLeftSidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar' }" />
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto">
+                {!v.main}
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="no-flex">
+                <lightning:buttonIcon onclick ="{!c.toggleRightSection}"
+                                      variant="border-filled"
+                                      iconName="{! v.isRightSidebarCollapsed ? 'utility:left' : 'utility:right' }" 
+                                      alternativeText="{! v.isRightSidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar' }" />
+            </lightning:layoutItem>
+            <lightning:layoutItem class="{! v.isRightSidebarCollapsed ? ' slds-hide' : '' }" size="3">
+                {!v.rightsidebar}
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

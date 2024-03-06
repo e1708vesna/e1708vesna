@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision</name>
+        <label>myDecision</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>Scenarios triggering Contact Update</label>
+        </rules>
+    </decisions>
+    <description>This process should contain all processes that are triggered from the Account object</description>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(AND(ISCHANGED([Account].RecordTypeId),[Account].RecordType.DeveloperName = &quot;SuspectAccount&quot;),&quot;Open&quot;,
+IF(AND(ISCHANGED([Account].RecordTypeId),[Account].RecordType.DeveloperName = &quot;ProspectAccount&quot;,[Account].Has_Open_Opportunity__c &gt; 0),&quot;Opportunity&quot;,
+IF(AND(ISCHANGED([Account].Has_Open_Opportunity__c),[Account].Has_Open_Opportunity__c &gt; 0,PRIORVALUE([Account].Has_Open_Opportunity__c) = 0,OR([Account].RecordType.DeveloperName = &quot;SuspectAccount&quot;,[Account].RecordType.DeveloperName = &quot;ProspectAccount&quot;)),&quot;Opportunity&quot;,
+IF(AND(ISCHANGED([Account].RecordTypeId),[Account].RecordType.DeveloperName = &quot;ProspectAccount&quot;,[Account].Has_Open_Opportunity__c = 0),&quot;Recycle&quot;,
+IF(AND(ISCHANGED([Account].Has_Lost_Opportunity__c),[Account].Has_Lost_Opportunity__c &gt; 0,[Account].Has_Lost_Opportunity__c = [Account].Count_of_opportunities__c,[Account].RecordType.DeveloperName = &quot;ProspectAccount&quot;),&quot;Recycle&quot;,
+IF(AND(ISCHANGED([Account].RecordTypeId),[Account].RecordType.DeveloperName = &quot;LiveAccount&quot;,ISPICKVAL([Account].Account_Status__c,&quot;Churned&quot;)),&quot;Churned&quot;,
+IF(AND(ISCHANGED([Account].Account_Status__c),ISPICKVAL([Account].Account_Status__c,&quot;Churned&quot;)),&quot;Churned&quot;,
+IF(AND(ISCHANGED([Account].RecordTypeId),[Account].RecordType.DeveloperName = &quot;LiveAccount&quot;,NOT(ISPICKVAL([Account].Account_Status__c,&quot;Churned&quot;))),&quot;Customer&quot;,&quot;Open&quot;))))))))</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_2_myRule_1_A1_7890850212</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(ISCHANGED({!myVariable_current.RecordTypeId}),{!myVariable_current.RecordType.DeveloperName} = &quot;SuspectAccount&quot;),&quot;Open&quot;,
+IF(AND(ISCHANGED({!myVariable_current.RecordTypeId}),{!myVariable_current.RecordType.DeveloperName} = &quot;ProspectAccount&quot;,{!myVariable_current.Has_Open_Opportunity__c} &gt; 0),&quot;Opportunity&quot;,
+IF(AND(ISCHANGED({!myVariable_current.Has_Open_Opportunity__c}),{!myVariable_current.Has_Open_Opportunity__c} &gt; 0,PRIORVALUE({!myVariable_current.Has_Open_Opportunity__c}) = 0,OR({!myVariable_current.RecordType.DeveloperName} = &quot;SuspectAccount&quot;,{!myVariable_current.RecordType.DeveloperName} = &quot;ProspectAccount&quot;)),&quot;Opportunity&quot;,
+IF(AND(ISCHANGED({!myVariable_current.RecordTypeId}),{!myVariable_current.RecordType.DeveloperName} = &quot;ProspectAccount&quot;,{!myVariable_current.Has_Open_Opportunity__c} = 0),&quot;Recycle&quot;,
+IF(AND(ISCHANGED({!myVariable_current.Has_Lost_Opportunity__c}),{!myVariable_current.Has_Lost_Opportunity__c} &gt; 0,{!myVariable_current.Has_Lost_Opportunity__c} = {!myVariable_current.Count_of_opportunities__c},{!myVariable_current.RecordType.DeveloperName} = &quot;ProspectAccount&quot;),&quot;Recycle&quot;,
+IF(AND(ISCHANGED({!myVariable_current.RecordTypeId}),{!myVariable_current.RecordType.DeveloperName} = &quot;LiveAccount&quot;,ISPICKVAL({!myVariable_current.Account_Status__c},&quot;Churned&quot;)),&quot;Churned&quot;,
+IF(AND(ISCHANGED({!myVariable_current.Account_Status__c}),ISPICKVAL({!myVariable_current.Account_Status__c},&quot;Churned&quot;)),&quot;Churned&quot;,
+IF(AND(ISCHANGED({!myVariable_current.RecordTypeId}),{!myVariable_current.RecordType.DeveloperName} = &quot;LiveAccount&quot;,NOT(ISPICKVAL({!myVariable_current.Account_Status__c},&quot;Churned&quot;))),&quot;Customer&quot;,&quot;Open&quot;))))))))</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>OR(
+
+AND(
+ISCHANGED([Account].Has_Open_Opportunity__c),
+[Account].Has_Open_Opportunity__c &gt; 0,
+PRIORVALUE([Account].Has_Open_Opportunity__c) = 0,
+OR(
+[Account].RecordType.DeveloperName = &quot;SuspectAccount&quot;,
+[Account].RecordType.DeveloperName = &quot;ProspectAccount&quot;)),
+
+AND(
+ISCHANGED([Account].Has_Lost_Opportunity__c),
+[Account].Has_Lost_Opportunity__c &gt; 0,
+[Account].Has_Lost_Opportunity__c = [Account].Count_of_opportunities__c,
+[Account].RecordType.DeveloperName = &quot;ProspectAccount&quot;),
+
+AND(
+ISCHANGED([Account].Account_Status__c),
+ISPICKVAL([Account].Account_Status__c,&quot;Churned&quot;)),
+
+AND(
+ISCHANGED([Account].RecordTypeId),
+OR(
+[Account].RecordType.DeveloperName = &quot;SuspectAccount&quot;,
+[Account].RecordType.DeveloperName = &quot;ProspectAccount&quot;,
+[Account].RecordType.DeveloperName = &quot;LiveAccount&quot;))
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(
+
+AND(
+ISCHANGED({!myVariable_current.Has_Open_Opportunity__c}),
+{!myVariable_current.Has_Open_Opportunity__c} &gt; 0,
+PRIORVALUE({!myVariable_current.Has_Open_Opportunity__c}) = 0,
+OR(
+{!myVariable_current.RecordType.DeveloperName} = &quot;SuspectAccount&quot;,
+{!myVariable_current.RecordType.DeveloperName} = &quot;ProspectAccount&quot;)),
+
+AND(
+ISCHANGED({!myVariable_current.Has_Lost_Opportunity__c}),
+{!myVariable_current.Has_Lost_Opportunity__c} &gt; 0,
+{!myVariable_current.Has_Lost_Opportunity__c} = {!myVariable_current.Count_of_opportunities__c},
+{!myVariable_current.RecordType.DeveloperName} = &quot;ProspectAccount&quot;),
+
+AND(
+ISCHANGED({!myVariable_current.Account_Status__c}),
+ISPICKVAL({!myVariable_current.Account_Status__c},&quot;Churned&quot;)),
+
+AND(
+ISCHANGED({!myVariable_current.RecordTypeId}),
+OR(
+{!myVariable_current.RecordType.DeveloperName} = &quot;SuspectAccount&quot;,
+{!myVariable_current.RecordType.DeveloperName} = &quot;ProspectAccount&quot;,
+{!myVariable_current.RecordType.DeveloperName} = &quot;LiveAccount&quot;))
+)</expression>
+    </formulas>
+    <interviewLabel>Account_Management-20_InterviewLabel</interviewLabel>
+    <label>_Account Management</label>
+    <processMetadataValues>
+        <name>ObjectType</name>
+        <value>
+            <stringValue>Account</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>ObjectVariable</name>
+        <value>
+            <elementReference>myVariable_current</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OldObjectVariable</name>
+        <value>
+            <elementReference>myVariable_old</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>TriggerType</name>
+        <value>
+            <stringValue>onAllChanges</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Workflow</processType>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>criteria</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[Account].Contacts</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
+        <name>myRule_1_A1</name>
+        <label>Update Contact Status</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>inputDataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Contact Status</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>operatorDataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>ContactStatus__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>No Longer There</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Contact Status</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>ContactStatus__c</field>
+            <value>
+                <elementReference>formula_2_myRule_1_A1_7890850212</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Contact</object>
+    </recordUpdates>
+    <startElementReference>myDecision</startElementReference>
+    <status>Obsolete</status>
+    <variables>
+        <name>myVariable_current</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_old</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+</Flow>

@@ -1,0 +1,27 @@
+<aura:component controller='DownloadRelatedFilesLghtCtrl' implements="force:lightningQuickAction,force:hasRecordId">
+    
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<aura:attribute name="files" type="Object[]" />
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="true"/>
+    
+<div class="slds-clearfix">
+    <aura:if isTrue="{!v.showSpinner}">
+        <div class="spinner">
+            <lightning:spinner alternativeText="Loading" size="small" />
+        </div>
+    </aura:if>
+    <div style="max-height: 300px; min-height: 100px;">
+        <lightning:datatable
+                             aura:id="dataTable"
+                keyField="id"
+                data="{! v.files }"
+                columns="{! v.columns }"
+                hideCheckboxColumn="false"/>
+    </div>
+    <div style="padding:10px;" class="slds-float--right">
+        <lightning:button variant="brand" label="Download" title="Download Selected files" onclick="{! c.handleDownload }" />
+    </div>
+    </div>
+</aura:component>

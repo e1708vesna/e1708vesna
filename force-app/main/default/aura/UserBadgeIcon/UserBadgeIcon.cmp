@@ -1,0 +1,19 @@
+<aura:component implements="force:hasRecordId,flexipage:availableForAllPageTypes" access="global" >
+    
+    <aura:attribute name="userBadgeRecord" type="Object"/>
+    <aura:attribute name="badgeRecord" type="Object"/>
+    <aura:attribute name="recordLoadError" type="String"/>
+    
+    <force:recordData aura:id="recordLoader"
+    recordId="{!v.recordId}"
+    fields="trailheadapp__Badge_Icon__c,trailheadapp__URL__c,trailheadapp__Badge__c,trailheadapp__Badge__r.trailheadapp__Icon__c"
+    targetFields="{!v.userBadgeRecord}"
+    targetError="{!v.recordLoadError}"
+    />
+
+    <div class="slds-align_absolute-center">
+        <a href="{!v.userBadgeRecord.trailheadapp__URL__c}" target="_blank">
+			<img src="{!v.userBadgeRecord.trailheadapp__Badge__r.trailheadapp__Icon__c}" width="100"/>
+        </a>
+	</div>
+</aura:component>

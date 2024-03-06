@@ -1,0 +1,14 @@
+.datatable-container {
+    padding: 10px;
+    box-shadow: 0 var(--lwc-borderWidthThick, 2px) 10px 0 rgba(0, 0, 0, 0.1);
+    border: var(--lwc-borderWidthThin, 1px) solid #e0e0e0;
+}
+
+.text-color-red {
+    color: var(--lwc-colorTextError);
+}
+
+.custom-label {
+    text-align: left;
+    font-style: italic;
+}

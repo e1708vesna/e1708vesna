@@ -1,0 +1,12 @@
+<aura:component implements="lightning:homeTemplate" description="Two Equal Columns">
+    <aura:attribute name="left" type="Aura.Component[]" />
+    <aura:attribute name="right" type="Aura.Component[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}" />
+
+    <div>
+        <lightning:layout horizontalAlign="spread" multipleRows="false">
+      			<lightning:layoutItem flexibility="grow" size="6"> {!v.left} </lightning:layoutItem>
+       			<lightning:layoutItem flexibility="grow" size="6"> {!v.right} </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>SendEnglishSurveyEmail</name>
+        <label>Send English Survey Email</label>
+        <locationX>506</locationX>
+        <locationY>600</locationY>
+        <actionName>Case.CSATSurveyEmailEnglish</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>CreateEmailMessageFeedItem</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <constants>
+        <name>forSenderOrgWideEmail</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>noreply@adyen.com</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Check_to_Send_CSAT</name>
+        <label>Check to Send CSAT</label>
+        <locationX>374</locationX>
+        <locationY>384</locationY>
+        <defaultConnector>
+            <targetReference>Set_CSAT_Case_Fields</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>DoNotSendCsat</name>
+            <conditionLogic>1 OR 2 OR 3 OR 4 OR (5 AND 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>forRecipientEmailAddress</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>forRecipientEmailAddress</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>adyen.com</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.CsatUser__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contact.CsatOptOut__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Email_Messages</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Autoclosed__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Do not send CSAT</label>
+        </rules>
+    </decisions>
+    <description>20/10: Replaced Email Creation by Feed Item creation
+Hotfix for Deployment - Not for Invalid Cases or Blocked Emails
+Version with only English
+Update only, no AutoClosed cases</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>forRecipientEmailAddress</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.ContactEmail})),{!$Record.ContactEmail}, {!$Record.SuppliedEmail})</expression>
+    </formulas>
+    <interviewLabel>CASE_SERVICE_SendCsatSurveyEmail {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CASE_SERVICE_SendCsatSurveyEmail</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>CreateEmailMessageFeedItem</name>
+        <label>Create Email Message Feed Item</label>
+        <locationX>506</locationX>
+        <locationY>708</locationY>
+        <inputAssignments>
+            <field>Body</field>
+            <value>
+                <elementReference>TTEmailSent</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IsRichText</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>LinkPost</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Visibility</field>
+            <value>
+                <stringValue>InternalUsers</stringValue>
+            </value>
+        </inputAssignments>
+        <object>FeedItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Get_Email_Messages</name>
+        <label>Get Email Messages</label>
+        <locationX>374</locationX>
+        <locationY>276</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_to_Send_CSAT</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Incoming</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>FromAdyenEmail__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ParentId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>EmailMessage</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Set_CSAT_Case_Fields</name>
+        <label>Set CSAT Case Fields</label>
+        <locationX>506</locationX>
+        <locationY>492</locationY>
+        <connector>
+            <targetReference>SendEnglishSurveyEmail</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>CsatEmailSent__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CsatRecipientEmailAddress__c</field>
+            <value>
+                <elementReference>forRecipientEmailAddress</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>AND(ISPICKVAL({!$Record.Status}, &apos;Completed&apos;),
+{!$Record.CsatEmailSent__c} == FALSE,
+{!$Record.CaseRequesterCsatOptOut__c} == FALSE,
+{!$Record.IsShopperCase__c} == FALSE,
+{!$Permission.BypassCaseTriggerValidationMigration} == FALSE,
+TEXT({!$Record.AutoCloseReason__c}) != &apos;Invalid Case&apos;,
+TEXT({!$Record.AutoCloseReason__c}) != &apos;Blocked Email&apos;)</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <name>Send_CSAT_Survey</name>
+            <connector>
+                <targetReference>Get_Email_Messages</targetReference>
+            </connector>
+            <label>Send CSAT Survey</label>
+            <offsetNumber>48</offsetNumber>
+            <offsetUnit>Hours</offsetUnit>
+            <recordField>ClosedDate</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>forEnglishEmailBody</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Hi {!$Record.RecipientNameFormula__c},&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;We&apos;d love to hear what you think of the support you received from us.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Please rate your overall experience with Adyen Support&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0); font-family: Arial, Helvetica, sans-serif; font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Here&apos;s the description of the ticket as a reminder:&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>forEnglishEmailSubject</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>How was your experience with Adyen Support?</text>
+    </textTemplates>
+    <textTemplates>
+        <name>TTEmailSent</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Automated Email Sent: CSAT Survey</text>
+    </textTemplates>
+    <variables>
+        <name>emailCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>EmailMessage</objectType>
+    </variables>
+</Flow>

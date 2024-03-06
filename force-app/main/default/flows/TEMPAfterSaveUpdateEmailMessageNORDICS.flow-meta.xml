@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <name>UpdateStatus</name>
+        <label>Update Status?</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>No Update</defaultConnectorLabel>
+        <rules>
+            <name>YesUpdateStatus</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Parent.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Waiting on Merchant</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Parent.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Solved</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetCaseStatusToReopened</targetReference>
+            </connector>
+            <label>Yes, Update Status</label>
+        </rules>
+    </decisions>
+    <description>Gon 25/05: Added a condition to re-open a case for legal cases as well.</description>
+    <environments>Default</environments>
+    <interviewLabel>TEMP After Save Update Email Message NORDICS {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>After-Save Update Email Message NORDICS/LEGAL</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>SetCaseStatusToReopened</name>
+        <label>Set Case Status To Reopened</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ParentId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Reopened</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>UpdateStatus</targetReference>
+        </connector>
+        <filterFormula>AND (
+{!$Record.Incoming} ,
+OR(
+{!$Record.Parent.RecordType.DeveloperName} = &apos;Nordics_Cases&apos;,
+{!$Record.Parent.RecordType.DeveloperName} = &apos;LegalSupport&apos;)
+)</filterFormula>
+        <object>EmailMessage</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

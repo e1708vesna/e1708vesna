@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Show Toast Message</masterLabel>
+    <description>To show a custom toast message on a page layout</description>
+
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="title" label="Title" type="String" />
+            <property name="message" label="Message" type="String" />
+            <property name="variant" label="Variant" description="Check Custom Components Documentation to see Design Guidelines" type="String" datasource="info,warning,success,error" default="info" />
+            <property name="mode" label="Mode" type="String" description="Check Custom Components Documentation to see Design Guidelines" datasource="dismissible,pester,sticky" default="dismissible" />
+            <property name="linkURL" label="Link URL" type="String" description="If you want to display a link, put the URL"/>
+            <property name="linkLabel" label="Link Label" type="String" description="Put a value in this if you want to show some context information, for example when a record is created you can use - Record {Label} created"/>
+            <property name="linkText" label="Link Text" type="String" description="Text which is to be highlighted as a link"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

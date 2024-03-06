@@ -1,0 +1,16 @@
+<template>
+    <div class="footer slds-card__footer navigationBar"> 
+        <div class="slds-float_right">
+            <lightning-button class="slds-m-top_small" onclick={handleCancel}  name="cancel" label="Cancel">
+            </lightning-button>
+            <span if:true={showNextButton}>
+                <lightning-button class="slds-m-top_small" variant="brand" onclick={handleNext}  name="next" label="Next">
+                </lightning-button>
+            </span>
+            <span if:true={showFinishButton}>
+                <lightning-button class="slds-m-top_small" variant="brand" onclick={handleFinish} name="finish" label="Finish">
+                </lightning-button>
+            </span>
+        </div>
+    </div>
+</template>

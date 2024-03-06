@@ -1,0 +1,83 @@
+<aura:component controller="APConfidentialInformationLghtCtrl" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="calculatedValue" type="String" default="Loading"/>
+    <aura:attribute name="cnt" type="String" default="Loading"/>
+    <aura:attribute name="mvm" type="String" default="Loading"/>
+    <aura:attribute name="vmoa" type="String" default="Loading"/>
+    <aura:attribute name="currentMargin" type="String" default="Loading"/>
+    <aura:attribute name="additionalMargin" type="String" default="Loading"/>
+    <aura:attribute name="loading" type="Boolean" default="true"/>
+    <aura:attribute name="errorMessage" type="String" default=""/>
+    <aura:attribute name="confidentialInformationId" type="String" default=""/>
+    <aura:attribute name="fields" type="String[]" default="['MaximumWinnableSowLongTerm__c', 'TargetSoWByCurrentYearEnd__c', 'OrganicGrowthOverNext12Months__c']" />
+    
+    <lightning:card class="slds-card_boundary forceRelatedListCardHeader" title="Share of Wallet Summary" iconName="utility:custom_apps">
+        
+        
+        <div class="slds-p-horizontal_small">
+            <aura:if isTrue="{!v.loading}">
+                <div class="exampleHolder">
+                    <lightning:spinner alternativeText="Loading" size="medium"  />
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.errorMessage.length > 0}">
+                <p class="errorText red">{!v.errorMessage}</p>
+                <aura:set attribute="else">
+                    <div class="slds-form slds-grid slds-wrap">
+                        <!-- Not shown anymore -->
+                        <!--<lightning:input class="slds-size_1-of-2" 
+                                         type="text" 
+                                         value="{!v.cnt}" 
+                                         Name="Total Records" 
+                                         label ="Total SoW Records" 
+                                         readonly="true"/>-->
+                        <lightning:input class="slds-size_1-of-2" 
+                                         type="text" 
+                                         value="{!v.mvm}" 
+                                         Name="Sum Merchant Volume / Month" 
+                                         label ="Sum Merchant Volume / Month" 
+                                         readonly="true"/>
+                        <lightning:input class="slds-size_1-of-2" 
+                                         type="text" 
+                                         value="{!v.vmoa}" 
+                                         Name="Sum Volume / Month on Adyen" 
+                                         label ="Sum Volume / Month on Adyen" 
+                                         readonly="true"/>
+                        <lightning:input class="slds-size_1-of-2" 
+                                         type="text" 
+                                         value="{!v.calculatedValue}" 
+                                         Name="SoW on Adyen" 
+                                         label ="SoW on Adyen" 
+                                         readonly="true"/>
+                        <lightning:input class="slds-size_1-of-2" 
+                                         type="text" 
+                                         value="{!v.currentMargin}" 
+                                         Name="Current Margin" 
+                                         label ="Current Margin" 
+                                         readonly="true"/>
+                        <lightning:input class="slds-size_1-of-2" 
+                                         type="text" 
+                                         value="{!v.additionalMargin}" 
+                                         Name="Additional Margin" 
+                                         label ="Additional Margin" 
+                                         readonly="true"/>
+                    </div>
+                </aura:set>
+                
+            </aura:if>
+            <aura:if isTrue="{!v.confidentialInformationId.length > 0}">
+                
+                <lightning:recordForm 
+                                          recordId="{!v.confidentialInformationId}" 
+                                          objectApiName="APConfidentialInformation__c" 
+                                          mode="view"
+                                          fields="{!v.fields}">
+                        
+                    </lightning:recordForm>
+            </aura:if>
+        </div>
+        
+    </lightning:card>
+    
+    
+</aura:component>

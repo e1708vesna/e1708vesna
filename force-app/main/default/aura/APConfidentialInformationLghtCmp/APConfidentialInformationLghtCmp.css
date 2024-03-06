@@ -1,0 +1,41 @@
+.THIS .header {
+        font-size: 24px;
+    	font-weight: bold;
+}
+
+.THIS .text {
+        font-size: 13px;
+}
+
+.THIS .centercontent {
+    text-align: center;
+}
+
+.THIS .leftcontent {
+    text-align: left;
+}
+
+.THIS .errorText {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.THIS .red {
+    	color: rgb(224, 32, 18); 
+}
+
+.THIS .borderless div textarea{
+    border: none !important;
+    outline: none !important;
+}
+
+.THIS .slds-card__header{
+        background-color: rgb(243,242,242);
+    	padding-bottom: 12px !important;
+    	margin-bottom: 0px !important;
+    	height: 65px !important;
+}
+
+.THIS .slds-card__body{
+        margin: none !important;
+}

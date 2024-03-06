@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <assignments>
+        <description>Deactivate hypercare on account record.</description>
+        <name>assDeactivateHypercareOnAccount</name>
+        <label>Deactivate Hypercare On Account</label>
+        <locationX>176</locationX>
+        <locationY>854</locationY>
+        <assignmentItems>
+            <assignToReference>varAccount.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varAccount.HypercareMode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SuccessMessage</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assign end date (current date) and reason (given by the user in the previous screen) to each ALA record.</description>
+        <name>AssignEndDateReason</name>
+        <label>Assign End Date/Reason</label>
+        <locationX>264</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>loopThroughRetrievedALARecords.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>loopThroughRetrievedALARecords.EndReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>HypercareEndReason</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varAccountLifecycleActions</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>loopThroughRetrievedALARecords</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>loopThroughRetrievedALARecords</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <description>Reason: Happy Customer</description>
+        <name>HappyCustomer</name>
+        <choiceText>Happy Customer</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Happy Customer</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <description>Reason: No Longer Needed</description>
+        <name>NoLongerNeeded</name>
+        <choiceText>No Longer Needed</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No Longer Needed</stringValue>
+        </value>
+    </choices>
+    <description>Dectivates the Hypercare mode on an Account record.</description>
+    <environments>Default</environments>
+    <interviewLabel>Service - Screen-Flow Account Hypercare Deactivation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Service - Screen-Flow Account Hypercare Deactivation</label>
+    <loops>
+        <description>Loop through all retrieved ALA records in order to set/update end date and reason.</description>
+        <name>loopThroughRetrievedALARecords</name>
+        <label>Loop Through Retrieved ALA Records</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <collectionReference>getOpenALARecord</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>AssignEndDateReason</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>UpdateALARecord</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>Gets theopen (not expired) ALA record(s) for the Account and updates the End Reason &amp; End Date fields on that ALA record.</description>
+        <name>getOpenALARecord</name>
+        <label>Get Open ALA Records</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>loopThroughRetrievedALARecords</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR 3)</filterLogic>
+        <filters>
+            <field>Account__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>EndDate__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>EndDate__c</field>
+            <operator>GreaterThanOrEqualTo</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>AccountLifecycleAction__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>EndDate__c</queriedFields>
+        <queriedFields>EndReason__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Updates ALA record with an end reason and date.</description>
+        <name>UpdateALARecord</name>
+        <label>Update ALA Record</label>
+        <locationX>176</locationX>
+        <locationY>734</locationY>
+        <connector>
+            <targetReference>assDeactivateHypercareOnAccount</targetReference>
+        </connector>
+        <inputReference>varAccountLifecycleActions</inputReference>
+    </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <screens>
+        <name>HypercareDeactivation</name>
+        <label>Hypercare Deactivation</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>getOpenALARecord</targetReference>
+        </connector>
+        <fields>
+            <name>HCendReasonTxt</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Please choose the Hypercare end reason in the section below.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>HypercareEndReason</name>
+            <choiceReferences>HappyCustomer</choiceReferences>
+            <choiceReferences>NoLongerNeeded</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Hypercare End Reason</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>SuccessMessage</name>
+        <label>Success Message</label>
+        <locationX>176</locationX>
+        <locationY>974</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>SuccessfullyDeactivatedHCMode</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;The Hypercare mode on the Account was successfully deactivated.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>HypercareDeactivation</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Account record on which hypercare needs to be inactivated</description>
+        <name>varAccount</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <description>Collection of Account Lifecycle Action records</description>
+        <name>varAccountLifecycleActions</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>AccountLifecycleAction__c</objectType>
+    </variables>
+</Flow>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Post_Message_to_Chatter</name>
+        <label>Post Message to Chatter</label>
+        <locationX>365</locationX>
+        <locationY>342</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>UserID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <elementReference>ChatterPostBody</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>user</stringValue>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>OutputFeedItemId</assignToReference>
+            <name>feedItemId</name>
+        </outputParameters>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <description>Reply to unauthorized chatter message (with attachment)</description>
+    <interviewLabel>Reply To Chatter Message {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Reply To Chatter Message</label>
+    <processType>AutoLaunchedFlow</processType>
+    <startElementReference>Post_Message_to_Chatter</startElementReference>
+    <status>Active</status>
+    <textTemplates>
+        <name>ChatterPostBody</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>@[{!UserID}] Due to security regulations it is not allowed to post attachments to Chatter. We would kindly ask you to remove the file and chatter post.
+In parallel the IS department will be informed on this Chatter Post.
+
+Kind regards,
+Adyen IS Department
+#SecurityViolation #NoFilesInChatter</text>
+    </textTemplates>
+    <variables>
+        <name>OutputFeedItemId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Title of the Chatter Post</description>
+        <name>Title</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Due to Security regulations Chatter Posts with Attachments are not allowed.</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <description>UserID of the person who created the record</description>
+        <name>UserID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

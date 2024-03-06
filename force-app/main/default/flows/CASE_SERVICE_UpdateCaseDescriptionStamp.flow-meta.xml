@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <assignments>
+        <description>Clear value of &apos;Case Description Stamp&apos; field</description>
+        <name>ClearCaseDescriptionStampField</name>
+        <label>Clear Case Description Stamp Field</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CaseDescriptionStamp__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Copy &apos;Description&apos; field&apos;s value to &apos;Case Description Stamp&apos; field</description>
+        <name>PopulateCaseDescriptionStampField</name>
+        <label>Populate Case Description Stamp Field</label>
+        <locationX>314</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.CaseDescriptionStamp__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forDescription</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>Checks whether the field &apos;First Reply Time&apos; is null or not</description>
+        <name>FirstReplyTimePopulated</name>
+        <label>First Reply Time Populated?</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>PopulateCaseDescriptionStampField</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesPopulated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.FirstReplyTime__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ClearCaseDescriptionStampField</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>29-12-2023 | Bug Fix: When checking Case Origin for Email Cases, check that the Origin Contains &apos;Email&apos; rather than Equals &apos;Email&apos; (entry criteria).</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Formula that adds the text &apos;This is the original message that started this case: in front of the description</description>
+        <name>forDescription</name>
+        <dataType>String</dataType>
+        <expression>&apos;This is the original message that started this case:&apos; + &apos; &apos; + {!$Record.Description}</expression>
+    </formulas>
+    <interviewLabel>CASE_SERVICE_UpdateCaseDescriptionStamp {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CASE_SERVICE_UpdateCaseDescriptionStamp</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>FirstReplyTimePopulated</targetReference>
+        </connector>
+        <filterFormula>AND(
+  {!$Record.RecordType.Name} = &apos;Service Case&apos;,
+  CONTAINS(TEXT({!$Record.Origin}), &quot;Email&quot;) = False
+)</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

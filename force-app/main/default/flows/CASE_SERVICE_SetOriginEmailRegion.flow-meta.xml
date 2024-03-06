@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <description>30-08-2023 | Matt: Added Support Email - LATAM
+11-12-2023: Updated formula to match new picklist values</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Determines the Case Origin Email Region based on the Case Origin</description>
+        <name>forCaseOriginEmailRegion</name>
+        <dataType>String</dataType>
+        <expression>CASE({!$Record.Origin}, &apos;Email - APAC&apos;, &apos;APAC&apos;, &apos;Email - LATAM&apos;, &apos;LATAM&apos;, &apos;Email - NA&apos;, &apos;NA&apos;, &apos;Email - EMEA&apos;, &apos;EMEA&apos;, &apos;&apos;)</expression>
+    </formulas>
+    <interviewLabel>CASE_SERVICE_SetCaseOriginEmailRegion {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CASE_SERVICE_SetOriginEmailRegion</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Set_Origin_Email_Field</name>
+        <label>Set Origin Email Field</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <inputAssignments>
+            <field>CaseOriginRegion__c</field>
+            <value>
+                <elementReference>forCaseOriginEmailRegion</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Origin</field>
+            <value>
+                <stringValue>Email</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Set_Origin_Email_Field</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Origin</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Email -</stringValue>
+            </value>
+        </filters>
+        <object>Case</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

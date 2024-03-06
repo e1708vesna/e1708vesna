@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <assignments>
+        <description>Case Priority is changed to High</description>
+        <name>assPriority</name>
+        <label>Change Priority to High</label>
+        <locationX>490</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>High</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <description>Case Priority is changed to Urgent</description>
+        <name>Change_Priority_to_Urgent</name>
+        <label>Change Priority to Urgent</label>
+        <locationX>50</locationX>
+        <locationY>611</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Priority</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Urgent</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Escalation_Reason</name>
+        <label>Escalation Reason</label>
+        <locationX>402</locationX>
+        <locationY>395</locationY>
+        <defaultConnector>
+            <targetReference>Update_Priority_To_High</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other Reasons</defaultConnectorLabel>
+        <rules>
+            <name>Emergency_Email_Used_By_Customer</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.EscalationReason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Emergency Email Used By Customer</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Priority_To_Urgent</targetReference>
+            </connector>
+            <label>Emergency Email Used By Customer</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Escalated</name>
+        <label>Is Escalated?</label>
+        <locationX>666</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>NOT Escalated</defaultConnectorLabel>
+        <rules>
+            <name>Escalated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.IsEscalated</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Escalation_Reason</targetReference>
+            </connector>
+            <label>Escalated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Update_Priority_To_High</name>
+        <label>Update Priority To High?</label>
+        <locationX>622</locationX>
+        <locationY>503</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesEscalatedPriorityNormalOrMedium</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Priority</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>High</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Priority</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Urgent</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>assPriority</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Update_Priority_To_Urgent</name>
+        <label>Update Priority To Urgent?</label>
+        <locationX>182</locationX>
+        <locationY>503</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Priority</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Urgent</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Change_Priority_to_Urgent</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Refactor to include logic for escalation by including the emergency email address on a case email thread.</description>
+    <environments>Default</environments>
+    <interviewLabel>Before-Save Case Escalation {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Before-Save Case Escalation</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>540</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_Escalated</targetReference>
+        </connector>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

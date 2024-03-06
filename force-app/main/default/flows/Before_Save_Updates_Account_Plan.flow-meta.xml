@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <assignments>
+        <name>Update_Account_Plan_Name</name>
+        <label>Update Account Plan Name</label>
+        <locationX>182</locationX>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Name</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AccountPlanName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IsAccountPlanModifiedByAm</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>UpdateLastModifiedByAm</name>
+        <label>Update Last Modified By AM</label>
+        <locationX>50</locationX>
+        <locationY>551</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.LastModifiedByAm__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forUserName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.LastModifiedByAmDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>IsAccountPlanModifiedByAm</name>
+        <label>Is Account Plan Modified by AM?</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ModifiedByAM</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Profile.Name</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Adyen v2 Account Manager</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateLastModifiedByAm</targetReference>
+            </connector>
+            <label>Modified by AM</label>
+        </rules>
+    </decisions>
+    <description>Last Update: Differentiation naming Partner versus Merchant Account Plans</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>AccountPlanName</name>
+        <dataType>String</dataType>
+        <expression>IF(
+CONTAINS({!$Record.RecordType.DeveloperName}, &quot;Partner&quot;),
+&quot;PAP-&quot;&amp;LEFT({!$Record.Account__r.Name}, 76),
+&quot;AP-&quot;&amp;LEFT({!$Record.Account__r.Name}, 77)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forUserName</name>
+        <dataType>String</dataType>
+        <expression>{!$User.FirstName} &amp; &quot; &quot; &amp; {!$User.LastName}</expression>
+    </formulas>
+    <interviewLabel>Before- {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Before-Save Updates Account Plan</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Account_Plan_Name</targetReference>
+        </connector>
+        <object>AccountPlan__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

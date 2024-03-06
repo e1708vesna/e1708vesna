@@ -1,0 +1,12 @@
+<aura:component implements="lightning:homeTemplate" description="A single column with a background image">
+    <aura:attribute name="main" type="Aura.Component[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}" />
+
+    <div>
+        <lightning:layout horizontalAlign="spread" verticalAlign="center">
+            <lightning:layoutItem flexibility="grow">
+                {!v.main}
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

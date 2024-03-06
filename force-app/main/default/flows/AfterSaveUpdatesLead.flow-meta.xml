@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>SendNotification</name>
+        <label>Send Notification</label>
+        <locationX>50</locationX>
+        <locationY>1463</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <elementReference>GetCustomNotificationReferral.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <elementReference>textMessageToReferralContactOwner</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Partner Referral Contact Owner updated on Lead</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>collectionRecipientReferralContactOwner</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>SendNotificationToRecordOwner</name>
+        <label>Send Notification To Record Owner</label>
+        <locationX>50</locationX>
+        <locationY>947</locationY>
+        <actionName>customNotificationAction</actionName>
+        <actionType>customNotificationAction</actionType>
+        <connector>
+            <targetReference>NewPartnerReferralContactOwner</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>customNotifTypeId</name>
+            <value>
+                <elementReference>GetCustomNotification.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>body</name>
+            <value>
+                <elementReference>textMessageToOwner</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Referral change on a Lead</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientIds</name>
+            <value>
+                <elementReference>collectionRecipient</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>targetId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>52.0</apiVersion>
+    <assignments>
+        <name>AssignRecipient</name>
+        <label>Assign Recipient</label>
+        <locationX>50</locationX>
+        <locationY>839</locationY>
+        <assignmentItems>
+            <assignToReference>collectionRecipient</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SendNotificationToRecordOwner</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignRecipientReferralContactOwner</name>
+        <label>Assign Recipient</label>
+        <locationX>50</locationX>
+        <locationY>1355</locationY>
+        <assignmentItems>
+            <assignToReference>collectionRecipientReferralContactOwner</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record__Prior.PartnerReferralContactOwner__r.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SendNotification</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>NewLead</name>
+        <label>NewLead?</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnector>
+            <targetReference>SendOwnerNotification</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.PreferredLanguage__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Preferred_Language</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>NewPartnerReferralContactOwner</name>
+        <label>New Partner Referral Contact Owner?</label>
+        <locationX>182</locationX>
+        <locationY>1139</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesPartnerReferralContactOwnerChanged</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.PartnerReferralContactOwner__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.PartnerReferralContactOwner__r.IsActive</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record__Prior.PartnerReferralContactOwner__r.Id</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>forLoggedInUser</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetCustomNotificationReferral</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>SendOwnerNotification</name>
+        <label>Send Owner Notification</label>
+        <locationX>182</locationX>
+        <locationY>623</locationY>
+        <defaultConnector>
+            <targetReference>NewPartnerReferralContactOwner</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>NotifyOwner</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$User.Id</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Partner_Referral__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Owner:User.IsActive</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetCustomNotification</targetReference>
+            </connector>
+            <label>Notify Owner</label>
+        </rules>
+    </decisions>
+    <description>Last Update: Changed Decision Node regarding preferred language</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Determine Lead Origin based on Main Form Fill</description>
+        <name>ForLeadOriginMainFormFill</name>
+        <dataType>String</dataType>
+        <expression>CASE({!$Record.MainFormFill__c}, 
+&apos;Partner Portal&apos;, &apos;Inbound Hot&apos;, 
+&apos;Contact Sales&apos;, &apos;Inbound Hot&apos;, 
+&apos;Reactivation&apos;, &apos;Inbound Hot&apos;, 
+&apos;Inbound Call&apos;, &apos;Inbound Hot&apos;, 
+&apos;Inbound Email&apos;,  &apos;Inbound Hot&apos;, 
+&apos;Event Met&apos;, &apos;Inbound Cold&apos;, 
+&apos;Test Account Settings&apos;, &apos;Inbound Hot&apos;, 
+&apos;Product Interest&apos;, &apos;Inbound Hot&apos;, 
+&apos;Country Interest&apos;, &apos;Inbound Hot&apos;, 
+ &apos;Video on Demand&apos;, &apos;Inbound Cold&apos;,
+&apos;Content Download&apos;, &apos;Inbound Cold&apos;,
+&apos;Newsletter Signup&apos;, &apos;Inbound Cold&apos;,
+&apos;Investor Relations&apos;, &apos;Inbound Cold&apos;,
+&apos;Webinar&apos;, &apos;Inbound Cold&apos;,
+&apos;Legal Update Signup&apos;, &apos;Inbound Cold&apos;,
+ &apos;Event Purchased&apos;, &apos;Outbound&apos;,
+&apos;Sales Generated&apos;, &apos;Outbound&apos;,
+&apos;AM Generated&apos;, &apos;Outbound&apos;,
+&apos;Outbound List&apos;, &apos;Outbound&apos;,
+&apos;Sales Navigator&apos;, &apos;Outbound&apos;,
+&apos;Event Signup&apos;, &apos;Inbound Cold&apos;, 
+&apos;PM Generated&apos;, &apos;Inbound Hot&apos;, 
+&apos;Platform self onboarding&apos;, &apos;Inbound Hot&apos;,
+&apos;PSP sync&apos;, &apos;Inbound Hot&apos;,
+&apos;Education Hub&apos;, &apos;Inbound Cold&apos;, 
+&apos;Partner Signup&apos;, &apos;Referral&apos;,
+&apos;Developer Newsletter&apos;, &apos;inbound cold&apos;, 
+&apos;Partner Newsletter&apos;, &apos;Inbound Cold&apos;, 
+&apos;Inbound Cold&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>forLoggedInUser</name>
+        <dataType>String</dataType>
+        <expression>CASESAFEID({!$User.Id})</expression>
+    </formulas>
+    <formulas>
+        <description>Value of Main Form Fill with the matching tag values</description>
+        <name>ForNewMainFormFill</name>
+        <dataType>String</dataType>
+        <expression>IF(
+NOT(ISBLANK({!$Record.MainFormFill__c})),
+CASE({!$Record.MainFormFill__c}, 
+&apos;Partner Portal&apos;, &apos;inbound hot&apos;, 
+&apos;Contact Sales&apos;, &apos;inbound hot&apos;, 
+&apos;Reactivation&apos;, &apos;inbound hot&apos;, 
+&apos;Inbound Call&apos;, &apos;inbound hot&apos;, 
+&apos;Inbound Email&apos;,  &apos;inbound hot&apos;, 
+&apos;Event Met&apos;, &apos;inbound hot&apos;, 
+&apos;Test Account Settings&apos;, &apos;inbound hot&apos;, 
+&apos;Product Interest&apos;, &apos;inbound hot&apos;, 
+&apos;Country Interest&apos;, &apos;inbound hot&apos;, 
+ &apos;Video on Demand&apos;, &apos;inbound cold&apos;,
+&apos;Content Download&apos;, &apos;inbound cold&apos;,
+&apos;Newsletter Signup&apos;, &apos;inbound cold&apos;,
+&apos;Investor Relations&apos;, &apos;inbound cold&apos;,
+&apos;Webinar&apos;, &apos;inbound cold&apos;,
+&apos;Legal Update Signup&apos;, &apos;inbound cold&apos;,
+ &apos;Event Purchased&apos;, &apos;Outbound&apos;,
+&apos;Sales Generated&apos;, &apos;Outbound&apos;,
+&apos;AM Generated&apos;, &apos;Outbound&apos;,
+&apos;Outbound List&apos;, &apos;Outbound&apos;,
+&apos;Sales Navigator&apos;, &apos;Outbound&apos;,
+&apos;Event Signup&apos;, &apos;inbound cold&apos;, 
+&apos;PM Generated&apos;, &apos;Inbound Hot/Outbound&apos;, 
+&apos;Platform self onboarding&apos;, &apos;Existing Merchant&apos;,
+&apos;PSP sync&apos;, &apos;Existing Merchant&apos;,
+&apos;Education Hub&apos;, &apos;Existing Merchant&apos;, 
+&apos;Partner Signup&apos;, &apos;Referral&apos;,
+&apos;Developer Newsletter&apos;, &apos;inbound cold&apos;, 
+&apos;Partner Newsletter&apos;, &apos;Referral&apos;, 
+&apos;Inbound&apos;), 
+&apos;&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>forPreferredLanguage</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK({!$Record.Country})),
+CASE({!$Record.Country},
+&apos;Japan&apos;, &apos;Japanese&apos;,
+&apos;France&apos;, &apos;French&apos;,
+&apos;Germany&apos;, &apos;German&apos;,
+&apos;Switzerland&apos;, &apos;German&apos;,
+&apos;Austria&apos;, &apos;German&apos;,
+&apos;Italy&apos;, &apos;Italian&apos;,
+&apos;Brazil&apos;, &apos;Portuguese&apos;,
+&apos;Mexico&apos;, &apos;Spanish&apos;,
+&apos;Sweden&apos;, &apos;Swedish&apos;,
+&apos;Denmark&apos;, &apos;Danish&apos;,
+&apos;Norway&apos;, &apos;Norwegian&apos;,
+&apos;Poland&apos;, &apos;Polish&apos;,
+&apos;Portugal&apos;, &apos;Portuguese&apos;,
+&apos;Netherlands&apos;, &apos;Dutch&apos;,
+&apos;Spain&apos;, &apos;Spanish&apos;,
+&apos;English&apos;),
+&apos;English&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>ForPriorMainFormFill</name>
+        <dataType>String</dataType>
+        <expression>IF(
+NOT(ISBLANK({!$Record__Prior.MainFormFill__c})),
+CASE({!$Record__Prior.MainFormFill__c}, 
+&apos;Partner Portal&apos;, &apos;inbound hot&apos;, 
+&apos;Contact Sales&apos;, &apos;inbound hot&apos;, 
+&apos;Reactivation&apos;, &apos;inbound hot&apos;, 
+&apos;Inbound Call&apos;, &apos;inbound hot&apos;, 
+&apos;Inbound Email&apos;,  &apos;inbound hot&apos;, 
+&apos;Event Met&apos;, &apos;inbound hot&apos;, 
+&apos;Test Account Settings&apos;, &apos;inbound hot&apos;, 
+&apos;Product Interest&apos;, &apos;inbound hot&apos;, 
+&apos;Country Interest&apos;, &apos;inbound hot&apos;, 
+ &apos;Video on Demand&apos;, &apos;inbound cold&apos;,
+&apos;Content Download&apos;, &apos;inbound cold&apos;,
+&apos;Newsletter Signup&apos;, &apos;inbound cold&apos;,
+&apos;Investor Relations&apos;, &apos;inbound cold&apos;,
+&apos;Webinar&apos;, &apos;inbound cold&apos;,
+&apos;Legal Update Signup&apos;, &apos;inbound cold&apos;,
+ &apos;Event Purchased&apos;, &apos;Outbound&apos;,
+&apos;Sales Generated&apos;, &apos;Outbound&apos;,
+&apos;AM Generated&apos;, &apos;Outbound&apos;,
+&apos;Outbound List&apos;, &apos;Outbound&apos;,
+&apos;Sales Navigator&apos;, &apos;Outbound&apos;,
+&apos;Event Signup&apos;, &apos;inbound cold&apos;, 
+&apos;PM Generated&apos;, &apos;Inbound Hot/Outbound&apos;, 
+&apos;Platform self onboarding&apos;, &apos;Existing Merchant&apos;,
+&apos;PSP sync&apos;, &apos;Existing Merchant&apos;,
+&apos;Education Hub&apos;, &apos;Existing Merchant&apos;, 
+&apos;Partner Signup&apos;, &apos;Referral&apos;,
+&apos;Developer Newsletter&apos;, &apos;inbound cold&apos;, 
+&apos;Partner Newsletter&apos;, &apos;Referral&apos;, 
+&apos;Inbound&apos;), 
+&apos;&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>SuspectAccountOwner</name>
+        <dataType>String</dataType>
+        <expression>IF( AND( NOT(ISBLANK({!$Record.Owner:User.Id})), {!$Record.Owner:User.IsActive}),
+{!$Record.Owner:User.Id},
+{!$Label.UnmanagedUser}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>SuspectAccountRecordTypeId</name>
+        <dataType>String</dataType>
+        <expression>{!$Label.SuspectAccount}</expression>
+    </formulas>
+    <interviewLabel>After-Save Updates Lead {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>After-Save Updates Lead</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>GetCustomNotification</name>
+        <label>Get Custom Notification</label>
+        <locationX>50</locationX>
+        <locationY>731</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssignRecipient</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>ReferralNotificationToRecordOwner</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CustomNotificationType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCustomNotificationReferral</name>
+        <label>Get Custom Notification Referral</label>
+        <locationX>50</locationX>
+        <locationY>1247</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssignRecipientReferralContactOwner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>ReferralContactOwnerNotification</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CustomNotificationType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Preferred_Language</name>
+        <label>Update Preferred Language</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <connector>
+            <targetReference>SendOwnerNotification</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>PreferredLanguage__c</field>
+            <value>
+                <elementReference>forPreferredLanguage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>NewLead</targetReference>
+        </connector>
+        <object>Lead</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>textMessageToOwner</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{!$User.FirstName} {!$User.LastName} changed the referral on one of your Leads: {!$Record.FirstName} {!$Record.LastName}</text>
+    </textTemplates>
+    <textTemplates>
+        <name>textMessageToReferralContactOwner</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>{!$User.FirstName} {!$User.LastName} changed the Partner Referral Contact Owner on a Lead where you were previously the Partner Referral Contact Owner: {!$Record.FirstName} {!$Record.LastName}</text>
+    </textTemplates>
+    <variables>
+        <name>collectionRecipient</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>collectionRecipientReferralContactOwner</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varNewTagId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varNewTagName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varPriorTagId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varPriorTagName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varTaggingLeadId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

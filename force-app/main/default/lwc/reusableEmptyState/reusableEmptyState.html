@@ -1,0 +1,37 @@
+<template>
+    <lightning-card>
+        <div class={flexipageRegionWidth}>
+            <div class={rootClass}>
+                <!--Illustration Image-->
+                <c-illustration-image
+                    if:false={textOnly}
+                    image-name={imageName}
+                ></c-illustration-image>
+                <!--Illustration Image-->
+                <div class="slds-text-longform">
+                    <!--Heading-->
+                    <h3 class="slds-text-heading_medium">
+                        {heading}
+                    </h3>
+                    <!--Heading-->
+                    <slot name="messageBody">
+                        <p class="slds-text-body_regular slds-p-bottom_xx-small">
+                            <!--Message-->
+                            <lightning-formatted-rich-text
+                                value={messageBody}>
+                            </lightning-formatted-rich-text>
+                            <!--Message-->
+                        </p>
+                    </slot>
+                </div>
+            </div>
+        </div>
+        <!--Call to Action Button-->
+        <template lwc:if={showCallToAction}>
+            <footer class="slds-card__footer">
+                <button class="slds-button slds-button_brand" onclick={createCase}>Create a Case</button>
+            </footer>
+        </template>
+    </lightning-card>
+    <!--Call to Action Button-->
+</template>

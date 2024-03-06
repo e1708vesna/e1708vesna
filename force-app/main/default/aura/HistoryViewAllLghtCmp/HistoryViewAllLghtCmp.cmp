@@ -1,0 +1,34 @@
+<aura:component controller="HistoryRelatedListLghtCtrl" implements="lightning:isUrlAddressable" access="global">
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.init}" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:attribute name="recordId" type="String" access="global" />
+    <aura:attribute name="objectName" type="String" access="global" />
+    <aura:attribute name="historyType" type="String" default="" access="global" />
+    <aura:attribute name="includeStandardHistory" type="Boolean" default="false" access="global" />
+    
+    <aura:attribute name="recordName" type="String" default=""/>
+    
+    <aura:attribute name="records" type="Object[]"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="headerTitle" type="Aura.Component[]">
+        <div >
+            <p><small>{!v.objectName} > <lightning:formattedUrl value="{!'/'+v.recordId}" label="{!v.recordName}"/></small></p>
+            <h2 class="cardheader">
+                <b>History ({!v.records.length})</b>
+            </h2>
+        </div>
+    </aura:attribute>
+    
+    <lightning:card class="slds-card_boundary forceRelatedListCardHeader" title="{!v.headerTitle}">
+        <lightning:datatable
+                             resizeColumnDisabled="true"
+                             keyField="id"
+                             data="{!v.records}"
+                             columns="{!v.columns}"
+                             hideCheckboxColumn="true"
+                             showRowNumberColumn="true"
+                             />
+    </lightning:card>
+    
+</aura:component>

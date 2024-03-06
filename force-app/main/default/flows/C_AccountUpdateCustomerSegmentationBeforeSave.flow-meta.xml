@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <decisions>
+        <description>Decision on which specific Customer Segmentation is needed based on Account Owner and Merchant Status</description>
+        <name>WhichCustomerSegmentationIsNeeded</name>
+        <label>Which Customer Segmentation is needed?</label>
+        <locationX>314</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ManagedAccount</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4 OR 5)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Owner.SalesTeam__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Account Management</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Live</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Transacting</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Churning</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Churned</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CustomerSegmentationToManaged</targetReference>
+            </connector>
+            <label>Managed Account</label>
+        </rules>
+        <rules>
+            <name>StandardAccount</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4 OR 5)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Owner.SalesTeam__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Account Management Pool</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Live</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Transacting</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Churning</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Account_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Churned</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CustomerSegmentationToStandardAccount</targetReference>
+            </connector>
+            <label>Standard Account</label>
+        </rules>
+    </decisions>
+    <description>This flow updates the Customer Segmentation field on Account based on the Merchant Status and Account Owner</description>
+    <environments>Default</environments>
+    <interviewLabel>[C] Account - Update Customer Segmentation - Before Save {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[C] Account - Update Customer Segmentation - Before Save</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Update the Customer Segmentation on Account to Managed Account</description>
+        <name>CustomerSegmentationToManaged</name>
+        <label>Customer Segmentation to Managed</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>ServiceLevel__c</field>
+            <value>
+                <stringValue>Managed Account</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Update the Customer Segmentation on Account to Standard Account</description>
+        <name>CustomerSegmentationToStandardAccount</name>
+        <label>Customer Segmentation to Standard Account</label>
+        <locationX>314</locationX>
+        <locationY>431</locationY>
+        <inputAssignments>
+            <field>ServiceLevel__c</field>
+            <value>
+                <stringValue>Standard Account</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>WhichCustomerSegmentationIsNeeded</targetReference>
+        </connector>
+        <filterLogic>(1 OR 2) AND 3 AND 4 AND 5</filterLogic>
+        <filters>
+            <field>Account_Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>OwnerId</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ServiceLevel__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Top Account</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ServiceLevel__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Focus Account</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ServiceLevel__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Key Account</stringValue>
+            </value>
+        </filters>
+        <object>Account</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

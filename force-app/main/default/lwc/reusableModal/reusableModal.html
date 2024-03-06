@@ -1,0 +1,30 @@
+<template>
+    <lightning-modal-header label="Create Case"></lightning-modal-header>
+    <lightning-modal-body>
+        <lightning-flow
+                flow-api-name='TEST_CreateCase_DGR'
+                flow-input-variables={inputVariables}
+        >
+        </lightning-flow>
+        <!--<template lwc:if={showEmptyState}>
+            <c-reusable-empty-state
+                    heading={label.EmptyStateHeading}
+                    message-body={label.CaseCreationFailureMessage}
+                    image-name="error:walkthrough_not_available"
+                    image-size="small">
+            </c-reusable-empty-state>
+        </template>-->
+        <!--Empty State-->
+    </lightning-modal-body>
+
+    <!--Toast Component-->
+    <template lwc:if={showToast}>
+        <c-show-toast-msg
+                title="Case Created"
+                message="Sit back & relax, somebody from Commercial Enablement will reach out to you within 3-5 business days"
+                variant="success"
+                mode="dismissible">
+        </c-show-toast-msg>
+    </template>
+    <!--Toast Component-->
+</template>

@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>49.0</apiVersion>
+    <choices>
+        <name>choNo</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>choYes</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <name>AccountOrOpportunity</name>
+        <label>Account or Opportunity</label>
+        <locationX>168</locationX>
+        <locationY>258</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>IsAccount</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>001</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>scrRequest</targetReference>
+            </connector>
+            <label>Record is Account</label>
+        </rules>
+        <rules>
+            <name>IsOpportunity</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>006</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetOpportunity</targetReference>
+            </connector>
+            <label>Record is Opportunity</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Should_Support_Request_be_submitted</name>
+        <label>Should Support Request be submitted?</label>
+        <locationX>439</locationX>
+        <locationY>612</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Submit</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Submit_Support_Request_chbx</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Submit_Support_Request</targetReference>
+            </connector>
+            <label>Submit</label>
+        </rules>
+    </decisions>
+    <description>POS to IPP text update</description>
+    <dynamicChoiceSets>
+        <name>choRegion</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Region__c</picklistField>
+        <picklistObject>SupportRequest__c</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>choResourcesNeeded</name>
+        <dataType>Multipicklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>ResourcesNeeded__c</picklistField>
+        <picklistObject>SupportRequest__c</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <formulas>
+        <name>forAccountId</name>
+        <dataType>String</dataType>
+        <expression>IF(LEFT({!recordId},3)=&apos;001&apos;,{!recordId},
+IF(LEFT({!recordId},3)=&apos;006&apos;,{!GetOpportunity.AccountId},NULL))</expression>
+    </formulas>
+    <formulas>
+        <name>forCurrentUser</name>
+        <dataType>String</dataType>
+        <expression>{!$User.Id}</expression>
+    </formulas>
+    <formulas>
+        <name>forOpportunityId</name>
+        <dataType>String</dataType>
+        <expression>IF(LEFT({!recordId},3)=&apos;006&apos;,{!recordId},NULL)</expression>
+    </formulas>
+    <formulas>
+        <name>outputIntegrations</name>
+        <dataType>String</dataType>
+        <expression>IF(AND({!EcomIntegration}=True,{!PosIntegration}=True,{!AdyenForPlatforms}=True,{!FranchiseQSR}=True),&quot;Ecom Integration;POS Integration;Adyen for Platforms;Franchise / QSR&quot;,
+
+IF(AND({!EcomIntegration}=True,{!PosIntegration}=True,{!AdyenForPlatforms}=True,{!FranchiseQSR}=False),&quot;Ecom Integration;POS Integration;Adyen for Platforms&quot;,
+
+IF(AND({!EcomIntegration}=True,{!PosIntegration}=True,{!AdyenForPlatforms}=False,{!FranchiseQSR}=True),&quot;Ecom Integration;POS Integration;Franchise / QSR&quot;,
+
+IF(AND({!EcomIntegration}=True,{!PosIntegration}=True,{!AdyenForPlatforms}=False,{!FranchiseQSR}=False),&quot;Ecom Integration;POS Integration&quot;,
+
+IF(AND({!EcomIntegration}=True,{!PosIntegration}=False,{!AdyenForPlatforms}=True,{!FranchiseQSR}=False),&quot;Ecom Integration;Adyen for Platforms&quot;,
+
+IF(AND({!EcomIntegration}=True,{!PosIntegration}=False,{!AdyenForPlatforms}=False,{!FranchiseQSR}=True),&quot;Ecom Integration;Franchise / QSR&quot;,
+
+IF(AND({!EcomIntegration}=True,{!PosIntegration}=False,{!AdyenForPlatforms}=False,{!FranchiseQSR}=False),&quot;Ecom Integration&quot;,
+
+IF(AND({!EcomIntegration}=False,{!PosIntegration}=True,{!AdyenForPlatforms}=True,{!FranchiseQSR}=False),&quot;POS Integration;Adyen for Platforms&quot;,
+
+IF(AND({!EcomIntegration}=False,{!PosIntegration}=True,{!AdyenForPlatforms}=False,{!FranchiseQSR}=True),&quot;POS Integration;Franchise / QSR&quot;,
+
+IF(AND({!EcomIntegration}=False,{!PosIntegration}=True,{!AdyenForPlatforms}=False,{!FranchiseQSR}=False),&quot;POS Integration&quot;,
+
+IF(AND({!EcomIntegration}=False,{!PosIntegration}=False,{!AdyenForPlatforms}=True,{!FranchiseQSR}=True),&quot;Adyen for Platforms;Franchise / QSR&quot;,
+
+IF(AND({!EcomIntegration}=False,{!PosIntegration}=False,{!AdyenForPlatforms}=True,{!FranchiseQSR}=False),&quot;Adyen for Platforms&quot;,
+
+IF(AND({!EcomIntegration}=False,{!PosIntegration}=False,{!AdyenForPlatforms}=False,{!FranchiseQSR}=True),&quot;Franchise / QSR&quot;,&quot;&quot;)))))))))))))</expression>
+    </formulas>
+    <formulas>
+        <name>outputResourcesNeeded</name>
+        <dataType>String</dataType>
+        <expression>IF(AND({!IM}=True,{!POM}=True,{!OnboardingSpecialist}=True),&quot;IM;POM;Onboarding Specialist&quot;,
+
+IF(AND({!IM}=True,{!POM}=True,{!OnboardingSpecialist}=False),&quot;IM;POM&quot;,
+
+IF(AND({!IM}=True,{!POM}=False,{!OnboardingSpecialist}=True),&quot;IM;Onboarding Specialist&quot;,
+
+IF(AND({!IM}=True,{!POM}=False,{!OnboardingSpecialist}=False),&quot;IM&quot;,
+
+IF(AND({!IM}=False,{!POM}=True,{!OnboardingSpecialist}=True),&quot;POM;Onboarding Specialist&quot;,
+
+IF(AND({!IM}=False,{!POM}=True,{!OnboardingSpecialist}=False),&quot;POM&quot;,
+
+IF(AND({!IM}=False,{!POM}=False,{!OnboardingSpecialist}=True),&quot;Onboarding Specialist&quot;,&quot;&quot;)))))))</expression>
+    </formulas>
+    <interviewLabel>Create Support Request {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create Support Request</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <name>CreateSupportRequest</name>
+        <label>Create Support Request</label>
+        <locationX>304</locationX>
+        <locationY>447</locationY>
+        <assignRecordIdToReference>varCreatedSupportRequest</assignRecordIdToReference>
+        <connector>
+            <targetReference>Support_Request_Created</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>ErrorScreen</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>Account__c</field>
+            <value>
+                <elementReference>forAccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AddendumForPosServicesSigned__c</field>
+            <value>
+                <elementReference>AddendumForPosServicesSigned</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Context__c</field>
+            <value>
+                <elementReference>Context</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Integrations__c</field>
+            <value>
+                <elementReference>outputIntegrations</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>MerchantTechnicalContact__c</field>
+            <value>
+                <elementReference>varMerchantTechnicalContact</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NextMeeting__c</field>
+            <value>
+                <elementReference>NextMeeting</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>forOpportunityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PluginName__c</field>
+            <value>
+                <elementReference>PluginName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Plugin__c</field>
+            <value>
+                <elementReference>Plugin</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Region__c</field>
+            <value>
+                <elementReference>Region</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ResourcesNeeded__c</field>
+            <value>
+                <elementReference>outputResourcesNeeded</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <object>SupportRequest__c</object>
+    </recordCreates>
+    <recordLookups>
+        <name>GetOpportunity</name>
+        <label>Get Opportunity</label>
+        <locationX>304</locationX>
+        <locationY>189</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>scrRequest</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>ErrorScreen</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <runInMode>SystemModeWithSharing</runInMode>
+    <screens>
+        <name>ErrorScreen</name>
+        <label>ErrorScreen</label>
+        <locationX>616</locationX>
+        <locationY>338</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>disErrorText</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Something went wrong during this process due to the following error:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(192, 1, 1);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Please retry if you understand what goes wrong, otherwise reach out to your System Administrator.&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>scrRequest</name>
+        <label>scrRequest</label>
+        <locationX>305</locationX>
+        <locationY>318</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>CreateSupportRequest</targetReference>
+        </connector>
+        <fields>
+            <name>NotificationDifferences</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Please make sure you understand the differences between a handover and support request before making your request. Learn more on hub: &lt;/b&gt;&lt;a href=&quot;https://hub.is.adyen.com/commercial/tools-systems/salesforce/faqs/salesforce-handover-process/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;https://hub.is.adyen.com/commercial/tools-systems/salesforce/faqs/salesforce-handover-process/&lt;/b&gt;&lt;/a&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>displResourcesNeeded</name>
+            <fieldText>&lt;p&gt;Resources needed?&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>IM</name>
+            <dataType>Boolean</dataType>
+            <fieldText>IM</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt; &lt;/p&gt;</errorMessage>
+                <formulaExpression>OR({!IM}=True,{!POM}=True,{!OnboardingSpecialist}=True)</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>POM</name>
+            <dataType>Boolean</dataType>
+            <fieldText>POM</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt; &lt;/p&gt;</errorMessage>
+                <formulaExpression>OR({!IM}=True,{!OnboardingSpecialist}=True,{!POM}=True)</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>OnboardingSpecialist</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Onboarding Specialist</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0); background-color: rgb(255, 255, 255);&quot;&gt;Please select at least one of the options to proceed.&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>OR({!IM}=True,{!OnboardingSpecialist}=True,{!POM}=True)</formulaExpression>
+            </validationRule>
+        </fields>
+        <fields>
+            <name>Region</name>
+            <choiceReferences>choRegion</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Region</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Context</name>
+            <fieldText>Context</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <helpText>&lt;p&gt;Provide context for your request. The support is meant to be used if a new feature or product or service is being added to an existing merchant, an/or&amp;nbsp;you need help from an IM or POM.&lt;/p&gt;</helpText>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>displIntegrations</name>
+            <fieldText>&lt;p&gt;Integrations?&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>EcomIntegration</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Ecom Integration</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>PosIntegration</name>
+            <dataType>Boolean</dataType>
+            <fieldText>IPP Integration</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>AdyenForPlatforms</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Adyen for Platforms</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>FranchiseQSR</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Franchise / QSR</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Plugin</name>
+            <choiceReferences>choYes</choiceReferences>
+            <choiceReferences>choNo</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>choNo</defaultSelectedChoiceReference>
+            <fieldText>Plugin</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>PluginName</name>
+            <dataType>String</dataType>
+            <fieldText>Plugin name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Plugin</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>choYes</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NextMeeting</name>
+            <dataType>Date</dataType>
+            <fieldText>When is next meeting scheduled?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>AddendumForPosServicesSigned</name>
+            <choiceReferences>choYes</choiceReferences>
+            <choiceReferences>choNo</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>choNo</defaultSelectedChoiceReference>
+            <fieldText>Addendum for IPP Services already signed?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>MerchantTechnicalContact</name>
+            <extensionName>flowruntime:lookup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>MerchantTechnicalContact__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Merchant Technical Contact</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>SupportRequest__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>varMerchantTechnicalContact</assignToReference>
+                <name>recordId</name>
+            </outputParameters>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Support_Request_Created</name>
+        <label>Support Request Created</label>
+        <locationX>299</locationX>
+        <locationY>602</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Should_Support_Request_be_submitted</targetReference>
+        </connector>
+        <fields>
+            <name>SubmitRequest</name>
+            <fieldText>&lt;p&gt;Your Support Request has been created! If you&apos;d like to submit your request now, check the box below.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Submit_Support_Request_chbx</name>
+            <dataType>Boolean</dataType>
+            <defaultValue>
+                <booleanValue>false</booleanValue>
+            </defaultValue>
+            <fieldText>Submit Support Request?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>69</locationY>
+        <connector>
+            <targetReference>AccountOrOpportunity</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Submit_Support_Request</name>
+        <label>Submit Support Request</label>
+        <locationX>571</locationX>
+        <locationY>612</locationY>
+        <flowName>UpdateSupportRequestStatus</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>varCreatedSupportRequest</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varCreatedSupportRequest</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varMerchantTechnicalContact</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

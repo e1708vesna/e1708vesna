@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <decisions>
+        <name>AlreadyCompleted</name>
+        <label>Already Completed?</label>
+        <locationX>182</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>InvalidActionScreen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Yes</defaultConnectorLabel>
+        <rules>
+            <name>No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId.IsClosed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ConfirmationScreen</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <description>Screen Flow triggered via a Quick Action that allow the Portal users to update the status of a Case to &apos;Completed&apos;</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Always updates the checkbox to the opposite value. The changing is allowing the user to update the Status.</description>
+        <name>forUpdateCheckbox</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+{!recordId.AllowPortalUserToUpdateStatus__c} = FALSE,
+TRUE,
+FALSE
+)</expression>
+    </formulas>
+    <interviewLabel>CASE_SERVICE_ {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CASE_SERVICE_PortalUserCompletesCase</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordUpdates>
+        <description>Updates the current Case to Status &apos;Completed&apos; together with a checkbox update, so the Validation Rule that would block Status updates for Portal users is bypassed.</description>
+        <name>CompleteCase</name>
+        <label>Complete Case</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <connector>
+            <targetReference>CompletionFinishedScreen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>AllowPortalUserToUpdateStatus__c</field>
+            <value>
+                <elementReference>forUpdateCheckbox</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <screens>
+        <name>CompletionFinishedScreen</name>
+        <label>CompletionFinishedScreen</label>
+        <locationX>50</locationX>
+        <locationY>458</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Copy_1_of_displInvalidAction</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Case resolved&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;This Case has now been updated to completed.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Close Screen</nextOrFinishButtonLabel>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>ConfirmationScreen</name>
+        <label>ConfirmationScreen</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>CompleteCase</targetReference>
+        </connector>
+        <fields>
+            <name>displAreYouSure</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Confirmation&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;You are about to resolve the Case with the following subject: {!recordId.Subject}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;If you want to proceed click on &apos;Resolve My Case&apos;, otherwise close this screen.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Resolve My Case</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>InvalidActionScreen</name>
+        <label>InvalidActionScreen</label>
+        <locationX>314</locationX>
+        <locationY>242</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>displInvalidAction</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Case already resolved&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;This Case has already been completed, therefore you cannot mark it as resolved again.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Close Screen</nextOrFinishButtonLabel>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>AlreadyCompleted</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+</Flow>

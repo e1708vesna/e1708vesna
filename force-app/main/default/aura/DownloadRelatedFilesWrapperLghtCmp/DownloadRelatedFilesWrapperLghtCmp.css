@@ -1,0 +1,30 @@
+.THIS {
+}
+
+.THIS .slds-card__header{
+        background-color: rgb(243,242,242);
+    	padding-bottom: 12px !important;
+    	margin-bottom: 0px !important;
+    	height: 65px !important;
+}
+
+.THIS .slds-card__body{
+        margin: none !important;
+}
+
+.THIS .blackLink a{
+    color: black !important;
+}
+
+.THIS .slds-form-element__label{
+    padding: none;
+}
+
+.THIS .padding-5px{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.THIS lightning-primitive-header-actions {
+    display: none;
+}

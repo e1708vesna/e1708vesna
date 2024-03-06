@@ -1,0 +1,113 @@
+<aura:component controller="DocuSignTemplateSelectorLghtCtrl" implements="lightning:availableForFlowScreens" access="global">
+    
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+    
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    
+    
+    <aura:attribute name="searchQuery"  type="String" access="private" /> 
+    <aura:attribute name="region"  type="String" default = "" access="global"  /> 
+    <aura:attribute name="contractType"  type="String" default = "" access="global" /> 
+    <aura:attribute name="salesChannel"  type="String" default = "" access="global" /> 
+    <aura:attribute name="queryLimit"  type="Integer" default = "15" access="global" />
+    
+    
+    <aura:attribute name="timer"  type="Object" access="private" />
+    
+    <aura:attribute name="regionPickListValues"  type="Object" access="private" /> 
+    <aura:attribute name="contractTypePickListValues"  type="Map" access="private" /> 
+    <aura:attribute name="salesChannelPickListValues"  type="Map" access="private" />
+    
+    <aura:html tag="style">
+        .slds-modal__container {
+        min-width: 80% !important;
+        }
+    </aura:html> 
+    
+    
+    <aura:attribute name="templateId"  type="String" access="global" />
+    <div style="box">
+        <div style="padding-bottom: 10px;">
+            <lightning:input name="query" label="Search in Template Name" value="{!v.searchQuery}"  onchange="{!c.handleOnChange}"/>
+        </div>
+        <div class="slds-grid slds-gutters" style="padding-bottom: 20px;">
+            <div class="slds-col">
+                <span>
+                    <lightning:radioGroup name="Region"
+                                          label="Region"
+                                          options="{! v.regionPickListValues }"
+                                          value="{! v.region }"
+                                          type="radio"
+                                          onchange="{!c.handleOnChange}"/>
+                </span>
+            </div>
+            <div class="slds-col">
+                <span>
+                    <lightning:radioGroup name="ContractType"
+                                          label="ContractType"
+                                          options="{! v.contractTypePickListValues }"
+                                          value="{! v.contractType }"
+                                          type="radio"
+                                          onchange="{!c.handleOnChange}"/>
+                </span>
+            </div>
+            <div class="slds-col">
+                <span>
+                    <lightning:radioGroup name="SalesChannel"
+                                          label="Sales Channel"
+                                          options="{! v.salesChannelPickListValues }"
+                                          value="{! v.salesChannel }"
+                                          type="radio"
+                                          onchange="{!c.handleOnChange}"/>
+                </span>
+            </div>
+        </div>
+        
+        
+        
+        <div style="height: 300px">
+            <lightning:datatable
+                                 columns="{! v.columns }"
+                                 data="{! v.data }"
+                                 keyField="id"
+                                 maxRowSelection="1"
+                                 onrowselection="{! c.updateSelectedTemplate }"/>
+        </div>
+    </div>
+    
+    
+    
+    <!-- Determine which actions are available -->
+   <aura:attribute name="canPause" type="Boolean" />
+   <aura:attribute name="canBack" type="Boolean" />
+   <aura:attribute name="canNext" type="Boolean" />
+   <aura:attribute name="canFinish" type="Boolean" />
+        
+   <div aura:id="actionButtonBar" class="slds-clearfix slds-p-top_medium">
+      <!-- If Previous is available, display to the left -->
+      <div class="slds-float_left">
+         <aura:if isTrue="{!v.canBack}">
+            <lightning:button aura:id="BACK" label="Previous"
+               variant="neutral" onclick="{!c.onButtonPressed}" />
+         </aura:if>
+      </div>
+      <div class="slds-float_right">
+         <!-- If Pause, Next, or Finish are available, display to the right -->
+         <aura:if isTrue="{!v.canPause}">
+            <lightning:button aura:id="PAUSE" label="Pause"
+               variant="neutral" onclick="{!c.onButtonPressed}" />
+         </aura:if>
+         <aura:if isTrue="{! v.canNext}">
+            <lightning:button aura:id="NEXT" label="Next" 
+               variant="brand" disabled="{! not(v.templateId.length > 1)}" onclick="{!c.onButtonPressed}" />
+         </aura:if>
+         <aura:if isTrue="{!v.canFinish}">
+            <lightning:button aura:id="FINISH" label="Done"
+               variant="brand" disabled="{! not(v.templateId.length > 1)}" onclick="{!c.onButtonPressed}" />
+         </aura:if>
+      </div>
+   </div>
+    
+    
+</aura:component>

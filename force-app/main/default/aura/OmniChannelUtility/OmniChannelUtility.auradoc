@@ -1,0 +1,3 @@
+<aura:documentation>
+	<aura:description>POC: Background utility bar functionality to open Omni-Channel utility in specific cases. Don't need to be deployed to other environments then servicedev.</aura:description>
+</aura:documentation>

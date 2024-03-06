@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <description>This flow updates the Account Name with - Partner behind the name so it is identified easily that the Account is a Partner</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>forAccountName</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.Name} + &quot; (Partner)&quot;</expression>
+    </formulas>
+    <interviewLabel>[C] {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>[C] Account - Update Account Name when Account is Partner - Before Save</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Update the Account Name of the Partner Account with &quot;(Partner)&quot;</description>
+        <name>UpdateAccountNameWithPartner</name>
+        <label>Update Account Name with &quot;(Partner)&quot;</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>forAccountName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>UpdateAccountNameWithPartner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeMirror__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>PartnerAccountv2</stringValue>
+            </value>
+        </filters>
+        <object>Account</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

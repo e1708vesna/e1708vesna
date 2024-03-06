@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <decisions>
+        <description>First time an agent sends an outbound post from this case. This can be a reply on a merchant post or a first message.</description>
+        <name>FirstMessageByAgent</name>
+        <label>First Message by Agent?</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>UpdateRecords</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Multiple Replies</defaultConnectorLabel>
+        <rules>
+            <name>FirstReply</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetRelatedCase.FirstReplyTime__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>FirstReplyTime</targetReference>
+            </connector>
+            <label>First Reply</label>
+        </rules>
+    </decisions>
+    <description>Moved first time pley subflow to this flow</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>TotalReplies</name>
+        <dataType>Number</dataType>
+        <expression>{!varSumOfEmails} + {!varCountFeedItems}</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>FEEDITEM_CaseUpdates {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>FEEDITEM_CaseUpdates</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get Case data</description>
+        <name>GetRelatedCase</name>
+        <label>Get Related Case</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>FirstMessageByAgent</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Parent:Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update the First Reply Time</description>
+        <name>UpdateRecords</name>
+        <label>Update Records</label>
+        <locationX>182</locationX>
+        <locationY>731</locationY>
+        <inputReference>GetRelatedCase</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>GetRelatedCase</targetReference>
+        </connector>
+        <filterFormula>AND(
+ISBLANK({!$Record.CreatedBy:User.ContactId}), 
+NOT(ISBLANK({!$Record.Parent:Case.Id})),
+ ISPICKVAL({!$Record.Visibility}, &quot;AllUsers&quot;)
+)</filterFormula>
+        <object>FeedItem</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>FirstReplyTime</name>
+        <label>First Reply Time</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <connector>
+            <targetReference>UpdateRecords</targetReference>
+        </connector>
+        <flowName>CASE_SERVICE_FirstReplyTime</flowName>
+        <inputAssignments>
+            <name>Case</name>
+            <value>
+                <elementReference>GetRelatedCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ParentCaseId</name>
+            <value>
+                <elementReference>$Record.Parent:Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>GetRelatedCase</assignToReference>
+            <name>Case</name>
+        </outputAssignments>
+    </subflows>
+    <variables>
+        <name>NumberOfEmailMessages</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <description>Total number of feed items</description>
+        <name>NumberOfFeedItems</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>ParentCaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varCountFeedItems</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+    <variables>
+        <name>varSumOfEmails</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+    </variables>
+</Flow>

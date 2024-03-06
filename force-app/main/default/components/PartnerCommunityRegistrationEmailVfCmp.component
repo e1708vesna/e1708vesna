@@ -1,0 +1,294 @@
+<apex:component controller="PartnerCommunityRegEmailCtrl" access="global">
+    <apex:attribute type="Id" name="receiverId" assignTo="{!receivingUserId}" description="Value to pass into the controller"/>
+    <apex:attribute type="String" name="communityUrl" description="Community URL"/>
+    
+<body bgcolor="#f3f6f9" style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; height: 100% !important; width: 100% !important; background-color: #f3f6f9; margin: 0; padding: 0;">
+<style type="text/css">
+#outlook a {
+    padding: 0;
+}
+
+.body {
+    width: 100% !important;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.ExternalClass {
+    width: 100%;
+}
+
+.ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div {
+    line-height: 100%;
+}
+
+img {
+    outline: none;
+    text-decoration: none;
+    -ms-interpolation-mode: bicubic;
+}
+
+a {
+    color: #0abf53;
+}
+
+a img {
+    border: none;
+}
+
+p {
+    margin: 1em 0;
+}
+
+table td {
+    border-collapse: collapse;
+}
+
+/* hide unsubscribe from forwards*/
+blockquote .original-only, .WordSection1 .original-only {
+    display: none !important;
+}
+
+.tpl-text-small,
+.tpl-text-body,
+.tpl-text-heading-1,
+.tpl-text-heading-2,
+.tpl-text-heading-3 {
+    color: #00112b;
+    font-family: 'Fakt', 'Arial', sans-serif;
+}
+
+.tpl-text-heading-1,
+.tpl-text-heading-2 {
+    font-weight: bold;
+}
+
+.tpl-text-heading-1 {
+    font-size: 32px;
+    line-height: 42px;
+}
+
+.tpl-text-heading-2,
+.tpl-text-heading-3 {
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.tpl-text-body {
+    font-size: 16px;
+    line-height: 26px;
+}
+
+.tpl-button-link-container {
+    padding: 12px;
+}
+
+.tpl-button-link {
+    color: #ffffff;
+    display: block;
+    font-family: 'Fakt', 'Arial', sans-serif;
+    font-size: 16px;
+    line-height: 26px;
+    text-align: center;
+    text-decoration: none;
+}
+
+@media only screen and (max-width: 660px) {
+    body, table, td, p, a, li, blockquote {
+        -webkit-text-size-adjust: none !important;
+    }
+
+    /* Prevent Webkit platforms from changing default text sizes */
+    body {
+        width: 100% !important;
+        min-width: 100% !important;
+    }
+
+    /* Prevent iOS Mail from adding padding to the body */
+    #bodyCell {
+        padding: 10px !important;
+    }
+
+    #templateContainer {
+        max-width: 660px !important;
+        width: 100% !important;
+    }
+
+    #headerImage {
+        height: auto !important;
+        max-width: 660px !important;
+        width: 100% !important;
+    }
+
+    .headerContent {
+        font-size: 20px !important;
+        line-height: 125% !important;
+    }
+
+    .bodyContent {
+        font-size: 16px !important;
+        line-height: 125% !important;
+        padding: 20px !important;
+    }
+
+    .tpl-responsive-height {
+        height: 20px !important;
+    }
+
+    .tpl-responsive-width {
+        width: 20px !important;
+    }
+
+    .templateColumnContainer {
+        display: block !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+
+    .columnImage {
+        height: auto !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    .leftColumnContent,
+    .rightColumnContent {
+        display: block !important;
+        font-size: 16px !important;
+        line-height: 125% !important;
+        width: 100% !important;
+    }
+
+    .tpl-column-margin-bottom {
+        margin-bottom: 20px !important;
+    }
+
+    .tpl-responsive-hidden {
+        display: none !important;
+    }
+
+    .footerContent a {
+        display: block !important;
+    }
+
+}
+</style>
+<table align="center" border="0" cellpadding="0" cellspacing="0" id="bodyTable" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; background-color: #f3f6f9; border-collapse: collapse !important; height: 100% !important; margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; width: 100% !important" width="100%">
+    <tbody>
+    <tr>
+        <td align="center" id="bodyCell" style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; height: 100% !important; width: 100% !important; margin: 0; padding: 20px;" valign="top">
+            <table border="0" cellpadding="0" cellspacing="0" id="templateContainer" style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse !important; width: 660px;">
+                <tbody>
+                <!-- BEGIN PREHEADER // -->    
+                <tr>
+                    <td align="center" style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" id="templatePreheader" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%">
+                            <tbody>
+                            <tr>
+                                <td width="50%"><a href="https://www.adyen.com" style="text-decoration: none;"><img align="center" alt="" border="0" src="https://www.adyen.com/dam/jcr:39adc4db-76f7-4b9e-aec6-bfa21db4153c/adyen-logo-green.png" style="width: 100px;" width="100" /></a></td>
+                                <td align="right" width="50%"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <!-- // END PREHEADER -->   
+                
+                <!-- BEGIN ONE COLUMN // -->
+                <tr>
+                    <td align="center" style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tbody>
+                            <tr>
+                                <td height="20">&nbsp;</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <table border="0" cellpadding="0" cellspacing="0" id="templateHeader" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; background-color: #FFFFFF; border-collapse: collapse !important; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 2px;" width="100%">
+                            <tbody>
+                            <tr>
+                                <td align="left" class="bodyContent" style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 40px 40px 40px 40px;" valign="top">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="tpl-text-body" style="color: #00112c; font-family:'Fakt', 'Arial', sans-serif; font-size: 16px; line-height: 26px; font-style: normal; font-weight: normal; letter-spacing: normal; margin: 0; text-align: left;">
+                                                    <p>
+ Hi {!contactFirstName}, <br /><br />
+                   
+<apex:outputpanel rendered="{!ISBLANK(lastLoginDate)==true}">
+Just to let you know we have created this Adyen Partner Community account for you, please set your password via <a href="{!communityUrl}">Create a Password</a>.
+</apex:outputpanel>
+<apex:outputpanel rendered="{!ISBLANK(lastLoginDate)==false}">
+Just to let you know we have reactivated your Adyen Partner Community account for you. Please login within 24 hours to keep your Account active.
+</apex:outputpanel>
+<br /><br />
+
+
+
+Username: {!receivingUserName}<br />
+Partner Community: <a href="https://partners.adyen.com">https://partners.adyen.com</a><br /><br />
+Kind regards, <br />
+{!currentUserName}                
+                                                    </p>
+                                                </div>
+                                            </td>
+                                         </tr>
+                                         </tbody>
+                                     </table>
+                                 </td>
+                             </tr>
+                             </tbody>
+                         </table>
+                     </td>
+                 </tr>
+                 
+                <!-- BEGIN FOOTER // -->
+                <tr>
+                    <td align="center" style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" valign="top">
+                        <table border="0" cellpadding="0" cellspacing="0" id="templateFooter" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-collapse: collapse !important; mso-table-lspace: 0pt; mso-table-rspace: 0pt" width="100%">
+                            <tbody>
+                            <tr>
+                                <td align="center">
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tbody>
+                                        <tr>
+                                            <td height="40">&nbsp;</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="center" class="tpl-text-small" style="color: #00112b; font-family:'Fakt', 'Arial', sans-serif; font-size: 13px; line-height: 20px;">
+                                    Adyen | Simon Carmiggeltstraat 6-50 | 1011 DK Amsterdam | The Netherlands
+                                    <br />
+                                    Office +31 85 888 8138 | Email <a href="mailto:sales@adyen.com?subject=RE:Thank you for your interest in Adyen">sales@adyen.com</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tpl-height-medium" height="40">&nbsp;</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <!-- // END FOOTER -->    
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>    
+</body>
+</apex:component>

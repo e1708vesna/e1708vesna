@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <assignments>
+        <description>Set Unique Identifier to prevent users from creating duplicate Exception Request Members</description>
+        <name>SetUniqueIdentifier</name>
+        <label>Set Unique Identifier</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.UniqueIdentifier__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forUniqueID</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Last Update: Set Unique Identifier</description>
+    <formulas>
+        <name>forUniqueID</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.ExceptionRequest__c} &amp; &quot; - &quot; &amp; {!$Record.User__c}</expression>
+    </formulas>
+    <interviewLabel>Before-Save Updates Exception Request Member {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Before-Save Updates Exception Request Member</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>SetUniqueIdentifier</targetReference>
+        </connector>
+        <object>ExceptionRequestMember__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

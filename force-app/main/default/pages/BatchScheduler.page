@@ -1,0 +1,59 @@
+<apex:page controller="BatchSchedulerCtrl" action="{!init}" >
+<apex:sectionHeader />
+	<apex:form >
+    <apex:actionPoller action="{!getStatus}" rerender="counter" interval="7"/>	
+    	<apex:pageBlock title="Restart Scheduler  (auto refresh every ~7 sec)" id="counter">
+        	<apex:pageMessages escape="false"/>
+			<table>
+				<col width='220px'/>
+				<col width='70px'/>
+				<col width='70px'/>
+				<col width='70px'/>
+				<col width='100px'/>
+				<col width='100px'/>
+				<col width='100px'/>
+				<col width='100px'/>
+				<col width='100px'/>
+				<col width='100px'/>
+				<thead>
+					<tr>
+					<th><apex:outputText value="Service"/></th>
+					<th><apex:outputText value="Solo"/></th>
+					<th><apex:outputText value="Restart"/></th>
+					<th><apex:outputText value="Stop"/></th>
+					<th><apex:outputText value="State"/></th>
+					<th><apex:outputText value="Next Run"/></th>
+					<th><apex:outputText value="AutoReschedule"/></th>
+					<th><apex:outputText value="More Available"/></th>
+					<th><apex:outputText value="Last Processed"/></th>
+					<th><apex:outputText value="Last Processed"/></th>
+					</tr>
+				</thead>
+				<tbody>
+				<apex:repeat value="{!sbj}" var="sbjItem">
+				<tr>
+					<td><apex:outputText value="{!sbjItem.name}"/></td>
+					<td><apex:commandButton value="Solo Start" action="{!scheduleSolo}"  reRender="block" immediate="true" >
+						<apex:param name="param1" value="{!sbjItem.name}" assignTo="{!inputValue}"/>
+				   </apex:commandButton></td>
+				   <td><apex:commandButton value="(Re)Start" action="{!scheduleWakeup}"  reRender="block" immediate="true" >
+	                 	<apex:param name="param1" value="{!sbjItem.name}" assignTo="{!inputValue}"/>
+		            </apex:commandButton></td>
+					<td><apex:commandButton value="Stop" action="{!scheduleStop}"  reRender="block" immediate="true" >
+						<apex:param name="param1" value="{!sbjItem.name}" assignTo="{!inputValue}"/>
+				    </apex:commandButton></td>
+				    <td><apex:outputText value="{!sbjItem.state}"/></td>
+					<td><apex:outputText value="{!sbjItem.nextRun}"/></td>
+					<td><apex:outputText value="{!sbjItem.autoReschedule}"/></td>
+					<td><apex:outputText value="{!sbjItem.MoreHitsAvailableIndicator}"/></td>
+					<td><apex:outputText value="{!sbjItem.LastProcessedDateTime}"/></td>
+					<td><apex:outputText value="{!sbjItem.LastProcessedId}"/></td>
+				</tr>
+				</apex:repeat>
+				<apex:outputPanel id="block">
+		        </apex:outputPanel>
+				</tbody>
+			</table>
+      	</apex:pageBlock>
+	</apex:form>
+</apex:page>

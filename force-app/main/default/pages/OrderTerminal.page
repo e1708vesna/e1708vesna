@@ -1,0 +1,5 @@
+<apex:page standardController="Opportunity" lightningStyleSheets="true"> 
+    <flow:interview name="OrderTerminal" finishLocation="/{!Opportunity.ID}">
+        <apex:param name="recordId" value="{!Opportunity.ID}"/>
+    </flow:interview>
+</apex:page>

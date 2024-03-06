@@ -1,0 +1,21 @@
+<template>
+    <template if:true={hypercareMode}>
+
+        <lightning-card title="Hypercare" variant="narrow">
+            <div class="slds-card__body slds-card__body_inner">
+
+                <template lwc:if={loading}>
+                    <div class="spinnerWrapper">
+                        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                    </div>
+                </template>
+                <template lwc:else>
+                    <p class="text-color-red">{label.hypercareAccountMessage}</p>
+                    <template lwc:if={notAgentHasSkill}>
+                        <p class="text-color-red">{label.handoverMessage}</p>
+                    </template>
+                </template>
+            </div>
+        </lightning-card>
+    </template>
+</template>

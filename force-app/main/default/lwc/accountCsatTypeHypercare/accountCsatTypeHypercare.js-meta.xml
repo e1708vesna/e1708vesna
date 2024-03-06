@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Account's CSAT score, Type and Hypercare</masterLabel>
+    <description>To show Account's CSAT score, type and Hypercare yes/no on an account, related contact and/or related case</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="showCsat" label="Show CSAT" type="Boolean" default="true" />
+            <property name="showServiceLevel" label="Show Service Level" type="Boolean" default="true" />
+            <property name="showHypercare" label="Show Hypercare" type="Boolean" default="true" />
+        </targetConfig>
+    </targetConfigs>
+
+</LightningComponentBundle>

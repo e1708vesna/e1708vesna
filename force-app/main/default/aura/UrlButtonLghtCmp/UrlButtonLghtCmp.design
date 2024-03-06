@@ -1,0 +1,5 @@
+<design:component>
+	<design:attribute name="url" label="Url to open"/>
+    <design:attribute name="ButtonText" label="Button Text" />
+    <design:attribute name="ButtonTitle" label="Button Title (Tooltip)" />
+</design:component>

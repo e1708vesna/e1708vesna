@@ -1,0 +1,769 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <assignments>
+        <description>This assignment will check if the resource request checkbox has changed and if necessary update the fields:
+- Assigned(resource)
+- Rejection Reason
+- Rejection Comments</description>
+        <name>AssignedResourceCleanUp</name>
+        <label>Assigned Resource Clean-Up</label>
+        <locationX>446</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Assigned_AM__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForAssignedAM</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Assigned_AM__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForAssignedAMPool</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.IM__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForAssignedIM</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Assigned_OS__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForAssignedOS</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.AssignedPom__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForAssignedPOM</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Sales_Manager__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForAssignedSales</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.AMRejectionReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForUnassignedAMReason</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.AMPoolRejectionReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForUnassignedAMPoolReason</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.IMRejectionReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForUnassignedIMReason</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.OSRejectionReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForUnassignedOSReason</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.POMRejectionReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForUnassignedPOMReason</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.SalesRejectionReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forUnassignedSalesReason</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CommentsAM__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForUnassignedAMComment</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CommentsAMPool__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForUnassignedAMPoolComment</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CommentsIM__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForUnassignedIMComment</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CommentsOS__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForUnassignedOSComment</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CommentsPOM__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForUnassignedPOMComment</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CommentsSales__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForUnassignedSalesComment</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.AssignedPartnerManager__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForAssignedProjectManagerPool</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CommentsPartnerPool__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForUnassignedPMPoolComment</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.PartnerPoolRejectionReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForUnassignedPMPoolReason</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.AssignedPartnerManager__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForAssignedDedicatedProjectManager</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CommentDedicatedPartnerManager__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForUnassignedDedicatedPMComment</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.PartnerManagerRejectionReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForUnassignedDedicatedPMReason</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.AssignedPartnerManager__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ForAssignedDedicatedProjectManager</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ChangeStatus</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>ToCompleted</name>
+        <label>To Completed</label>
+        <locationX>314</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>ToInProgress</name>
+        <label>To In Progress</label>
+        <locationX>842</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Progress</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>ToMissingDetails</name>
+        <label>To Missing Details</label>
+        <locationX>578</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Missing Details</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>ToRejected</name>
+        <label>To Rejected</label>
+        <locationX>50</locationX>
+        <locationY>503</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rejected</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>Check if the status should be Completed, Rejected, Missing Information or continue In Progress</description>
+        <name>ChangeStatus</name>
+        <label>Change Status?</label>
+        <locationX>446</locationX>
+        <locationY>395</locationY>
+        <defaultConnector>
+            <targetReference>ToInProgress</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Rejected</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForCountOfResourcesRequested</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ForCountOfRejected</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ForCountOfMissingInfo</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ToRejected</targetReference>
+            </connector>
+            <label>Rejected</label>
+        </rules>
+        <rules>
+            <name>Completed</name>
+            <conditionLogic>1 AND 2 AND (5 OR (3 AND 4 AND 6))</conditionLogic>
+            <conditions>
+                <leftValueReference>ForCountOfResourcesRequested</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ForCountOfResourcesAssigned</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ForCountOfMissingInfo</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Opportunity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Opportunity__r.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Transacting</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>forAMCheck</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>forAMCheck</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ToCompleted</targetReference>
+            </connector>
+            <label>Completed W/WO AM</label>
+        </rules>
+        <rules>
+            <name>MissingDetails</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ForCountOfMissingInfo</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ToMissingDetails</targetReference>
+            </connector>
+            <label>Missing Details</label>
+        </rules>
+    </decisions>
+    <description>Gon 24/08: Added a new variable in FORAMCHECK to see if AM pool is selected as well.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Formula to check if Dedicated AM or AM Pool is part of the handover, used to change stage to completed</description>
+        <name>forAMCheck</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+OR(
+{!$Record.AccountManager__c} = TRUE,
+{!$Record.AMPool__c} = TRUE),
+TRUE, 
+FALSE)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the AM Checkbox was changed, if it was and is now FALSE, clean the AM Assigned field, if not, leave as is.</description>
+        <name>ForAssignedAM</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.AccountManager__c}),
+  {!$Record.AccountManager__c} = FALSE
+  ),
+&quot;&quot;,
+{!$Record.Assigned_AM__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the AM Pool Checkbox was changed, if it was and is now FALSE, clean the AM Assigned field, if not, leave as is.</description>
+        <name>ForAssignedAMPool</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.AMPool__c}),
+  {!$Record.AMPool__c} = FALSE
+  ),
+&quot;&quot;,
+{!$Record.Assigned_AM__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ForAssignedDedicatedProjectManager</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.DedicatedPartnerManager__c}),
+{!$Record.DedicatedPartnerManager__c} = FALSE
+  ),
+&quot;&quot;,
+{!$Record.AssignedPartnerManager__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the IM Checkbox was changed, if it was and is now FALSE, clean the IM Assigned field, if not, leave as is.</description>
+        <name>ForAssignedIM</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.ImplementationManager__c}),
+  {!$Record.ImplementationManager__c} = FALSE
+  ),
+&quot;&quot;,
+{!$Record.IM__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the OS Checkbox was changed, if it was and is now FALSE, clean the OS Assigned field, if not, leave as is.</description>
+        <name>ForAssignedOS</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.OnboardingSpecialist__c}),
+  {!$Record.OnboardingSpecialist__c} = FALSE
+  ),
+&quot;&quot;,
+{!$Record.Assigned_OS__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the POM Checkbox was changed, if it was and is now FALSE, clean the POM Assigned field, if not, leave as is.</description>
+        <name>ForAssignedPOM</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.ProjectOperationsManager__c}),
+  {!$Record.ProjectOperationsManager__c} = FALSE
+  ),
+&quot;&quot;,
+{!$Record.AssignedPom__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ForAssignedProjectManagerPool</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.PartnerPool__c}),
+  {!$Record.PartnerPool__c} = FALSE
+  ),
+&quot;&quot;,
+{!$Record.AssignedPartnerManager__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the Sales Checkbox was changed, if it was and is now FALSE, clean the Sales Assigned field, if not, leave as is.</description>
+        <name>ForAssignedSales</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.Sales__c}),
+  {!$Record.Sales__c} = FALSE
+  ),
+&quot;&quot;,
+{!$Record.Sales_Manager__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ForChangeToRejected</name>
+        <dataType>Number</dataType>
+        <expression>{!ForCountOfResourcesRequested} - ({!ForCountOfRejected} + {!ForCountOfResourcesAssigned})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>ForCountOfMissingInfo</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISPICKVAL({!$Record.AMRejectionReason__c}, &quot;Need More Information&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.AMPoolRejectionReason__c}, &quot;Need More Information&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.IMRejectionReason__c}, &quot;Need More Information&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.OSRejectionReason__c}, &quot;Need More Information&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.POMRejectionReason__c}, &quot;Need More Information&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.SalesRejectionReason__c}, &quot;Need More Information&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.PartnerPoolRejectionReason__c}, &quot;Need More Information&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.PartnerManagerRejectionReason__c}, &quot;Need More Information&quot;) = true, 1, 0)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>ForCountOfRejected</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISPICKVAL({!$Record.AMRejectionReason__c}, &quot;Reject Resource Request&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.AMPoolRejectionReason__c}, &quot;Reject Resource Request&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.IMRejectionReason__c}, &quot;Reject Resource Request&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.OSRejectionReason__c}, &quot;Reject Resource Request&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.POMRejectionReason__c}, &quot;Reject Resource Request&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.SalesRejectionReason__c}, &quot;Reject Resource Request&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.PartnerPoolRejectionReason__c}, &quot;Reject Resource Request&quot;) = true, 1, 0)+
+IF(ISPICKVAL({!$Record.PartnerManagerRejectionReason__c}, &quot;Reject Resource Request&quot;) = true, 1, 0)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>ForCountOfResourcesAssigned</name>
+        <dataType>Number</dataType>
+        <expression>IF(
+{!$Record.Assigned_AM__c} != null, 1, 0) +
+IF(
+{!$Record.Assigned_OS__c} != null, 1, 0) +
+IF(
+{!$Record.IM__c} != null, 1, 0) +
+IF(
+{!$Record.AssignedPom__c} != null, 1, 0) +
+IF(
+{!$Record.Sales_Manager__c} != null, 1, 0)+
+IF(
+{!$Record.AssignedPartnerManager__c} != null, 1, 0)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>ForCountOfResourcesRequested</name>
+        <dataType>Number</dataType>
+        <expression>IF(
+{!$Record.AccountManager__c} = true, 1, 0)+
+IF(
+{!$Record.AMPool__c} = true, 1, 0)+
+IF(
+{!$Record.ImplementationManager__c} = true, 1, 0)+
+IF(
+{!$Record.ProjectOperationsManager__c} = true, 1, 0)+
+IF(
+{!$Record.OnboardingSpecialist__c} = true, 1, 0)+
+IF(
+{!$Record.Sales__c} = true, 1, 0)+
+IF( {!$Record.PartnerPool__c}= true, 1, 0)+
+IF( {!$Record.DedicatedPartnerManager__c}= true, 1, 0)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <description>Check if the AM Checkbox was changed, if it was and is now TRUE, clean the AM Rejection Comment field, if not, leave as is.</description>
+        <name>ForUnassignedAMComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.AccountManager__c}),
+  {!$Record.AccountManager__c} = TRUE
+  ),
+&quot;&quot;,
+{!$Record.CommentsAM__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the AM Checkbox was changed, if it was and is now TRUE, clean the AM Rejection Comment field, if not, leave as is.</description>
+        <name>ForUnassignedAMPoolComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.AMPool__c}),
+  {!$Record.AMPool__c} = TRUE
+  ),
+&quot;&quot;,
+{!$Record.CommentsAMPool__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the AM Pool Checkbox was changed, if it was and is now TRUE, clean the AM Pool Rejection Reason field, if not, leave as is.</description>
+        <name>ForUnassignedAMPoolReason</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.AMPool__c}),
+  {!$Record.AMPool__c} = TRUE
+  ),
+&quot;&quot;,
+TEXT({!$Record.AMPoolRejectionReason__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the AM Checkbox was changed, if it was and is now TRUE, clean the AM Rejection Reason field, if not, leave as is.</description>
+        <name>ForUnassignedAMReason</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.AccountManager__c}),
+  {!$Record.AccountManager__c} = TRUE
+  ),
+&quot;&quot;,
+TEXT({!$Record.AMRejectionReason__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ForUnassignedDedicatedPMComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.DedicatedPartnerManager__c}),
+ {!$Record.DedicatedPartnerManager__c} = TRUE
+  ),
+&quot;&quot;,
+{!$Record.CommentDedicatedPartnerManager__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ForUnassignedDedicatedPMReason</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.DedicatedPartnerManager__c}),
+ {!$Record.DedicatedPartnerManager__c} = TRUE
+  ),
+&quot;&quot;,
+TEXT({!$Record.PartnerManagerRejectionReason__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the IM Checkbox was changed, if it was and is now TRUE, clean the IM Rejection Comment field, if not, leave as is.</description>
+        <name>ForUnassignedIMComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.ImplementationManager__c}),
+  {!$Record.ImplementationManager__c} = TRUE
+  ),
+&quot;&quot;,
+{!$Record.CommentsIM__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the IM Checkbox was changed, if it was and is now TRUE, clean the IM Rejection Reason field, if not, leave as is.</description>
+        <name>ForUnassignedIMReason</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.ImplementationManager__c}),
+  {!$Record.ImplementationManager__c} = TRUE
+  ),
+&quot;&quot;,
+TEXT({!$Record.IMRejectionReason__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the OS Checkbox was changed, if it was and is now TRUE, clean the OS Rejection Comment field, if not, leave as is.</description>
+        <name>ForUnassignedOSComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.OnboardingSpecialist__c}),
+  {!$Record.OnboardingSpecialist__c} = TRUE
+  ),
+&quot;&quot;,
+{!$Record.CommentsOS__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the OS Checkbox was changed, if it was and is now TRUE, clean the OS Rejection Reason field, if not, leave as is.</description>
+        <name>ForUnassignedOSReason</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.OnboardingSpecialist__c}),
+  {!$Record.OnboardingSpecialist__c} = TRUE
+  ),
+&quot;&quot;,
+TEXT({!$Record.OSRejectionReason__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ForUnassignedPMPoolComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.PartnerPool__c}),
+  {!$Record.PartnerPool__c} = TRUE
+  ),
+&quot;&quot;,
+{!$Record.CommentsPartnerPool__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ForUnassignedPMPoolReason</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.PartnerPool__c}),
+  {!$Record.PartnerPool__c} = TRUE
+  ),
+&quot;&quot;,
+TEXT({!$Record.PartnerPoolRejectionReason__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the POM Checkbox was changed, if it was and is now TRUE, clean the POM Rejection Comment field, if not, leave as is.</description>
+        <name>ForUnassignedPOMComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.ProjectOperationsManager__c}),
+  {!$Record.ProjectOperationsManager__c} = TRUE
+  ),
+&quot;&quot;,
+{!$Record.CommentsPOM__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the POM Checkbox was changed, if it was and is now TRUE, clean the POM Rejection Reason field, if not, leave as is.</description>
+        <name>ForUnassignedPOMReason</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.ProjectOperationsManager__c}),
+  {!$Record.ProjectOperationsManager__c} = TRUE
+  ),
+&quot;&quot;,
+TEXT({!$Record.POMRejectionReason__c})
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the Sales Checkbox was changed, if it was and is now TRUE, clean the Sales Rejection Comment field, if not, leave as is.</description>
+        <name>ForUnassignedSalesComment</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.Sales__c}),
+  {!$Record.Sales__c} = TRUE
+  ),
+&quot;&quot;,
+{!$Record.CommentsSales__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Check if the Sales Checkbox was changed, if it was and is now TRUE, clean the Sales Rejection Reason field, if not, leave as is.</description>
+        <name>forUnassignedSalesReason</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ AND (
+  ISCHANGED({!$Record.Sales__c}),
+  {!$Record.Sales__c} = TRUE
+  ),
+&quot;&quot;,
+TEXT({!$Record.SalesRejectionReason__c})
+)</expression>
+    </formulas>
+    <interviewLabel>Before - Save Updates Handover NEW {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Before-Save Updates Handover</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>320</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>AssignedResourceCleanUp</targetReference>
+        </connector>
+        <filterFormula>{!$Record.RecordType.DeveloperName} = &apos;Handover&apos;</filterFormula>
+        <object>Handover__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

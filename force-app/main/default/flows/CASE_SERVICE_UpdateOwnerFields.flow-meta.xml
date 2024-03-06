@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <environments>Default</environments>
+    <formulas>
+        <name>ManagerName</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.Owner:User.ManagerId}), &apos;&apos;, {!$Record.Owner:User.Manager.FirstName} + &apos; &apos; + {!$Record.Owner:User.Manager.LastName})</expression>
+    </formulas>
+    <interviewLabel>CASE_SERVICE_UpdateOwnerFields {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CASE_SERVICE_UpdateOwnerFields</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>QueueName</name>
+        <label>Queue Name</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <inputAssignments>
+            <field>Country__c</field>
+            <value>
+                <elementReference>$Record.Owner:User.Country</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Department__c</field>
+            <value>
+                <elementReference>$Record.Owner:User.Department</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Manager__c</field>
+            <value>
+                <elementReference>ManagerName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>QueueName__c</field>
+            <value>
+                <elementReference>$Record.Owner:Group.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>QueueName</targetReference>
+        </connector>
+        <filterFormula>(
+  {!$Record.RecordType.DeveloperName} == &apos;ServiceCase&apos; || 
+  {!$Record.RecordType.DeveloperName} == &apos;InternalCase&apos;
+) &amp;&amp; 
+(
+  ISNEW() ||
+  ISCHANGED({!$Record.OwnerId}) 
+)</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,19 @@
+<template>
+    <lightning-card title="Datatable Example" icon-name="custom:custom63">
+      <div class="slds-m-around_medium">
+        <template lwc:if={cases}>
+          <lightning-datatable
+            key-field="Id"
+            data={cases}
+            columns={columns}
+            onsave={handleSave}
+            draft-values={draftValues}
+          >
+          </lightning-datatable>
+        </template>
+        <template lwc:if={cases.error}>
+          <p>An error occured</p>
+        </template>
+      </div>
+    </lightning-card>
+  </template>

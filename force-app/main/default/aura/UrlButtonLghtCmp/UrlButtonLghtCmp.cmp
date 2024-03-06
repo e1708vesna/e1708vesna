@@ -1,0 +1,6 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:appHostable" access="global">
+    <aura:attribute name="url" type="String" />
+    <aura:attribute name="ButtonText" type="String" />
+    <aura:attribute name="ButtonTitle" type="String" />
+    <lightning:button variant="brand" label="{!v.ButtonText}" title="{!v.ButtonTitle}" onclick="{! c.handleClick }" />
+</aura:component>

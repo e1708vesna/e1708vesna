@@ -1,0 +1,32 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <template lwc:if={loading}>
+        <div class="spinnerWrapper">
+            <lightning-spinner variant="brand" alternative-text="Loading"></lightning-spinner>
+        </div>
+    </template>
+    <template lwc:else>
+        <lightning-card title="Skills" icon-name="standard:skill">
+            <template lwc:if={errorMsg}>
+                <div class="text-color-red">{errorMsg}</div>
+            </template>
+            <template lwc:elseif={skillsFound}>
+                <div style="overflow-x: auto;">
+                    <lightning-datatable
+                        key-field="id"
+                        data={skills}
+                        columns={columns}
+                        hide-checkbox-column="true">
+                    </lightning-datatable>
+                </div>
+            </template>
+            <template lwc:else>
+                <c-reusable-empty-state 
+                    message-body={label.noSkillsFoundMessage}
+                    image-name="no_data:desert"
+                    image-size="small">
+                </c-reusable-empty-state>
+            </template>
+        </lightning-card>
+    </template>
+</template>

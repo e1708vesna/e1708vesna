@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <description>Displays Chatter Posts related to a Merchant's Case in Community</description>
+    <isExposed>true</isExposed>
+    <masterLabel>Chatter Post Feed Display</masterLabel>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property label="Case Id" name="recordId" default="{!recordId}" type="String" description="Do not change the default value !" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

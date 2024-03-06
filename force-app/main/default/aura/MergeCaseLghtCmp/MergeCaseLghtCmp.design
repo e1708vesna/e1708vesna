@@ -1,0 +1,5 @@
+<design:component>
+	<design:attribute name="ids" label="ids" description="List of Ids to pass" />
+	<design:attribute name="recordId" label="recordId" description="Id of the current record" />
+	<design:attribute name="sObjectType" label="sObjectType" description="Api name that belongs to the recordId" />
+</design:component>

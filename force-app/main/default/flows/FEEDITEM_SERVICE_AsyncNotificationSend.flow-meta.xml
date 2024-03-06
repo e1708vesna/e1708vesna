@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <description>Bug fix: don&apos;t notify the case owner if he created the comment itself</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>forDoNotReopen</name>
+        <dataType>Boolean</dataType>
+        <expression>CONTAINS({!$Record.Body}, &apos;Automated Email&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>forUpdateCheckbox</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+{!$Record.Parent:Case.AllowPortalUserToUpdateStatus__c} = FALSE,
+TRUE,
+FALSE
+)</expression>
+    </formulas>
+    <interviewLabel>FEEDITEM_SERVICE_AsyncNotificationSend {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>FEEDITEM_SERVICE_AsyncNotificationSend</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <filterFormula>AND(
+    OR(
+          {!$Record.Parent:Case.RecordType.DeveloperName} = &apos;ServiceCase&apos;, 
+          {!$Record.Parent:Case.RecordType.DeveloperName} = &apos;InternalCase&apos;, 
+          {!$Record.Parent:Case.RecordType.DeveloperName} = &apos;Support&apos;
+     ),
+    NOT(ISPICKVAL({!$Record.Parent:Case.AutoCloseReason__c}, &apos;Blocked Email&apos;)),
+    OR(
+          {!$Record.Parent:Case.IsShopperCase__c} == false, 
+          {!$Record.Parent:Case.ShopperCaseAllowed__c}
+    ),
+    {!$Record.CreatedById} != {!$Record.Parent:Case.OwnerId}
+)</filterFormula>
+        <object>FeedItem</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>SendNotificationOnCaseReply</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>SendNotificationOnCaseReply</name>
+        <label>Send Notification on Case Reply</label>
+        <locationX>308</locationX>
+        <locationY>276</locationY>
+        <flowName>Subflow_SendNotificationCaseOwner</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>$Record.Parent:Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <textTemplates>
+        <name>richtextBody</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;{!$Record.Body}&lt;/p&gt;</text>
+    </textTemplates>
+</Flow>

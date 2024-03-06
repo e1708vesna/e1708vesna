@@ -1,0 +1,5 @@
+<!-- https://nitinkhunalsalesforce.wordpress.com/2021/06/10/salesforce-close-a-tab-in-the-service-console-upon-finishing-a-flow  -->
+<aura:component implements="lightning:availableForFlowScreens,lightning:availableForFlowActions,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:workspaceAPI aura:id="workspace" /> 
+</aura:component>

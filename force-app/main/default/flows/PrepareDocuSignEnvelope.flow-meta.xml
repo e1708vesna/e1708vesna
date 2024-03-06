@@ -1,0 +1,2743 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>ContactCreatedToast</name>
+        <label>Contact Created Toast</label>
+        <locationX>578</locationX>
+        <locationY>1718</locationY>
+        <actionName>c:showToast</actionName>
+        <actionType>component</actionType>
+        <connector>
+            <targetReference>AssignNewLookupValues</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>ErrorScreen</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>duration</name>
+            <value>
+                <stringValue>5</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>message</name>
+            <value>
+                <stringValue>Contact Created!</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>type</name>
+            <value>
+                <stringValue>success</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>50.0</apiVersion>
+    <assignments>
+        <name>AssignNewLookupValues</name>
+        <label>Assign New Lookup Values</label>
+        <locationX>578</locationX>
+        <locationY>1838</locationY>
+        <assignmentItems>
+            <assignToReference>Opportunity.ContractSignatory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueCreatedContractSignatory</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.MerchantContact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueCreatedMerchantContact</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>EnterContactInformation</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>PrepareAccountOpportunityUpdate</name>
+        <label>Prepare Account &amp; Opportunity Update</label>
+        <locationX>1634</locationX>
+        <locationY>2078</locationY>
+        <assignmentItems>
+            <assignToReference>Opportunity.MerchantCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueMerchantCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.ContractEffectiveDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueContractEffectiveDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.CompanyRegistrationNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueCompanyRegistrationNumber</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.MerchantLegalName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueMerchantLegalName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Account.Adyen_Platform_Account_Code__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueCompanyAccountName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Account.BillingCountry</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueCompanyAddressCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Account.BillingState</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueCompanyAddressProvince</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Account.BillingCity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueCompanyAddressCity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Account.BillingPostalCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueCompanyAddressPostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Account.BillingStreet</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueCompanyAddressStreet</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AffiliateContractEffectiveDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAffiliateContractEffectiveDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AffiliateLegalName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAffiiateLegalName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AffiliateCompanyRegistrationNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAffiliateCompanyRegistrationNumber</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AffiliateMerchantAccountCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAffiliateMerchantAccountCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AffiliateMerchantCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAffiliateMerchantCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AffiliateRegionOrJurisdictionMerchant__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAffiliateMerchantRegionJurisdiction</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AffiliateCompanyCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAffiliateCompanyAddressCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AffiliateCompanyCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAffiliateCompanyAddressCity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AffiliateCompanyPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAffiliateCompanyAddressPostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AffiliateCompanyStreet__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAffiliateCompanyAddressStreet</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AdditionalTerms__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAdditionalTerms</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AdyenLocalEntity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAdyenLocalEntity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.NDAProvisionOfServicesExplanation__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueProvisionOfServicesExplanation</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AddendumEffectiveDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAddendumEffectiveDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.OldMerchantCompanyCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueOldMerchantCompanyCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.OldMerchantCompanyPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueOldMerchantCompanyPostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.OldMerchantCompanyCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueOldMerchantCompanyCity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.OldMerchantCompanyStreet__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueOldMerchantCompanyStreet</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.NewMerchantCompanyCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueNewMerchantCompanyCity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.NewMerchantCompanyCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueNewMerchantCompanyCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.NewMerchantCompanyPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueNewMerchantCompanyPostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.NewMerchantCompanyStreet__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueNewMerchantCompanyStreet</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.ParentEntityCompanyAccountCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueParentEntityCompanyAccountCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.NewMerchantEntityLegalName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueNewMerchantEntityLegalName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.OldMerchantEntityLegalName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueOldMerchantEntityLegalName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.PreviouslySignedContract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valuePreviouslySignedContract</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.NewMerchantCompanyState__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueNewMerchantCompanyState</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.OldMerchanyCompanyState__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueOldMerchantCompanyState</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AffiliateCompanyState__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAffiliateCompanyAddressState</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>UpdateOpportunity1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>PrepareOpportunityUpdate</name>
+        <label>Prepare Opportunity Update</label>
+        <locationX>1634</locationX>
+        <locationY>1598</locationY>
+        <assignmentItems>
+            <assignToReference>Opportunity.AdyenContactName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAdyenContactName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AdyenContactEmail__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAdyenContactEmail</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.AdyenContactPhone__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueAdyenContactPhone</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.ContractSignatory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueContractSignatory</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Opportunity.MerchantContact__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valueMerchantContact</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>UpdateOpportunity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>SetDocuSignURL</name>
+        <label>Set DocuSign URL</label>
+        <locationX>1634</locationX>
+        <locationY>2558</locationY>
+        <assignmentItems>
+            <assignToReference>varDocuSignURL</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>/apex/dsfs__DocuSign_CreateEnvelope</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varDocuSignURL</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>?SourceID=</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varDocuSignURL</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Opportunity.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varDocuSignURL</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>&amp;ecId=</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varDocuSignURL</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varEnvelopeConfigurationId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>OpenDocuSign</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>SetEnterContactInformationStage</name>
+        <label>Set Enter Contact Information Stage</label>
+        <locationX>710</locationX>
+        <locationY>878</locationY>
+        <assignmentItems>
+            <assignToReference>$Flow.CurrentStage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>stageEnterContactInformation</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetEnvelopeScreenVisibilitySetting</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>SetEnterContractDetailsStage</name>
+        <label>Set Enter Contract Details Stage</label>
+        <locationX>1634</locationX>
+        <locationY>1478</locationY>
+        <assignmentItems>
+            <assignToReference>$Flow.CurrentStage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>stageEnterContractDetails</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>PrepareOpportunityUpdate</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>SetOpenDocuSignStage</name>
+        <label>Set Open DocuSign Stage</label>
+        <locationX>1634</locationX>
+        <locationY>1958</locationY>
+        <assignmentItems>
+            <assignToReference>$Flow.CurrentStage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>stageOpenDocuSignEnvelope</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>PrepareAccountOpportunityUpdate</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>SetSelectTemplateStage</name>
+        <label>Set Select Template Stage</label>
+        <locationX>710</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>$Flow.CurrentStage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>stageSelectTemplate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SelectTemplate</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>AccountFound</name>
+        <label>Account Found?</label>
+        <locationX>380</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>SetSelectTemplateStage</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Account</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ErrorNoAccountFound</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>NewContactNeeded</name>
+        <label>New Contact Needed?</label>
+        <locationX>1106</locationX>
+        <locationY>1358</locationY>
+        <defaultConnector>
+            <targetReference>SetEnterContractDetailsStage</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>NewContractSignatoryButton.contactNeeded</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NewMerchantContactButton.contactNeeded</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CreateContact</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+        <rules>
+            <name>ContactsMissing</name>
+            <conditionLogic>((1 OR 6) AND 2) OR ((3 OR 7) AND 4 AND 5)</conditionLogic>
+            <conditions>
+                <leftValueReference>SelectContractSignatory.recordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NewContractSignatoryButton.contactNeeded</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>SelectMerchantContact.recordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NewMerchantContactButton.contactNeeded</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetEnvelopeScreenVisibilitySetting.MerchantContact__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>SelectContractSignatory.recordId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>SelectMerchantContact.recordId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>MissingContact</targetReference>
+            </connector>
+            <label>Contacts Missing</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>SettingsFound</name>
+        <label>Settings Found?</label>
+        <locationX>710</locationX>
+        <locationY>1118</locationY>
+        <defaultConnector>
+            <targetReference>EnterContactInformation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetEnvelopeScreenVisibilitySetting</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ErrorNoSettingsFound</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <description>11/10/2022 Cas Hefti: added a message that this flow will be deprecating soon</description>
+    <dynamicChoiceSets>
+        <name>choiceAccountCountries</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>BillingCountryCode</picklistField>
+        <picklistObject>Account</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>choiceAccountProvinces</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>BillingStateCode</picklistField>
+        <picklistObject>Account</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>choiceContractCountryCurrency</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>ContractCountryCurrency__c</picklistField>
+        <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>choiceContractType</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>ContractType__c</picklistField>
+        <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>choiceCountries</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>MerchantCountry__c</picklistField>
+        <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>choiceMerchantJurisdiction</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>AffiliateRegionJurisdictionMerchant__c</picklistField>
+        <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>choicePreviouslySignedContract</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>PreviouslySignedContract__c</picklistField>
+        <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>choiceSalesChannel</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>SalesChannel__c</picklistField>
+        <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <formulas>
+        <name>displayMerchantLegalName</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISNULL({!Opportunity.MerchantLegalName__c}),
+{!Account.Name},
+{!Opportunity.MerchantLegalName__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAddendumEffectiveDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(
+ISBLANK({!AddendumEffectiveDate}),
+{!Opportunity.AddendumEffectiveDate__c},
+{!AddendumEffectiveDate}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAdditionalTerms</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!AdditionalTerms}),
+{!Opportunity.AdditionalTerms__c},
+{!AdditionalTerms}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAdyenContactEmail</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!AdyenContactEmail.value} = &quot;&quot;,
+{!Opportunity.AdyenContactEmail__c},
+{!AdyenContactEmail.value}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAdyenContactName</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!AdyenContactName} = &quot;&quot;,
+{!Opportunity.AdyenContactName__c},
+{!AdyenContactName}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAdyenContactPhone</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!AdyenContactPhone.value} = &quot;&quot;,
+{!Opportunity.AdyenContactPhone__c},
+{!AdyenContactPhone.value}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAdyenLocalEntity</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!AdyenLocalEntity}),
+{!Opportunity.AdyenLocalEntity__c},
+{!AdyenLocalEntity}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAffiiateLegalName</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!AffiliateMerchantLegalName}),
+{!Opportunity.AffiliateLegalName__c},
+{!AffiliateMerchantLegalName}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAffiliateCompanyAddressCity</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!AffiliateCompanyAddress.city}),
+{!Opportunity.AffiliateCompanyCity__c},
+{!AffiliateCompanyAddress.city}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAffiliateCompanyAddressCountry</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!AffiliateCompanyAddress.country}),
+TEXT({!Opportunity.AffiliateCompanyCountry__c}),
+{!AffiliateCompanyAddress.country}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAffiliateCompanyAddressPostalCode</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!AffiliateCompanyAddress.postalCode}),
+{!Opportunity.AffiliateCompanyPostalCode__c},
+{!AffiliateCompanyAddress.postalCode}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAffiliateCompanyAddressState</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!AffiliateCompanyAddress.province}),
+{!Opportunity.AffiliateCompanyState__c},
+{!AffiliateCompanyAddress.province}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAffiliateCompanyAddressStreet</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!AffiliateCompanyAddress.street}),
+{!Opportunity.AffiliateCompanyStreet__c},
+{!AffiliateCompanyAddress.street}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAffiliateCompanyRegistrationNumber</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!AffiliateCompanyRegistrationNumber}),
+{!Opportunity.AffiliateCompanyRegistrationNumber__c},
+{!AffiliateCompanyRegistrationNumber}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAffiliateContractEffectiveDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(
+ISBLANK({!AffiliateContractEffectiveDate}),
+{!Opportunity.AffiliateContractEffectiveDate__c},
+{!AffiliateContractEffectiveDate}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAffiliateMerchantAccountCode</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!AffiliateMerchantAccountCode}),
+{!Opportunity.AffiliateMerchantAccountCode__c},
+{!AffiliateMerchantAccountCode}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAffiliateMerchantCountry</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!AffiliateMerchantCountry}),
+TEXT({!Opportunity.AffiliateMerchantCountry__c}),
+{!AffiliateMerchantCountry}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueAffiliateMerchantRegionJurisdiction</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!AffiliateMerchantRegionJurisdiction}),
+{!Opportunity.AffiliateRegionOrJurisdictionMerchant__c},
+{!AffiliateMerchantRegionJurisdiction}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueCompanyAccountName</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!CompanyAccountName}),
+{!Account.Adyen_Platform_Account_Code__c},
+{!CompanyAccountName}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueCompanyAddressCity</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!CompanyAddress.city}),
+{!Account.BillingCity},
+{!CompanyAddress.city}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueCompanyAddressCountry</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!CompanyAddress.country}),
+{!Account.BillingCountry},
+{!CompanyAddress.country}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueCompanyAddressPostalCode</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!CompanyAddress.postalCode}),
+{!Account.BillingPostalCode},
+{!CompanyAddress.postalCode}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueCompanyAddressProvince</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!CompanyAddress.province}),
+{!Account.BillingState},
+{!CompanyAddress.province}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueCompanyAddressStreet</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!CompanyAddress.postalCode}),
+{!Account.BillingStreet},
+{!CompanyAddress.street}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueCompanyRegistrationNumber</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!CompanyRegistrationNumber}),
+{!Opportunity.CompanyRegistrationNumber__c},
+{!CompanyRegistrationNumber}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueContractEffectiveDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(
+ISBLANK({!ContractEffectiveDate}),
+{!Opportunity.ContractEffectiveDate__c},
+{!ContractEffectiveDate}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueContractSignatory</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!SelectContractSignatory.recordId}),
+{!Opportunity.ContractSignatory__c},
+{!SelectContractSignatory.recordId}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueCreatedContractSignatory</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!NewContractSignatoryButton.contactNeeded} = TRUE,
+{!CreateContact1},
+{!Opportunity.ContractSignatory__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueCreatedMerchantContact</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!NewMerchantContactButton.contactNeeded} = TRUE,
+{!CreateContact1},
+{!Opportunity.MerchantContact__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueMerchantContact</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!SelectMerchantContact.recordId}),
+{!Opportunity.MerchantContact__c},
+{!SelectMerchantContact.recordId}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueMerchantCountry</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!MerchantCountry}),
+TEXT({!Opportunity.MerchantCountry__c}),
+{!MerchantCountry}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueMerchantLegalName</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!MerchantLegalName}),
+{!Account.Name},
+{!MerchantLegalName}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueNewMerchantCompanyCity</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!NewMerchantCompanyAddress.city} = &quot;&quot;,
+{!Opportunity.NewMerchantCompanyCity__c},
+{!NewMerchantCompanyAddress.city}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueNewMerchantCompanyCountry</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!NewMerchantCompanyAddress.country}),
+TEXT({!Opportunity.NewMerchantCompanyCountry__c}),
+{!NewMerchantCompanyAddress.country}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueNewMerchantCompanyPostalCode</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!NewMerchantCompanyAddress.postalCode} = &quot;&quot;,
+{!Opportunity.NewMerchantCompanyPostalCode__c},
+{!NewMerchantCompanyAddress.postalCode}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueNewMerchantCompanyState</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!NewMerchantCompanyAddress.province}),
+{!Opportunity.NewMerchantCompanyState__c},
+{!NewMerchantCompanyAddress.province}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueNewMerchantCompanyStreet</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!NewMerchantCompanyAddress.street} = &quot;&quot;,
+{!Opportunity.NewMerchantCompanyStreet__c},
+{!NewMerchantCompanyAddress.street}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueNewMerchantEntityLegalName</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!NewMerchantEntityLegalName} = &quot;&quot;,
+{!Opportunity.NewMerchantEntityLegalName__c},
+{!NewMerchantEntityLegalName}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueOldMerchantCompanyCity</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!OldMerchantCompanyAddress.city} = &quot;&quot;,
+{!Opportunity.OldMerchantCompanyCity__c},
+{!OldMerchantCompanyAddress.city}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueOldMerchantCompanyCountry</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!OldMerchantCompanyAddress.country}),
+TEXT({!Opportunity.OldMerchantCompanyCountry__c}),
+{!OldMerchantCompanyAddress.country}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueOldMerchantCompanyPostalCode</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!OldMerchantCompanyAddress.postalCode} = &quot;&quot;,
+{!Opportunity.OldMerchantCompanyPostalCode__c},
+{!OldMerchantCompanyAddress.postalCode}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueOldMerchantCompanyState</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!OldMerchantCompanyAddress.province}),
+{!Opportunity.OldMerchanyCompanyState__c},
+{!OldMerchantCompanyAddress.province}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueOldMerchantCompanyStreet</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!OldMerchantCompanyAddress.street} = &quot;&quot;,
+{!Opportunity.OldMerchantCompanyStreet__c},
+{!OldMerchantCompanyAddress.street}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueOldMerchantEntityLegalName</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!OldMerchantEntityLegalName} = &quot;&quot;,
+{!Opportunity.OldMerchantEntityLegalName__c},
+{!OldMerchantEntityLegalName}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueParentEntityCompanyAccountCode</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!ParentEntityCompanyAccountCode} = &quot;&quot;,
+{!Opportunity.ParentEntityCompanyAccountCode__c},
+{!ParentEntityCompanyAccountCode}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valuePreviouslySignedContract</name>
+        <dataType>String</dataType>
+        <expression>IF(
+ISBLANK({!PreviouslySignedContract}),
+TEXT({!Opportunity.PreviouslySignedContract__c}),
+{!PreviouslySignedContract}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueProvisionOfServicesExplanation</name>
+        <dataType>String</dataType>
+        <expression>IF(
+{!NDAProvisionOfServicesExplanation} = &quot;&quot;,
+{!Opportunity.NDAProvisionOfServicesExplanation__c},
+{!NDAProvisionOfServicesExplanation}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>valueSelectedContactLookup</name>
+        <dataType>String</dataType>
+        <expression>IF({!NewContractSignatoryButton.contactNeeded} = TRUE, {!NewContractSignatoryButton.targetLookup},
+IF({!NewMerchantContactButton.contactNeeded} = TRUE, {!NewMerchantContactButton.targetLookup},
+&quot;&quot;
+))</expression>
+    </formulas>
+    <interviewLabel>Prepare DocuSign Envelope {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Prepare DocuSign Envelope</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <name>CreateContact1</name>
+        <label>Create Contact</label>
+        <locationX>578</locationX>
+        <locationY>1598</locationY>
+        <connector>
+            <targetReference>ContactCreatedToast</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorScreen</targetReference>
+        </faultConnector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>CreateContactAccount.recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Email</field>
+            <value>
+                <elementReference>CreateContactEmail.value</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>FirstName</field>
+            <value>
+                <elementReference>CreateContactName.firstName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LastName</field>
+            <value>
+                <elementReference>CreateContactName.lastName</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Contact</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Account</name>
+        <label>Account</label>
+        <locationX>380</locationX>
+        <locationY>398</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AccountFound</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorScreen</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Opportunity.AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>In the end-state this solution will support many templates. To prevent the need for one screen element per template we manage screen component visibility through a Custom Metadata Type.</description>
+        <name>GetEnvelopeScreenVisibilitySetting</name>
+        <label>Get Envelope Screen Visibility Setting</label>
+        <locationX>710</locationX>
+        <locationY>998</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>SettingsFound</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorScreen</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varEnvelopeConfigurationId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>DocuSignScreenVisibilitySetting__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Get all Opportunity data.</description>
+        <name>Opportunity</name>
+        <label>Opportunity</label>
+        <locationX>380</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>OpportunityOwner</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorScreen</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>OpportunityOwner</name>
+        <label>Opportunity Owner</label>
+        <locationX>380</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Account</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorScreen</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Opportunity.OwnerId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>UpdateAccount</name>
+        <label>Update Account</label>
+        <locationX>1634</locationX>
+        <locationY>2318</locationY>
+        <connector>
+            <targetReference>UpdateOpportunityContactRoles</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorScreen</targetReference>
+        </faultConnector>
+        <inputReference>Account</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>UpdateOpportunity</name>
+        <label>Update Opportunity</label>
+        <locationX>1634</locationX>
+        <locationY>1718</locationY>
+        <connector>
+            <targetReference>EnterContractDetails</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorScreen</targetReference>
+        </faultConnector>
+        <inputReference>Opportunity</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>UpdateOpportunity1</name>
+        <label>Update Opportunity</label>
+        <locationX>1634</locationX>
+        <locationY>2198</locationY>
+        <connector>
+            <targetReference>UpdateAccount</targetReference>
+        </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>ErrorScreen</targetReference>
+        </faultConnector>
+        <inputReference>Opportunity</inputReference>
+    </recordUpdates>
+    <screens>
+        <name>CreateContact</name>
+        <label>Create Contact</label>
+        <locationX>578</locationX>
+        <locationY>1478</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>CreateContact1</targetReference>
+        </connector>
+        <fields>
+            <name>CreateContactHeader</name>
+            <extensionName>dhfpi:lwcFlowHeader</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>heading</name>
+                <value>
+                    <stringValue>Create Contact</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>icon</name>
+                <value>
+                    <stringValue>action:add_contact</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>CreateContactAccount</name>
+            <extensionName>flowruntime:lookup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>AccountId</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Account</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Contact</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Opportunity.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>CreateContactName</name>
+            <extensionName>flowruntime:name</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>CreateContactEmail</name>
+            <extensionName>flowruntime:email</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>EnterContactInformation</name>
+        <label>Enter Contact Information</label>
+        <locationX>1106</locationX>
+        <locationY>1238</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>NewContactNeeded</targetReference>
+        </connector>
+        <fields>
+            <name>PI5</name>
+            <extensionName>dhfpi:lwcProgressIndicator</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>currentStage</name>
+                <value>
+                    <elementReference>$Flow.CurrentStage</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>stages</name>
+                <value>
+                    <elementReference>$Flow.ActiveStages</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>ContactInformationHeader1</name>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;{!GetEnvelopeScreenVisibilitySetting.ContactInformationHeader1__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.ContactInformationHeader1__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>EnterContactInformation_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>EnterContactInformation_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>SelectContractSignatory</name>
+                    <extensionName>flowruntime:lookup</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>fieldApiName</name>
+                        <value>
+                            <stringValue>ContractSignatory__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>label</name>
+                        <value>
+                            <stringValue>Contract Signatory</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value>
+                            <stringValue>Opportunity</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>required</name>
+                        <value>
+                            <booleanValue>false</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>recordId</name>
+                        <value>
+                            <elementReference>Opportunity.ContractSignatory__c</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>10</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>EnterContactInformation_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>NewContractSignatoryButton</name>
+                    <extensionName>c:createContactFlowUtil</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>contactNeeded</name>
+                        <value>
+                            <booleanValue>false</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>targetLookup</name>
+                        <value>
+                            <stringValue>ContractSignatory__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>2</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
+            <name>EnterContactInformation_Section2</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>EnterContactInformation_Section2_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>SelectMerchantContact</name>
+                    <extensionName>flowruntime:lookup</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>fieldApiName</name>
+                        <value>
+                            <stringValue>MerchantContact__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>label</name>
+                        <value>
+                            <stringValue>Merchant Contact</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>objectApiName</name>
+                        <value>
+                            <stringValue>Opportunity</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>required</name>
+                        <value>
+                            <booleanValue>false</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>recordId</name>
+                        <value>
+                            <elementReference>Opportunity.MerchantContact__c</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>10</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>EnterContactInformation_Section2_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>NewMerchantContactButton</name>
+                    <extensionName>c:createContactFlowUtil</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>contactNeeded</name>
+                        <value>
+                            <booleanValue>false</booleanValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>targetLookup</name>
+                        <value>
+                            <stringValue>MerchantContact__c</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>2</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.MerchantContact__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ContactInformationHeader2</name>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;{!GetEnvelopeScreenVisibilitySetting.ContactInformationHeader2__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.ContactInformationHeader2__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AdyenContactName</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>OpportunityOwner.Name</elementReference>
+            </defaultValue>
+            <fieldText>Adyen Contact Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.AdyenContact__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AdyenContactEmail</name>
+            <extensionName>flowruntime:email</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>value</name>
+                <value>
+                    <elementReference>OpportunityOwner.Email</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Adyen Contact Email</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.AdyenContact__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AdyenContactPhone</name>
+            <extensionName>flowruntime:phone</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Adyen Contact Phone</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>readonly</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>value</name>
+                <value>
+                    <elementReference>OpportunityOwner.Phone</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.AdyenContact__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>EnterContractDetails</name>
+        <label>Enter Contract Details</label>
+        <locationX>1634</locationX>
+        <locationY>1838</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>SetOpenDocuSignStage</targetReference>
+        </connector>
+        <fields>
+            <name>PI2</name>
+            <extensionName>dhfpi:lwcProgressIndicator</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>currentStage</name>
+                <value>
+                    <elementReference>$Flow.CurrentStage</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>stages</name>
+                <value>
+                    <elementReference>$Flow.ActiveStages</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>ParentEntityCompanyAccountCode</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Opportunity.ParentEntityCompanyAccountCode__c</elementReference>
+            </defaultValue>
+            <fieldText>Parent Entity Company Account Code</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.ParentEntityCompanyAccountCode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PreviouslySignedContract</name>
+            <choiceReferences>choicePreviouslySignedContract</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Previously Signed Contract</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.PreviouslySignedContract__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ContractDetailsHeader1</name>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;{!GetEnvelopeScreenVisibilitySetting.ContractInformationHeader1__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.ContractInformationHeader1__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>OldMerchantEntityLegalName</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Opportunity.OldMerchantEntityLegalName__c</elementReference>
+            </defaultValue>
+            <fieldText>Old Merchant Entity Legal Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.OldMerchantEntityLegalName__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>OldMerchantCompanyAddress</name>
+            <extensionName>flowruntime:address</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>city</name>
+                <value>
+                    <elementReference>Opportunity.OldMerchantCompanyCity__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressLabel</name>
+                <value>
+                    <stringValue>Old Merchant Company Address</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>country</name>
+                <value>
+                    <elementReference>Opportunity.OldMerchantCompanyCountry__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>postalCode</name>
+                <value>
+                    <elementReference>Opportunity.OldMerchantCompanyPostalCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>street</name>
+                <value>
+                    <elementReference>Opportunity.OldMerchantCompanyStreet__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>inputCountryOptions</name>
+                <value>
+                    <elementReference>choiceAccountCountries</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>inputProvinceOptions</name>
+                <value>
+                    <elementReference>choiceAccountProvinces</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>province</name>
+                <value>
+                    <elementReference>Opportunity.OldMerchanyCompanyState__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.OldMerchantCompanyAddress__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CompanyAccountName</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Account.Adyen_Platform_Account_Code__c</elementReference>
+            </defaultValue>
+            <fieldText>Company Account Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.CompanyAccountName__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CompanyRegistrationNumber</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Opportunity.CompanyRegistrationNumber__c</elementReference>
+            </defaultValue>
+            <fieldText>Company Registration Number</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.CompanyRegistrationNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CompanyAddress</name>
+            <extensionName>flowruntime:address</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>inputCountryOptions</name>
+                <value>
+                    <elementReference>choiceAccountCountries</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressLabel</name>
+                <value>
+                    <stringValue>Company Address</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>inputProvinceOptions</name>
+                <value>
+                    <elementReference>choiceAccountProvinces</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>city</name>
+                <value>
+                    <elementReference>Account.BillingCity</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>country</name>
+                <value>
+                    <elementReference>Account.BillingCountry</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>postalCode</name>
+                <value>
+                    <elementReference>Account.BillingPostalCode</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>province</name>
+                <value>
+                    <elementReference>Account.BillingStateCode</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>street</name>
+                <value>
+                    <elementReference>Account.BillingStreet</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.CompanyAddress__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>MerchantLegalName</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>displayMerchantLegalName</elementReference>
+            </defaultValue>
+            <fieldText>Merchant Legal Name (Parent Entity)</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.MerchantLegalName__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>MerchantCountry</name>
+            <choiceReferences>choiceCountries</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Merchant Country</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.MerchantCountry__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ContractEffectiveDate</name>
+            <dataType>Date</dataType>
+            <defaultValue>
+                <elementReference>Opportunity.ContractEffectiveDate__c</elementReference>
+            </defaultValue>
+            <fieldText>Contract Effective Date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.ContractEffectiveDate__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>ContractDetailsHeader2</name>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;{!GetEnvelopeScreenVisibilitySetting.ContractInformationHeader2__c}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.ContractInformationHeader2__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NewMerchantEntityLegalName</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Opportunity.NewMerchantEntityLegalName__c</elementReference>
+            </defaultValue>
+            <fieldText>New Merchant Entity Legal Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.NewMerchantEntityLegalName__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NewMerchantCompanyAddress</name>
+            <extensionName>flowruntime:address</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>addressLabel</name>
+                <value>
+                    <stringValue>New Merchant Company Address</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>inputCountryOptions</name>
+                <value>
+                    <elementReference>choiceAccountCountries</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>city</name>
+                <value>
+                    <elementReference>Opportunity.NewMerchantCompanyCity__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>country</name>
+                <value>
+                    <elementReference>Opportunity.NewMerchantCompanyCountry__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>postalCode</name>
+                <value>
+                    <elementReference>Opportunity.NewMerchantCompanyPostalCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>street</name>
+                <value>
+                    <elementReference>Opportunity.NewMerchantCompanyStreet__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>inputProvinceOptions</name>
+                <value>
+                    <elementReference>choiceAccountProvinces</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>province</name>
+                <value>
+                    <elementReference>Opportunity.NewMerchantCompanyState__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.NewMerchantCompanyAddress__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AffiliateCompanyRegistrationNumber</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Opportunity.AffiliateCompanyRegistrationNumber__c</elementReference>
+            </defaultValue>
+            <fieldText>Affiliate Company Registration Number</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.AffiliateCompanyRegistrationNumber__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AffiliateCompanyAddress</name>
+            <extensionName>flowruntime:address</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>addressLabel</name>
+                <value>
+                    <stringValue>Affiliate Company Address</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>city</name>
+                <value>
+                    <elementReference>Opportunity.AffiliateCompanyCity__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>inputCountryOptions</name>
+                <value>
+                    <elementReference>choiceCountries</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>country</name>
+                <value>
+                    <elementReference>Opportunity.AffiliateCompanyCountry__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>postalCode</name>
+                <value>
+                    <elementReference>Opportunity.AffiliateCompanyPostalCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>street</name>
+                <value>
+                    <elementReference>Opportunity.AffiliateCompanyStreet__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>inputProvinceOptions</name>
+                <value>
+                    <elementReference>choiceAccountProvinces</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>province</name>
+                <value>
+                    <elementReference>Opportunity.AffiliateCompanyState__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.AffiliateCompanyAddress__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AffiliateMerchantLegalName</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Opportunity.AffiliateLegalName__c</elementReference>
+            </defaultValue>
+            <fieldText>Affiliate Merchant Legal Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.AffiliateLegalName__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AffiliateMerchantAccountCode</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Opportunity.AffiliateMerchantAccountCode__c</elementReference>
+            </defaultValue>
+            <fieldText>Affiliate Merchant Account Code</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.AffiliateMerchantAccountCode__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AffiliateMerchantRegionJurisdiction</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Opportunity.AffiliateRegionOrJurisdictionMerchant__c</elementReference>
+            </defaultValue>
+            <fieldText>Affiliate Merchant Region Jurisdiction</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.AffiliateRegionJurisdictionMerchant__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AffiliateMerchantCountry</name>
+            <choiceReferences>choiceCountries</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Affiliate Merchant Country</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.AffiliateMerchantCountry__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AffiliateContractEffectiveDate</name>
+            <dataType>Date</dataType>
+            <defaultValue>
+                <elementReference>Opportunity.AffiliateContractEffectiveDate__c</elementReference>
+            </defaultValue>
+            <fieldText>Affiliate Contract Effective Date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.AffiliateContractEffectiveDate__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AddendumEffectiveDate</name>
+            <dataType>Date</dataType>
+            <fieldText>Addendum Effective Date</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.AddendumEffectiveDate__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AdyenLocalEntity</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Opportunity.AdyenLocalEntity__c</elementReference>
+            </defaultValue>
+            <fieldText>Adyen Local Entity</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.AdyenLocalEntity__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>AdditionalTerms</name>
+            <defaultValue>
+                <stringValue>N/A</stringValue>
+            </defaultValue>
+            <fieldText>Additional Terms</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.AdditionalTerms__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NDAProvisionOfServicesExplanation</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>Opportunity.NDAProvisionOfServicesExplanation__c</elementReference>
+            </defaultValue>
+            <fieldText>NDA - Provision Of Services Explanation</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetEnvelopeScreenVisibilitySetting.NDAProvisionOfServicesExplanation__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>ErrorNoAccountFound</name>
+        <label>Error No Account Found</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorTextNoAccountFound</name>
+            <fieldText>&lt;p&gt;In order to create a contract document we need information from the related Account. Please relate an Account to this Opportunity before proceeding. &lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>ErrorNoSettingsFound</name>
+        <label>Error No Settings Found</label>
+        <locationX>314</locationX>
+        <locationY>1238</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorMessage</name>
+            <fieldText>&lt;p&gt;Something went wrong! We don&apos;t know what information is relevant for the template you selected. Please contact you&apos;re Salesforce Admin for assistance.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>ErrorScreen</name>
+        <label>ErrorScreen</label>
+        <locationX>842</locationX>
+        <locationY>1838</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>disErrorText</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Something went wrong during this process due to the following error:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(192, 1, 1);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Please retry if you understand what goes wrong, otherwise reach out to your System Administrator.&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>MissingContact</name>
+        <label>Missing Contact</label>
+        <locationX>1370</locationX>
+        <locationY>1478</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ValidaionMessageMissingContact</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;We&apos;re still missing some key information! Please click &apos;Previous&apos; and make sure all fields have a value.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>OpenDocuSign</name>
+        <label>Open DocuSign</label>
+        <locationX>1634</locationX>
+        <locationY>2678</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>PI3</name>
+            <extensionName>dhfpi:lwcProgressIndicator</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>currentStage</name>
+                <value>
+                    <elementReference>$Flow.CurrentStage</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>stages</name>
+                <value>
+                    <elementReference>$Flow.ActiveStages</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>OpenDocuSignDescription</name>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;All the preparations are done! Click &apos;Go To DocuSign&apos; to finalize the document and send it out.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;*If your contract requires pricing please make sure you have a pricing document ready before continuing&amp;nbsp;to DocuSign. You can prepare a pricing document here if you haven&apos;t done so already.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>DocuSignNavigation</name>
+            <extensionName>c:DocuSignNavigation</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>sourceURL</name>
+                <value>
+                    <elementReference>varDocuSignURL</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>SelectTemplate</name>
+        <label>Select Template</label>
+        <locationX>710</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>SetEnterContactInformationStage</targetReference>
+        </connector>
+        <fields>
+            <name>EaesyTempDeprecateMessage</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(255, 0, 0); font-size: 14px;&quot;&gt;The EasyTemp flow will be deprecated by the end of the year. Most standard contracts (no red-lining / adjustments) can be sent through the &lt;/strong&gt;&lt;a href=&quot;https://backoffice-finance.adyen.com/backoffice/ui/settings/pricing-contracts/create&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; color: rgb(0, 200, 255); background-color: rgb(255, 255, 255);&quot;&gt;&lt;strong&gt;&lt;u&gt;Contract Creator&lt;/u&gt;&lt;/strong&gt;&lt;/a&gt;  &lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0); font-size: 14px;&quot;&gt;(link)&lt;/strong&gt;&lt;strong style=&quot;color: rgb(255, 0, 0); font-size: 14px;&quot;&gt; in the Backoffice.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(255, 0, 0); font-size: 14px;&quot;&gt;More info on the Contract Creator can be found on &lt;/strong&gt;&lt;a href=&quot;https://hub.is.adyen.com/commercial/tools-systems/contract-engine/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 14px; color: rgb(0, 200, 255);&quot;&gt;&lt;strong&gt;&lt;u&gt;the Hub&lt;/u&gt;&lt;/strong&gt;&lt;/a&gt;  &lt;strong style=&quot;color: rgb(255, 0, 0); font-size: 14px;&quot;&gt;(link)&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>PI1</name>
+            <extensionName>dhfpi:lwcProgressIndicator</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>currentStage</name>
+                <value>
+                    <elementReference>$Flow.CurrentStage</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>stages</name>
+                <value>
+                    <elementReference>$Flow.ActiveStages</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>selectTemplateDescription</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Please select the template you would like to use. &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;This flow is not to be used for non-standard contracts (deviating terms that need to go by legal, or uncommon contracts). Also, don&apos;t forget to create and add your Pricing Schedule if needed.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>TemplateSelector</name>
+            <extensionName>c:DocuSignTemplateSelecterLghtCmp</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>queryLimit</name>
+                <value>
+                    <numberValue>200.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>varEnvelopeConfigurationId</assignToReference>
+                <name>templateId</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <stages>
+        <name>stageEnterContactInformation</name>
+        <isActive>true</isActive>
+        <label>Contact Information</label>
+        <stageOrder>15</stageOrder>
+    </stages>
+    <stages>
+        <name>stageEnterContractDetails</name>
+        <isActive>true</isActive>
+        <label>Contract Details</label>
+        <stageOrder>20</stageOrder>
+    </stages>
+    <stages>
+        <name>stageOpenDocuSignEnvelope</name>
+        <isActive>true</isActive>
+        <label>Open DocuSign Envelope</label>
+        <stageOrder>30</stageOrder>
+    </stages>
+    <stages>
+        <name>stageSelectTemplate</name>
+        <isActive>true</isActive>
+        <label>Select Template</label>
+        <stageOrder>10</stageOrder>
+    </stages>
+    <start>
+        <locationX>254</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Opportunity</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <description>DocuSign Recipients are based on Salesforce Opportunity Contact Roles. For now we assume that the SelectContractSignatory screen element is always populated.</description>
+        <name>UpdateOpportunityContactRoles</name>
+        <label>Update Opportunity Contact Roles</label>
+        <locationX>1634</locationX>
+        <locationY>2438</locationY>
+        <connector>
+            <targetReference>SetDocuSignURL</targetReference>
+        </connector>
+        <flowName>UpdateOpportunityContactRoles</flowName>
+        <inputAssignments>
+            <name>varContactId</name>
+            <value>
+                <elementReference>SelectContractSignatory.recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varOpportunityId</name>
+            <value>
+                <elementReference>Opportunity.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varRoleName</name>
+            <value>
+                <stringValue>Contract Signatory</stringValue>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varContactLookupName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>varDocuSignURL</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varEnvelopeConfigurationId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>varTemplateId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <assignments>
+        <description>Reparent the Email Message to first non merged case.</description>
+        <name>ReparentEmailMessage</name>
+        <label>Reparent EmailMessage</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.HtmlBody</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forNewHtmlBody</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.TextBody</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forNewTextBody</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.ParentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forFirstNonMergedParentCase</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>NewParentFound</name>
+        <label>New Parent Found?</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <defaultConnectorLabel>No Parent Found</defaultConnectorLabel>
+        <rules>
+            <name>outcomeParentFound</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>forFirstNonMergedParentCase</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.ParentId</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ReparentEmailMessage</targetReference>
+            </connector>
+            <label>Parent Found</label>
+        </rules>
+    </decisions>
+    <description>This flow reparents the emailmessage if the parent case is in status &apos;&apos;Merged&apos;.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Traversing the Case hierarchy to the first non merged case.</description>
+        <name>forFirstNonMergedParentCase</name>
+        <dataType>String</dataType>
+        <expression>If (TEXT({!$Record.Parent.Status}) != &apos;Merged&apos; , {!$Record.ParentId}, 
+	If (TEXT({!$Record.Parent.Parent.Status}) != &apos;Merged&apos; , {!$Record.Parent.ParentId}, 
+		If (TEXT({!$Record.Parent.Parent.Parent.Status}) != &apos;Merged&apos; , {!$Record.Parent.Parent.ParentId}, 
+			If (TEXT({!$Record.Parent.Parent.Parent.Parent.Status}) != &apos;Merged&apos; , {!$Record.Parent.Parent.Parent.ParentId}, 
+				If (TEXT({!$Record.Parent.Parent.Parent.Parent.Parent.Status}) != &apos;Merged&apos; , {!$Record.Parent.Parent.Parent.Parent.ParentId}, {!$Record.ParentId})
+			)
+		)
+	)
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forNewHtmlBody</name>
+        <dataType>String</dataType>
+        <expression>if ( NOT(ISBLANK({!$Record.HtmlBody})), &quot;This is a response to the merged case with Case Number: &quot; &amp; {!$Record.Parent.CaseNumber} &amp; BR() &amp; SUBSTITUTE({!$Record.HtmlBody}, &apos;thread::&apos;, &apos;thread_old::&apos;), &apos;&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>forNewTextBody</name>
+        <dataType>String</dataType>
+        <expression>if ( NOT(ISBLANK({!$Record.TextBody})), &quot;This is a response to the merged case with Case Number: &quot; &amp; {!$Record.Parent.CaseNumber} &amp; &apos;\n\n&apos; &amp; SUBSTITUTE({!$Record.TextBody}, &apos;thread::&apos;, &apos;thread_old::&apos;), &apos;&apos;)</expression>
+    </formulas>
+    <interviewLabel>EMAIL_SERVICE_HandleMergedCases {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>EMAIL_SERVICE_HandleMergedCases</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>NewParentFound</targetReference>
+        </connector>
+        <filterFormula>AND (
+TEXT({!$Record.Parent.Status}) = &apos;Merged&apos;,
+{!$Record.ClonedEmail__c} = FALSE,
+NOT({!$Permission.BypassCaseTriggerValidationMigration}),
+NOT(CONTAINS({!$Record.FromAddress}, &apos;@adyen&apos;)),
+{!$Record.Incoming} ,
+OR({!$Record.Parent.RecordType.DeveloperName} == &apos;ServiceCase&apos;, {!$Record.Parent.RecordType.DeveloperName} == &apos;InternalCase&apos;, {!$Record.Parent.RecordType.DeveloperName} == &apos;Support&apos;),
+OR({!$Record.Parent.IsShopperCase__c} == false, {!$Record.Parent.ShopperCaseAllowed__c}),
+NOT(ISPICKVAL({!$Record.Parent.AutoCloseReason__c}, &apos;Blocked Email&apos;))
+)</filterFormula>
+        <object>EmailMessage</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

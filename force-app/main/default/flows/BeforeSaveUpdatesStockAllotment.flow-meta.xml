@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <assignments>
+        <description>Populates Unique Identifier field on Stock Allotment record to ensure no duplicates exist.</description>
+        <name>PopulateUniqueKey</name>
+        <label>Populate Unique Key</label>
+        <locationX>176</locationX>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.UniqueIdentifier__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forUniqueID</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Latest update: Populate Unique Identifier to prevent duplicates</description>
+    <formulas>
+        <name>forUniqueID</name>
+        <dataType>String</dataType>
+        <expression>TEXT({!$Record.ProductModel__c}) &amp; &quot;-&quot; &amp; 
+TEXT({!$Record.StockAllotmentArea__c}) &amp; &quot;-&quot; &amp;
+TEXT({!$Record.Year__c}) &amp; &quot;-&quot; &amp; 
+TEXT({!$Record.Month__c})</expression>
+    </formulas>
+    <interviewLabel>Before-Save Updates Stock Allotment {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Before-Save Updates Stock Allotment</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>PopulateUniqueKey</targetReference>
+        </connector>
+        <object>StockAllotment__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,3 @@
+<aura:documentation>
+	<aura:description>Custom lightning page with header and two columns of which right column is collapsible.</aura:description>
+</aura:documentation>

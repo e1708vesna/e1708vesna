@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <decisions>
+        <description>If an agent works on the case, skills will not be recalculated and rerouted.</description>
+        <name>AgentWorksOnCase</name>
+        <label>Agent works on Case?</label>
+        <locationX>50</locationX>
+        <locationY>539</locationY>
+        <defaultConnector>
+            <targetReference>CaseOwner</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Working</defaultConnectorLabel>
+        <rules>
+            <name>WorkingOnCase</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetActiveWorkItem</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.OwnerId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>GetActiveWorkItem.UserId</elementReference>
+                </rightValue>
+            </conditions>
+            <label>Working</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Is the case owned by a queue or an agent?</description>
+        <name>CaseOwner</name>
+        <label>Case Owner</label>
+        <locationX>347</locationX>
+        <locationY>647</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>RecalculateSkillsAndRouteCase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Agent</defaultConnectorLabel>
+        <rules>
+            <name>OwnedByQueue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Owner:Group.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>VerifyIfQueueIsUnclassified</targetReference>
+            </connector>
+            <label>Queue</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>If previous query comes back with at least one record, the case is owned by an unclassfied queue. This means that the case should not be routed to an agent automatically.</description>
+        <name>RecordFound</name>
+        <label>Record Found?</label>
+        <locationX>149</locationX>
+        <locationY>863</locationY>
+        <defaultConnector>
+            <targetReference>RecalculateSkillsAndRouteCase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Classified</defaultConnectorLabel>
+        <rules>
+            <name>UnclassifiedQueue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>VerifyIfQueueIsUnclassified</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Unclassified</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>If status is New, In Progress or Handover, omni-channel should run</description>
+        <name>StatusCase</name>
+        <label>Status?</label>
+        <locationX>429</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Other</defaultConnectorLabel>
+        <rules>
+            <name>statusNewHandoverInProgress</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>In Progress</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Handover</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetActiveWorkItem</targetReference>
+            </connector>
+            <label>New/Handover/In Progress</label>
+        </rules>
+    </decisions>
+    <description>Triggers Omni-Channel flow routing on a case if needed.</description>
+    <environments>Default</environments>
+    <interviewLabel>CASE_OmniChannelFlowRouting {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CASE_OmniChannelFlowRouting</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Do not route when an agent is already working on it.</description>
+        <name>GetActiveWorkItem</name>
+        <label>Get Active WorkItem</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AgentWorksOnCase</targetReference>
+        </connector>
+        <filterLogic>1 AND (2 OR  3)</filterLogic>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Opened</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>WorkItemId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>WorkItemId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>AgentWork</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Verify if the queue belongs to Unclassified queues by looking the queue developer name up in the metadata table ServiceTeam.</description>
+        <name>VerifyIfQueueIsUnclassified</name>
+        <label>Verify If Queue is Unclassified</label>
+        <locationX>149</locationX>
+        <locationY>755</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>RecordFound</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>UnclassifiedQueueDeveloperName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Owner:Group.DeveloperName</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>ServiceTeam__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>303</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>StatusCase</targetReference>
+        </connector>
+        <filterFormula>AND(
+{!$Record.OmniFlowRouting__c},
+OR(
+ISNEW(),
+ISCHANGED( {!$Record.Type} ),
+ISCHANGED( {!$Record.SubType__c} ),
+ISCHANGED( {!$Record.ServiceTopic__c} ),
+ISCHANGED( {!$Record.OmniBaseSkill__c} ),
+ISCHANGED( {!$Record.BusinessModelRouting__c} ),
+ISCHANGED( {!$Record.HypercareMode__c} ),
+ISCHANGED( {!$Record.VIPAccount__c} ),
+ISCHANGED( {!$Record.RegionRouting__c} ),
+ISCHANGED( {!$Record.OwnerId})
+)
+)</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <description>Recalculate the skills needed to pickup the case and route the case to the correct agent.</description>
+        <name>RecalculateSkillsAndRouteCase</name>
+        <label>Recalculate Skills And Route Case</label>
+        <locationX>281</locationX>
+        <locationY>971</locationY>
+        <flowName>CASE_SubflowOmniChannelRecalcSkillRequirements</flowName>
+        <inputAssignments>
+            <name>Record</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <triggerOrder>1080</triggerOrder>
+    <variables>
+        <description>Case Id</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

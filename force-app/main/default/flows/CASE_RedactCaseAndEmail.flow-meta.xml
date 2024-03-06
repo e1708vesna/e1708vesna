@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Perform search and redact the Case and Email.</description>
+        <name>Redact_Case</name>
+        <label>Redact Case</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <actionName>CaseRedactionSearchInvocable</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>SuccessScreen</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>ShowError</targetReference>
+        </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>caseId</name>
+            <value>
+                <elementReference>recordId.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>redact</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>searchTerm</name>
+            <value>
+                <elementReference>SearchTerm</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <description>Perform the action to search, but do not redact yet.</description>
+        <name>Search</name>
+        <label>Search</label>
+        <locationX>314</locationX>
+        <locationY>278</locationY>
+        <actionName>CaseRedactionSearchInvocable</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>HitsFound</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>caseId</name>
+            <value>
+                <elementReference>recordId.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>redact</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>searchTerm</name>
+            <value>
+                <elementReference>SearchTerm</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <description>Decide the path to take based on whether any hits were found.</description>
+        <name>HitsFound</name>
+        <label>Hits Found</label>
+        <locationX>314</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>SearchSummaryScreenNoHits</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>HitsFoundOutcome</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Search.hitOnCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Search.amountOfEmailHits</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SearchSummaryScreen</targetReference>
+            </connector>
+            <label>Hits Found</label>
+        </rules>
+    </decisions>
+    <description>Label changed as this is displayed in screen component - Screen flow to search and redact a case and its related emails.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Amount of hits on email + case hit</description>
+        <name>varAmountOfHits</name>
+        <dataType>Number</dataType>
+        <expression>{!Search.amountOfEmailHits} + IF({!Search.hitOnCase}, 1, 0)</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>CASE_RedactCaseAndEmail {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Redact Case &amp; Email</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <runInMode>DefaultMode</runInMode>
+    <screens>
+        <name>SearchSummaryScreen</name>
+        <label>Search Summary Screen</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Redact_Case</targetReference>
+        </connector>
+        <fields>
+            <name>ResultSummaryDisplayText</name>
+            <fieldText>&lt;p&gt;The search for &lt;strong&gt;{!SearchTerm}&lt;/strong&gt; has found {!varAmountOfHits} records.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Press next to perform the redaction. &lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;Note that this &lt;/span&gt;&lt;strong style=&quot;color: rgb(255, 0, 0);&quot;&gt;can&apos;t&lt;/strong&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt; be undone!&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>SearchSummaryScreenNoHits</name>
+        <label>Search Summary Screen No Hits</label>
+        <locationX>578</locationX>
+        <locationY>518</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>SummaryOutputNoHits</name>
+            <fieldText>&lt;p&gt;The search term has not been found on the case or any related email message.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>ShowError</name>
+        <label>Show Error</label>
+        <locationX>314</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ErrorInformationDisplay</name>
+            <fieldText>&lt;p&gt;Below error has occurred while redacting the case. &lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>FlowError</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>SuccessScreen</name>
+        <label>Success Screen</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>SuccessOutput</name>
+            <fieldText>&lt;p&gt;The case and/or email messages have been successfully redacted.&lt;/p&gt;&lt;p&gt;Note that any email attachments have been moved to the Case record itself.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>refreshPage</name>
+            <extensionName>c:refreshViewFlowScreen</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>UserInputScreen</name>
+        <label>UserInputScreen</label>
+        <locationX>314</locationX>
+        <locationY>158</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Search</targetReference>
+        </connector>
+        <fields>
+            <name>Information</name>
+            <fieldText>&lt;p&gt;&amp;nbsp;Enter a string of text below to search the&amp;nbsp;&lt;strong&gt;subject&lt;/strong&gt;&amp;nbsp;&amp;amp;&amp;nbsp;&lt;strong&gt;description&lt;/strong&gt;&amp;nbsp;of the current case as well as its&amp;nbsp;&lt;strong&gt;related emails&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: red;&quot;&gt;Note: the search string is case sensitive so consider copy pasting the string of text.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;A summary of results will be shown before the actual redaction will take place.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>SearchTerm</name>
+            <dataType>String</dataType>
+            <fieldText>Search Term</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;Search Term must have at least 3 characters.&lt;/p&gt;</errorMessage>
+                <formulaExpression>LEN({!SearchTerm}) &gt; 2</formulaExpression>
+            </validationRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>UserInputScreen</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Case record that triggered the flow</description>
+        <name>recordId</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+</Flow>

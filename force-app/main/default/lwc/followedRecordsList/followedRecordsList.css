@@ -1,0 +1,121 @@
+.lightning-card {
+    display: block;
+    position: relative;
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid #dddbda;
+    border-radius: .25rem;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.1);
+}
+
+.spinnerWrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+}
+
+.combo-box-container {
+    display: flex;
+    align-items: center;
+    justify-content: start; 
+}
+
+.search-bar-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+.custom-combo-input {
+    width: 100%;  
+    max-width: 300px;
+}
+
+.custom-search-input {
+    width: 100%;  
+    max-width: 400px;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.refresh-button {
+    margin-left: 0.25rem;
+}
+
+@media (max-width: 768px) {
+    .custom-search-input {
+        max-width: 100%; 
+    }
+    
+    .combo-box-container,
+    .search-bar-container,
+    .button-container {
+        flex: 0 0 100%; 
+        justify-content: center; 
+        margin-bottom: 0.5rem; 
+    }
+
+    .refresh-button {
+        margin-top: 0.5rem; 
+    }
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.empty-state-card {
+    position: relative;
+}
+
+.refresh-button-empty-state {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+    z-index: 1;
+}
+
+.datatable-container {
+    padding: 9px;
+    box-shadow: 0 var(--lwc-borderWidthThick, 2px) 10px 0 rgba(0, 0, 0, 0.1);
+    border: var(--lwc-borderWidthThin, 1px) solid #e0e0e0;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;   
+}
+
+.pagination-button {
+    margin: 0 5px;
+}
+
+.page-number-display {
+    margin: 0 15px;
+}
+
+.total-records-container {
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    margin: 1rem 0; 
+}
+
+.total-records-container span{
+    padding-top: 0.25rem;
+}
+
+.info-icon {
+    margin-left: 0.2rem;
+}

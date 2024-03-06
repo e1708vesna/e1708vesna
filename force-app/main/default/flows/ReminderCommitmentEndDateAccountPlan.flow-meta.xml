@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>CommitmentEndDate3090DaysFuture</name>
+        <label>Commitment End Date 30/90 days Future</label>
+        <locationX>50</locationX>
+        <locationY>396</locationY>
+        <actionName>AccountPlan__c.CommitmentEndDateExpiring</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>CommitmentEndDateExpired</name>
+        <label>Commitment End Date Expired</label>
+        <locationX>314</locationX>
+        <locationY>396</locationY>
+        <actionName>AccountPlan__c.CommitmentEndDateExpired</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>52.0</apiVersion>
+    <decisions>
+        <name>CheckMonthsForReminder</name>
+        <label>Check months for reminder</label>
+        <locationX>314</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Reminder90DaysFuture</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CommitmentEndDate__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ForCommitmentEndDate90DaysFuture</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CommitmentEndDate__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ForCommitmentEndDate30DaysFuture</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CommitmentEndDate3090DaysFuture</targetReference>
+            </connector>
+            <label>Reminder 90 days Future</label>
+        </rules>
+        <rules>
+            <name>ReminderPastDate</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.CommitmentEndDate__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ForCommitmentEndDatePast</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.CommitmentEndDate__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ForCommitmentEndDate90DaysPast</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CommitmentEndDateExpired</targetReference>
+            </connector>
+            <label>Reminder Past Date</label>
+        </rules>
+    </decisions>
+    <description>Email notifications send 30/90 days before end date and on day after end date/90 days after expired date</description>
+    <formulas>
+        <name>ForCommitmentEndDate30DaysFuture</name>
+        <dataType>Date</dataType>
+        <expression>{!$Flow.CurrentDate} + 30</expression>
+    </formulas>
+    <formulas>
+        <name>ForCommitmentEndDate90DaysFuture</name>
+        <dataType>Date</dataType>
+        <expression>{!$Flow.CurrentDate} + 90</expression>
+    </formulas>
+    <formulas>
+        <name>ForCommitmentEndDate90DaysPast</name>
+        <dataType>Date</dataType>
+        <expression>{!$Flow.CurrentDate} - 90</expression>
+    </formulas>
+    <formulas>
+        <name>ForCommitmentEndDatePast</name>
+        <dataType>Date</dataType>
+        <expression>{!$Flow.CurrentDate} - 1</expression>
+    </formulas>
+    <interviewLabel>Reminder Commitment End Date - Account Plan {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Batch Account Plan - Reminder Commitment End Date</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>188</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>CheckMonthsForReminder</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CommitmentEndDate__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>AccountPlan__c</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2021-08-18</startDate>
+            <startTime>02:35:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

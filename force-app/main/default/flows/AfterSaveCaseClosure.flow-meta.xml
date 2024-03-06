@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>This email is automatically sent to the Case Contact when the status is being updated to &apos;Completed&apos;.</description>
+        <name>CaseCompleted</name>
+        <label>Case Completed</label>
+        <locationX>578</locationX>
+        <locationY>492</locationY>
+        <actionName>Case.CaseCompleted</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>QueryEmailTemplateSubject</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <description>This email alert is sent to the merchant after 168 hours (7days) to inform that the case has been auto-closed due to no response.</description>
+        <name>NotifyTheMerchant</name>
+        <label>Notify the Merchant</label>
+        <locationX>50</locationX>
+        <locationY>492</locationY>
+        <actionName>Case.AutoResponseClosingCaseDueToMerchantNoResponse</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>QueryEmailTemplateSubject2</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <description>Checks if the Email is populated. Only send notification if it is.</description>
+        <name>EmailPopulated</name>
+        <label>Email Populated</label>
+        <locationX>710</locationX>
+        <locationY>384</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SuppliedEmail</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ContactEmail</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Origin</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>ZD - Collaboration</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CaseCompleted</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if the Email is populated. Only send notification if it is.</description>
+        <name>EmailPopulated2</name>
+        <label>Email Populated</label>
+        <locationX>182</locationX>
+        <locationY>384</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes2</name>
+            <conditionLogic>(1 OR 2) AND 3 AND 4 AND 5</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.SuppliedEmail</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ContactEmail</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Origin</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>ZD - Collaboration</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.IsVisibleInPortal__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SuppressAutomatedEmails__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NotifyTheMerchant</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Checks if the Case Status has been updated to &apos;Completed&apos;.</description>
+        <name>ToCompleted</name>
+        <label>To &apos;Completed&apos;?</label>
+        <locationX>908</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Completed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Completed</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Autoclosed__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SuppressAutomatedEmails__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>EmailPopulated</targetReference>
+            </connector>
+            <label>Completed</label>
+        </rules>
+    </decisions>
+    <description>Move Case Completion auto response logic to run async 24 hours after case is completed.
+Run the flow for all users; don&apos;t skip it for users with custom permission BypassCaseTriggerValidationMigration.</description>
+    <environments>Default</environments>
+    <interviewLabel>After-Save Service Case Closure {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>After-Save Service Case Closure</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <description>Create a feedItem on the case to show that the automated email has been sent.</description>
+        <name>CreateFeedItem</name>
+        <label>Create FeedItem</label>
+        <locationX>578</locationX>
+        <locationY>708</locationY>
+        <inputAssignments>
+            <field>Body</field>
+            <value>
+                <elementReference>FeedItemContent</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IsRichText</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>LinkPost</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Visibility</field>
+            <value>
+                <stringValue>InternalUsers</stringValue>
+            </value>
+        </inputAssignments>
+        <object>FeedItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <description>Create a feedItem on the case to show that the automated email has been sent.</description>
+        <name>CreateFeedItemNoResponse</name>
+        <label>Create FeedItem No Response</label>
+        <locationX>50</locationX>
+        <locationY>708</locationY>
+        <inputAssignments>
+            <field>Body</field>
+            <value>
+                <elementReference>FeedItemContent</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IsRichText</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Visibility</field>
+            <value>
+                <stringValue>InternalUsers</stringValue>
+            </value>
+        </inputAssignments>
+        <object>FeedItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>Query the email template subject. Will be used in the creation of the feeditem.</description>
+        <name>QueryEmailTemplateSubject</name>
+        <label>Query Email Template Subject</label>
+        <locationX>578</locationX>
+        <locationY>600</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CreateFeedItem</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Case_Completed_1669823086401</stringValue>
+            </value>
+        </filters>
+        <object>EmailTemplate</object>
+        <outputAssignments>
+            <assignToReference>varEmailTemplateSubject</assignToReference>
+            <field>Subject</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
+        <description>Query the email template subject. Will be used in the creation of the feeditem.</description>
+        <name>QueryEmailTemplateSubject2</name>
+        <label>Query Email Template Subject</label>
+        <locationX>50</locationX>
+        <locationY>600</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CreateFeedItemNoResponse</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Merchant_Non_Responsive_1669822845754</stringValue>
+            </value>
+        </filters>
+        <object>EmailTemplate</object>
+        <outputAssignments>
+            <assignToReference>varEmailTemplateSubject</assignToReference>
+            <field>Subject</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordUpdates>
+        <description>The case status is changed to &apos;Completed&apos;.</description>
+        <name>CaseClosed</name>
+        <label>Case Closed</label>
+        <locationX>182</locationX>
+        <locationY>276</locationY>
+        <connector>
+            <targetReference>EmailPopulated2</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Waiting for Merchant</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>AutoCloseReason__c</field>
+            <value>
+                <stringValue>No Customer Response</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Autoclosed__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>221</locationX>
+        <locationY>0</locationY>
+        <filterFormula>AND (
+{!$Record.RecordType.DeveloperName} == &apos;ServiceCase&apos;,
+OR({!$Record.IsShopperCase__c} == false, {!$Record.ShopperCaseAllowed__c})
+)</filterFormula>
+        <object>Case</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <scheduledPaths>
+            <name>AutoCloseAfter7Days</name>
+            <connector>
+                <targetReference>CaseClosed</targetReference>
+            </connector>
+            <label>Auto-close After 7 Days</label>
+            <offsetNumber>7</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
+            <recordField>WaitingOnMerchantDateTime__c</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <scheduledPaths>
+            <name>Case_Completed_Auto_Email</name>
+            <connector>
+                <targetReference>ToCompleted</targetReference>
+            </connector>
+            <label>Case Completed Auto Email</label>
+            <offsetNumber>24</offsetNumber>
+            <offsetUnit>Hours</offsetUnit>
+            <recordField>ClosedDate</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>FeedItemContent</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Automated Email Sent: {!varEmailTemplateSubject} &lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <name>varEmailTemplateSubject</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

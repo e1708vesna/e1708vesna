@@ -1,0 +1,19 @@
+.THIS collapseButton {
+    width: 10px;
+    height: 60 px;
+    background-color: RGB(240,240,240);
+}
+.THIS article[data-type="TextPost"] {
+    background-color: yellow;
+}
+.THIS article[data-type="CaseCommentPost"] {
+    background-color: greenyellow;
+}
+/*
+.THIS article[data-type="EmailMessageEvent"] {
+    background-color: orange;
+}
+*/
+.THIS article[data-type="EmailMessageEvent"] .preambleContent {
+    background-color: peachpuff;
+}

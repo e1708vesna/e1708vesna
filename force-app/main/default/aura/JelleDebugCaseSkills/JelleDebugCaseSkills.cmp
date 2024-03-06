@@ -1,0 +1,21 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" controller="JelleDebugCaseSkillsController" access="global" >
+    <aura:handler event="force:refreshView" action="{!c.init}" />
+    <!-- attributes -->
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="columns" type="List"/>
+
+    <!-- handlers-->
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+
+
+    <!-- the container element determine the height of the datatable -->
+    <div style="height: 300px">
+        <lightning:button label="Refresh" iconName="utility:refresh" iconPosition="left" onclick = "{!c.init}" />
+        <lightning:button label="Invoke Routing Flow" iconName="utility:change_owner" iconPosition="left" onclick = "{!c.invokeFlow}" />
+        <lightning:datatable
+                keyField="id"
+                data="{! v.data }"
+                columns="{! v.columns }"
+                hideCheckboxColumn="true"/>
+    </div>
+</aura:component>

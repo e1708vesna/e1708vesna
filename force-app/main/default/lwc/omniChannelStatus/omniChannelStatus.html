@@ -1,0 +1,32 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <template lwc:if={loading}>
+        <div class="spinnerWrapper">
+            <lightning-spinner variant="brand" alternative-text="Loading"></lightning-spinner>
+        </div>
+    </template>
+    <template lwc:else>
+        <lightning-card class="omni-channel-card" title="Omni-Channel Status" icon-name="utility:omni_channel">
+            <!-- Case is in OmniChannel with AgentWork records -->
+            <template if:true={agentWorks.length}>
+                <div style="overflow-x: auto;">
+                    <lightning-datatable 
+                        key-field="Id" 
+                        data={agentWorks} 
+                        columns={columns} 
+                        hide-checkbox-column="true"
+                        class="full-width">
+                    </lightning-datatable>
+                </div>
+            </template>
+            <!-- No AgentWork records for the Case, implying it's not in OmniChannel -->
+            <template if:false={agentWorks.length}>
+                <c-reusable-empty-state 
+                    message-body={label.caseNotInOmniChannel}
+                    image-name="no_data:desert"
+                    image-size="small">
+                </c-reusable-empty-state>
+            </template>
+        </lightning-card>
+    </template>
+</template>

@@ -1,0 +1,14 @@
+.spinnerWrapper{
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+}
+
+.text-color-green {
+    color: #0abf53;
+}
+
+.text-color-red {
+    color: var(--lwc-colorTextError);
+}

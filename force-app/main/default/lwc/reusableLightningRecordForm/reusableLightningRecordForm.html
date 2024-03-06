@@ -1,0 +1,12 @@
+<template>
+    <div class="slds-p-around_medium">
+       <lightning-record-form
+                object-api-name={objectName}
+                mode="edit"
+                record-type-id={recordTypeId}
+                fields={fields}
+                onsuccess={handleSuccess}
+        >
+        </lightning-record-form>
+    </div>
+</template>

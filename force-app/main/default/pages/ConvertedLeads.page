@@ -1,0 +1,22 @@
+<apex:page standardController="Lead" extensions="LeadConvertedViewController" readOnly="true">
+
+    <apex:pageBlock >
+
+        <apex:pageBlockSection columns="1">
+
+            <!--
+              Unfortunately, you have to build out the page yourself
+              to show chatter feed, fields and any related lists.
+              You cannot use the <apex:detail> tag that would naturally
+              render the user's appropriate page layout, will get Insufficient Privileges.
+            -->
+
+            <apex:outputField value="{!record.firstName}"/>
+            <apex:outputField value="{!record.lastName}"/>
+            <apex:outputField value="{!record.company}"/>
+
+        </apex:pageBlockSection>
+
+    </apex:pageBlock>
+
+</apex:page>

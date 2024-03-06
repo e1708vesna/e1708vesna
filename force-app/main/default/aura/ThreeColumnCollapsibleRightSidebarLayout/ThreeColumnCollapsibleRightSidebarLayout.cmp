@@ -1,0 +1,31 @@
+<aura:component implements="lightning:recordHomeTemplate" description="Three columns with collapsible right sidebar." access="global">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:attribute name="leftsidebar" type="Aura.Component[]" description="Left sidebar region"/>
+    <aura:attribute name="main" type="Aura.Component[]" description="Main region"/>
+    <aura:attribute name="rightsidebar" type="Aura.Component[]" description="Collapsible right sidebar region"/>
+
+    <aura:attribute name="showSidebar" type="Boolean" access="PRIVATE" default="false" />
+
+    <div>
+        <lightning:layout>
+            <lightning:layoutItem flexibility="shrink" size="3">
+                {!v.leftsidebar}
+            </lightning:layoutItem>
+            <lightning:layoutItem class="noScroll" flexibility="auto" padding="horizontal-small">
+                {!v.main}
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="shrink">
+                <div title="{! v.showSidebar ? 'Close sidebar' : 'Open sidebar'}" class="collapseButton" onclick="{!c.toggleSection}">
+                    {! v.showSidebar ? '&gt;' : '&lt;'}
+                </div>
+            </lightning:layoutItem>
+            <aura:if isTrue="{!v.showSidebar}">
+                <lightning:layoutItem flexibility="shrink" size="3">
+                    {!v.rightsidebar}
+                </lightning:layoutItem>
+            </aura:if>
+        </lightning:layout>
+    </div>
+</aura:component>

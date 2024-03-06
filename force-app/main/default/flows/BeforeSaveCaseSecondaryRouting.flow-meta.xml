@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <assignments>
+        <description>Updates the secondary routing value to null.</description>
+        <name>UpdateToEmpty</name>
+        <label>Update to empty</label>
+        <locationX>1634</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SecondaryRouting__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>UpdatetoEscalated</name>
+        <label>Update to Escalated</label>
+        <locationX>314</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SecondaryRouting__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Escalated</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>UpdatetoHandoverReasonOther</name>
+        <label>Update to Handover Reason Other</label>
+        <locationX>1370</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SecondaryRouting__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Handover Other</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>UpdatetoHighPriority</name>
+        <label>Update to High Priority</label>
+        <locationX>578</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SecondaryRouting__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>High Priority</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>UpdateToNextRegion</name>
+        <label>Update to Next Region</label>
+        <locationX>1106</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SecondaryRouting__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Handover To Next Region</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>UpdatetoUrgent</name>
+        <label>Update to Urgent</label>
+        <locationX>50</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SecondaryRouting__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Urgent</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>UpdatetoVIP</name>
+        <label>Update to VIP</label>
+        <locationX>842</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.SecondaryRouting__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>VIP</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>DetermineSecondaryPriority</name>
+        <label>Determine Secondary Priority</label>
+        <locationX>842</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>UpdateToEmpty</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>StatusUrgent</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Priority</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Urgent</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdatetoUrgent</targetReference>
+            </connector>
+            <label>Status Urgent?</label>
+        </rules>
+        <rules>
+            <name>CaseEscalated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.IsEscalated</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdatetoEscalated</targetReference>
+            </connector>
+            <label>Case Escalated?</label>
+        </rules>
+        <rules>
+            <name>HighPriority</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Priority</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>High</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdatetoHighPriority</targetReference>
+            </connector>
+            <label>High Priority?</label>
+        </rules>
+        <rules>
+            <name>VIPAcccount</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Account.ServiceLevel__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>VIP</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdatetoVIP</targetReference>
+            </connector>
+            <label>VIP Acccount?</label>
+        </rules>
+        <rules>
+            <name>HandoverReasonHandoverToNextRegion</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.HandoverReason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Handover To Next Region</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdateToNextRegion</targetReference>
+            </connector>
+            <label>Handover Reason &apos;Handover To Next Region&apos;</label>
+        </rules>
+        <rules>
+            <name>HandoverReasonOther</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.HandoverReason__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.HandoverReason__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Handover To Next Region</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>UpdatetoHandoverReasonOther</targetReference>
+            </connector>
+            <label>Handover Reason Other</label>
+        </rules>
+    </decisions>
+    <description>Flow to update the Secondary Routing field on cases which is used for secondary routing of cases through omni channel.</description>
+    <environments>Default</environments>
+    <interviewLabel>Before Save Case Secondary Routing {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Before Save Case Secondary Routing</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>716</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>DetermineSecondaryPriority</targetReference>
+        </connector>
+        <object>Case</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,1899 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>InternalSupportCaseCreationEmail</name>
+        <label>Internal Support Case Creation Email</label>
+        <locationX>50</locationX>
+        <locationY>1106</locationY>
+        <actionName>Case.InternalSupportCaseCreation</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Upload_Files</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>Create_a_Case_first_0</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Navigate_to_Legal_Case</name>
+        <label>Navigate to Legal Case</label>
+        <locationX>842</locationX>
+        <locationY>890</locationY>
+        <actionName>c:ersNavigateToRecord</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>sObject</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>CreateLegalCase</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>NavigateToCase</name>
+        <label>Navigate To Case</label>
+        <locationX>182</locationX>
+        <locationY>1622</locationY>
+        <actionName>c:ersNavigateToRecord</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>sObject</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Create_a_Case_first_0</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>RecordTypesPerUser</name>
+        <label>Record Types per User</label>
+        <locationX>776</locationX>
+        <locationY>134</locationY>
+        <actionName>SObjectRecordTypeInvocable</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>FilterRecordTypes</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>sObjectName</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>SendEmailtoSupportCaseCreator</name>
+        <label>Send Email to Support Case Creator</label>
+        <locationX>314</locationX>
+        <locationY>1106</locationY>
+        <actionName>Case.Email_Case_Creator</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>Upload_Files</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>Create_a_Case_first_0</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>52.0</apiVersion>
+    <assignments>
+        <name>setCaseId</name>
+        <label>setCaseId</label>
+        <locationX>182</locationX>
+        <locationY>1406</locationY>
+        <assignmentItems>
+            <assignToReference>caseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forCaseId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>UpdateCaseRelation</targetReference>
+        </connector>
+    </assignments>
+    <choices>
+        <name>Addendum</name>
+        <choiceText>Addendum</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Addendum</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Additional_Product</name>
+        <choiceText>Additional Product</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Additional Product</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Afp</name>
+        <choiceText>Afp</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Afp</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>American_Express_Amex</name>
+        <choiceText>American Express (Amex)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>American Express (Amex)	</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ANCV_vacation_vouchers</name>
+        <choiceText>ANCV vacation vouchers</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ANCV vacation vouchers	</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Aplazame</name>
+        <choiceText>Aplazame</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Aplazame</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Apple_Pay</name>
+        <choiceText>Apple Pay</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Apple Pay	</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Arvato</name>
+        <choiceText>Arvato</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Arvato</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Asset</name>
+        <choiceText>Asset</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Asset</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Biller</name>
+        <choiceText>Biller</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Biller</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>BlueLine</name>
+        <choiceText>BlueLine</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>BlueLine</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Both</name>
+        <choiceText>Both</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Both</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Capital_One_PLCC</name>
+        <choiceText>Capital One PLCC</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Capital One PLCC	</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Card_scheme</name>
+        <choiceText>Card scheme</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Card scheme</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ChAdminActionNeeded</name>
+        <choiceText>Admin Action Needed</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Admin Action Needed</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ChFeatureRequest</name>
+        <choiceText>Feature Request</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Feature Request</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ChProblem</name>
+        <choiceText>Problem</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Problem</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ChQuestion</name>
+        <choiceText>Question</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Question</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Clutch_gift_cards</name>
+        <choiceText>Clutch gift cards</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Clutch gift cards	</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Compliance_Related_Feedback</name>
+        <choiceText>Compliance Related Feedback</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Compliance Related Feedback</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Diners</name>
+        <choiceText>Diners</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Diners</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Direct_Debit_Australia</name>
+        <choiceText>Direct Debit Australia</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Direct Debit Australia</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Discover</name>
+        <choiceText>Discover</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Discover</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>e_ANCV</name>
+        <choiceText>e-ANCV</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>e-ANCV	</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>EBT_Online_Electronic_Benefits_Transfer</name>
+        <choiceText>EBT Online (Electronic Benefits Transfer)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>EBT Online (Electronic Benefits Transfer)	</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ECOM</name>
+        <choiceText>ECOM</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ECOM</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>EFT_Direct_Debit</name>
+        <choiceText>EFT Direct Debit</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>EFT Direct Debit</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Eftpos_New_Zealand</name>
+        <choiceText>Eftpos New Zealand</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Eftpos New Zealand</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ELV_OLV</name>
+        <choiceText>ELV/OLV</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ELV/OLV	</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>EMI_Equal_Monthly_Instalments</name>
+        <choiceText>EMI (Equal Monthly Instalments)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>EMI (Equal Monthly Instalments)	</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Escalation</name>
+        <choiceText>Escalation</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Escalation</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Feature_Request</name>
+        <choiceText>Feature Request</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Feature Request</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Financial_Products</name>
+        <choiceText>Financial Products</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Financial Products</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Franchise_Setup</name>
+        <choiceText>Franchise Setup</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Franchise Setup</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>General_Legal_Question</name>
+        <choiceText>General Legal Question</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>General Legal Question</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Google_Pay</name>
+        <choiceText>Google Pay</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Google Pay	</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>I_need_to_check_first_with_my_merchant</name>
+        <choiceText>I need to check first with my merchant</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>I need to check first with my merchant</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>I_need_to_check_with_my_customer</name>
+        <choiceText>I need to check with my customer</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>I need to check with my customer</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>I_will_check_with_my_customer</name>
+        <choiceText>I will check with my customer</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>I will check with my customer</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Improvement_to_an_existing_Feature</name>
+        <choiceText>Improvement to an existing Feature</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Improvement to an existing Feature</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>JCB</name>
+        <choiceText>JCB</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>JCB</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Legal_Document_Received</name>
+        <choiceText>Legal Document Received</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Legal Document Received</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Lydia</name>
+        <choiceText>Lydia</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Lydia</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Mastercard</name>
+        <choiceText>Mastercard</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Mastercard</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Merchant_Agreement</name>
+        <choiceText>Merchant Agreement</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Merchant Agreement</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NDA</name>
+        <choiceText>NDA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>NDA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Need_to_Check</name>
+        <choiceText>Need to Check</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Need to Check</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Octopus</name>
+        <choiceText>Octopus</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Octopus</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Other</name>
+        <choiceText>Other</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Other</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Other_payment_partner</name>
+        <choiceText>Other payment partner</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Other payment partner</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Over_the_Counter</name>
+        <choiceText>Over the Counter</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Over the Counter	</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Partner_Related_Legal_Question</name>
+        <choiceText>Partner Related Legal Question</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Partner Related Legal Question</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>PayTo_Australia</name>
+        <choiceText>PayTo Australia</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PayTo Australia</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>POS</name>
+        <choiceText>POS</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>POS</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>PromptPayQR</name>
+        <choiceText>PromptPayQR</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PromptPayQR	</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RakutenPay</name>
+        <choiceText>RakutenPay</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>RakutenPay</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Referral_rev_share_partner</name>
+        <choiceText>Referral &amp; rev share partner</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Referral &amp; rev share partner</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Related_To_Account</name>
+        <choiceText>Related To Account</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Related To Account</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>RFP_Pitch</name>
+        <choiceText>RFP/Pitch</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>RFP/Pitch</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ShopBack_Pay_Later</name>
+        <choiceText>ShopBack Pay Later</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ShopBack Pay Later	</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Something_is_missing</name>
+        <choiceText>Something is missing</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Something is missing</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Tap_and_Go</name>
+        <choiceText>Tap and Go</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Tap and Go</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Unclear_Feature</name>
+        <choiceText>Unclear Feature</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Unclear Feature</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>UnionPay_CUP</name>
+        <choiceText>UnionPay (CUP)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>UnionPay (CUP)	</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Usability_Flow_design_Content</name>
+        <choiceText>Usability (Flow,design,Content)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Usability (Flow,design,Content)</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Vendors_third_parties</name>
+        <choiceText>Vendors &amp; third parties</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Vendors &amp; third parties</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Visa_Mastercard_acquiring</name>
+        <choiceText>Visa/Mastercard (acquiring)</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Visa/Mastercard (acquiring)</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ye</name>
+        <choiceText>ye</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ye</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Yesitis</name>
+        <choiceText>Yes</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Yes</stringValue>
+        </value>
+    </choices>
+    <collectionProcessors>
+        <name>FilterRecordTypes</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Filter RecordTypes</label>
+        <locationX>776</locationX>
+        <locationY>242</locationY>
+        <assignNextValueToReference>currentItem_FilterRecordTypes</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>RecordTypesPerUser.recordTypes</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_FilterRecordTypes.DeveloperName</leftValueReference>
+            <operator>NotEqualTo</operator>
+            <rightValue>
+                <stringValue>Nordics_Cases</stringValue>
+            </rightValue>
+        </conditions>
+        <conditions>
+            <leftValueReference>currentItem_FilterRecordTypes.DeveloperName</leftValueReference>
+            <operator>NotEqualTo</operator>
+            <rightValue>
+                <stringValue>Claim_Support</stringValue>
+            </rightValue>
+        </conditions>
+        <conditions>
+            <leftValueReference>currentItem_FilterRecordTypes.DeveloperName</leftValueReference>
+            <operator>NotEqualTo</operator>
+            <rightValue>
+                <stringValue>LocalAcquiring</stringValue>
+            </rightValue>
+        </conditions>
+        <conditions>
+            <leftValueReference>currentItem_FilterRecordTypes.DeveloperName</leftValueReference>
+            <operator>NotEqualTo</operator>
+            <rightValue>
+                <stringValue>LPM</stringValue>
+            </rightValue>
+        </conditions>
+        <conditions>
+            <leftValueReference>currentItem_FilterRecordTypes.DeveloperName</leftValueReference>
+            <operator>NotEqualTo</operator>
+            <rightValue>
+                <stringValue>Product_Feedback</stringValue>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Pick_type_of_Case</targetReference>
+        </connector>
+    </collectionProcessors>
+    <constants>
+        <name>Case</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Case</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>FeatureAreaProductAPI</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>FeatureProductArea__c</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <description>Checks whether the topic of the created case is Cases (Service Cloud)</description>
+        <name>TopicisCasesServiceCloud</name>
+        <label>Topic is Cases (Service Cloud)?</label>
+        <locationX>182</locationX>
+        <locationY>998</locationY>
+        <defaultConnector>
+            <targetReference>SendEmailtoSupportCaseCreator</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesTopicCasesServiceCloud</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Topic</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cases (Service Cloud)</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>InternalSupportCaseCreationEmail</targetReference>
+            </connector>
+            <label>Yes Topic Cases Service Cloud</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>What_is_the_RecordType_of_the_Case</name>
+        <label>What is the RecordType of the Case?</label>
+        <locationX>776</locationX>
+        <locationY>458</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Support</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Type_of_Case</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Support</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_a_Case</targetReference>
+            </connector>
+            <label>Support</label>
+        </rules>
+        <rules>
+            <name>Legal_Support</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Type_of_Case</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>LegalSupport</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>LegalScreen</targetReference>
+            </connector>
+            <label>Legal Support</label>
+        </rules>
+        <rules>
+            <name>ServiceInternal</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Type_of_Case</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ServiceCase</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Type_of_Case</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>InternalCase</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CreateCase</targetReference>
+            </connector>
+            <label>Service/Internal</label>
+        </rules>
+    </decisions>
+    <description>Removed the references to Payment Method, Local Acquiring and Product Feedback Cases</description>
+    <dynamicChoiceSets>
+        <name>AdyenOfficeLegal</name>
+        <dataType>Multipicklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Adyen_Office__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>AvailableUsedRecordTypes</name>
+        <collectionReference>FilterRecordTypes</collectionReference>
+        <dataType>String</dataType>
+        <displayField>Name</displayField>
+        <object>RecordType</object>
+        <valueField>DeveloperName</valueField>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>ChoiceMarketPicklist</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>MarketSingle__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>LPMType</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>PaymentMethods__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>MarketPicklist</name>
+        <dataType>Multipicklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Market__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <description>Case&apos;s Origin field (Salesforce, Call, Chatter, Email, Webform, Backoffice, Phone, Web)</description>
+        <name>Origin</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Origin</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>PaymentMethods</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>PaymentMethods__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <description>Case&apos;s Priority field (Urgent, High, Medium, Normal, Low)</description>
+        <name>Priority</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Priority</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>SalesChannelLPMCase</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Sales_Channel__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <description>Service Case&apos;s Sub-Type field.</description>
+        <name>SubType</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>SubType__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <description>Case&apos;s Type field.</description>
+        <name>Type</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Type</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>Type2</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Type</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>TypeofCase</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>RecordType_Case__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>varTopic</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Topic__c</picklistField>
+        <picklistObject>Case</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <formulas>
+        <name>FindSupportCaseOwner</name>
+        <dataType>String</dataType>
+        <expression>IF({!Topic} = &quot;Cases ( Service Cloud )&quot;, 
+&quot;InternalSupportQueueFormula&quot;, 
+IF(
+ISBLANK({!GetCaseAssignmentSupport.Assignee__c}),
+{!GetCommercialToolsQueue.Id},
+{!GetCaseAssignmentSupport.Assignee__c}
+))</expression>
+    </formulas>
+    <formulas>
+        <name>forAccountId</name>
+        <dataType>String</dataType>
+        <expression>IF(
+LEFT({!recordId}, 3) = &apos;001&apos;,
+{!recordId},
+&quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>forCaseId</name>
+        <dataType>String</dataType>
+        <expression>IF({!Support} = TRUE,
+{!Create_a_Case_first_0},
+&quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>forRelatedRecordAccount</name>
+        <dataType>String</dataType>
+        <expression>IF(
+LEFT({!recordId},3) = &quot;001&quot;, 
+{!recordId}, NULL
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forRelatedRecordAccountPlan</name>
+        <dataType>String</dataType>
+        <expression>IF(
+LEFT({!recordId},3) = &quot;a0p&quot;, 
+{!recordId}, &quot; &quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forRelatedRecordContact</name>
+        <dataType>String</dataType>
+        <expression>IF(
+LEFT({!recordId},3) = &quot;003&quot;, 
+{!recordId}, &quot; &quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forRelatedRecordHandover</name>
+        <dataType>String</dataType>
+        <expression>IF(
+LEFT({!recordId},3) = &quot;a13&quot;, 
+{!recordId}, &quot; &quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Add value to Lead field on Case</description>
+        <name>forRelatedRecordLead</name>
+        <dataType>String</dataType>
+        <expression>IF(
+LEFT({!recordId},3) = &quot;00Q&quot;, 
+{!recordId}, &quot; &quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>forRelatedRecordOpportunity</name>
+        <dataType>String</dataType>
+        <expression>IF(
+LEFT({!recordId},3) = &quot;006&quot;, 
+{!recordId}, NULL
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Determine the related record</description>
+        <name>forTopic</name>
+        <dataType>String</dataType>
+        <expression> CASE(LEFT({!recordId},3), 
+ &apos;00Q&apos;, &apos;Lead&apos;, 
+ &apos;001&apos;, &apos;Account&apos;, 
+&apos;006&apos;, &apos;Opportunity&apos;,
+&apos;003&apos;, &apos;Contact&apos;,
+&apos;a13&apos;, &apos;Handover&apos;, 
+&apos;a0p&apos;, &apos;Account Plan&apos;, 
+&apos;&apos;
+)</expression>
+    </formulas>
+    <formulas>
+        <description>Formula to get Commercial Tools Support Queue (Sales) or Internal Support Cases Queue (Service) based on case topic.</description>
+        <name>InternalSupportQueueFormula</name>
+        <dataType>String</dataType>
+        <expression>IF({!Topic} = &quot;Cases (Service Cloud)&quot;, &quot;InternalSupportCasesQueue&quot;, &quot;Commercial_Tools_Support&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>IsthisNewCustomerFormula</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+{!LegalCategory} = {!Related_To_Account},
+{!Isthisanewcustomer},
+FALSE)</expression>
+    </formulas>
+    <formulas>
+        <name>LegalAccountAccountFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(
+LEFT({!recordId},3) = &quot;001&quot;, 
+{!recordId},
+{!AccountLegal.recordId})</expression>
+    </formulas>
+    <formulas>
+        <name>SubjectFormulaLegal</name>
+        <dataType>String</dataType>
+        <expression>{!LegalCategory}  + &quot;-&quot; +  {!TypeOfRequestLegalFormula}</expression>
+    </formulas>
+    <formulas>
+        <name>SupportCaseOwnerID</name>
+        <dataType>String</dataType>
+        <expression>{!GetCommercialToolsQueue.Id}</expression>
+    </formulas>
+    <formulas>
+        <name>TypeOfRequestLegalFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(
+    {!LegalCategory} = {!Related_To_Account},
+    {!TypeOfCustomerRequest},
+    IF(
+        {!LegalCategory} = {!Partner_Related_Legal_Question},
+        {!TypeofPartnerRequestLegal},
+        {!TypeOfGeneralRequest}))</expression>
+    </formulas>
+    <interviewLabel>Create a Case Action {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Create a Case Action</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_a_Case_first_0</name>
+        <label>Create a Case first</label>
+        <locationX>182</locationX>
+        <locationY>890</locationY>
+        <connector>
+            <targetReference>TopicisCasesServiceCloud</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>Description</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>FindSupportCaseOwner</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>$Label.supportCaseRecordType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <elementReference>Subject</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedEmail</field>
+            <value>
+                <elementReference>$User.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Topic__c</field>
+            <value>
+                <elementReference>Topic</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>CreateLegalCase</name>
+        <label>Create Legal Case</label>
+        <locationX>842</locationX>
+        <locationY>674</locationY>
+        <connector>
+            <targetReference>LegalCaseCreationScreen</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>AccountLegal.recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Account_Name2__c</field>
+            <value>
+                <elementReference>AccountLegal.recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Adyen_Office__c</field>
+            <value>
+                <elementReference>AdyenOffice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>DescriptionLegal</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Isthisanewcustomer__c</field>
+            <value>
+                <elementReference>IsthisNewCustomerFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Legal_Category__c</field>
+            <value>
+                <elementReference>LegalCategory</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>OpportunityLegal.recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>$Label.LegalQueue</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>$Label.LegalRecordType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <elementReference>SubjectFormulaLegal</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedEmail</field>
+            <value>
+                <elementReference>$User.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type_Of_Request__c</field>
+            <value>
+                <elementReference>TypeOfRequestLegalFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>User__c</field>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <description>Assigns support case layout based on Topic</description>
+        <name>GetCaseAssignmentSupport</name>
+        <label>Get Case Assignment Support</label>
+        <locationX>182</locationX>
+        <locationY>674</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>GetCommercialToolsQueue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Topic__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Topic</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case_Assignment__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>If the Topic is Cases (Service Cloud) the case gets routed to the Internal Support Cases Queue, all the other cases get routed to an topic assignee or the Commercial tools case queue</description>
+        <name>GetCommercialToolsQueue</name>
+        <label>Get Internal Support Queue</label>
+        <locationX>182</locationX>
+        <locationY>782</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Create_a_Case_first_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InternalSupportQueueFormula</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Queue</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Group</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Add record id based on the source of the action button</description>
+        <name>UpdateCaseRelation</name>
+        <label>Update Case Relation</label>
+        <locationX>182</locationX>
+        <locationY>1514</locationY>
+        <connector>
+            <targetReference>NavigateToCase</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>ErrorScreen_0</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>caseId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>forRelatedRecordAccount</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Account_Plan__c</field>
+            <value>
+                <elementReference>forRelatedRecordAccountPlan</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>forRelatedRecordContact</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Handover__c</field>
+            <value>
+                <elementReference>forRelatedRecordHandover</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Lead__c</field>
+            <value>
+                <elementReference>forRelatedRecordLead</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>forRelatedRecordOpportunity</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <screens>
+        <name>Create_a_Case</name>
+        <label>Create a Case</label>
+        <locationX>182</locationX>
+        <locationY>566</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>GetCaseAssignmentSupport</targetReference>
+        </connector>
+        <fields>
+            <name>Resources</name>
+            <fieldText>&lt;p&gt;Have you checked our&lt;b&gt; &lt;/b&gt;&lt;a href=&quot;https://hub.is.adyen.com/commercial/tools-systems/salesforce/faqs/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;HUB&lt;/b&gt;&lt;/a&gt;&lt;b&gt; &lt;/b&gt;page and &lt;a href=&quot;https://adyen.my.trailhead.com/today&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;&lt;b&gt;MyTrailhead&lt;/b&gt;&lt;/a&gt; library already?&lt;/p&gt;&lt;p&gt;If not yet, go check it out - you might find the answer to your question!&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Subject</name>
+            <dataType>String</dataType>
+            <fieldText>Subject</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Description</name>
+            <fieldText>Description</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>Topic</name>
+            <choiceReferences>varTopic</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Topic</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>ErrorScreen_0</name>
+        <label>Error Screen</label>
+        <locationX>578</locationX>
+        <locationY>1622</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>ErrorText_0</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Something went wrong during the creation or update of your Case. Please contact your system administrator with the following error message:&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(192, 1, 1);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>LegalCaseCreationScreen</name>
+        <label>Legal Case Creation Screen</label>
+        <locationX>842</locationX>
+        <locationY>782</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Navigate_to_Legal_Case</targetReference>
+        </connector>
+        <fields>
+            <name>ConfirmationLegalCaseScreen</name>
+            <fieldText>&lt;p&gt;A new case has been created for the Legal Team with the following information,&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;{!LegalCategory}&lt;/li&gt;&lt;li&gt;{!TypeOfRequestLegalFormula}&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>LegalScreen</name>
+        <label>Legal Screen</label>
+        <locationX>842</locationX>
+        <locationY>566</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>CreateLegalCase</targetReference>
+        </connector>
+        <fields>
+            <name>LegalCategory</name>
+            <choiceReferences>Related_To_Account</choiceReferences>
+            <choiceReferences>Partner_Related_Legal_Question</choiceReferences>
+            <choiceReferences>General_Legal_Question</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Legal Category</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>AccountLegal</name>
+            <extensionName>flowruntime:lookup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>AccountId</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Account</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>LegalAccountAccountFormula</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LegalCategory</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Related_To_Account</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Isthisanewcustomer</name>
+            <dataType>Boolean</dataType>
+            <fieldText>Is this a new customer?</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LegalCategory</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Related_To_Account</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>OpportunityLegal</name>
+            <extensionName>flowruntime:lookup</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>fieldApiName</name>
+                <value>
+                    <stringValue>Opportunity__c</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Opportunity</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LegalCategory</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Related_To_Account</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>TypeOfCustomerRequest</name>
+            <choiceReferences>NDA</choiceReferences>
+            <choiceReferences>Afp</choiceReferences>
+            <choiceReferences>Merchant_Agreement</choiceReferences>
+            <choiceReferences>Franchise_Setup</choiceReferences>
+            <choiceReferences>Financial_Products</choiceReferences>
+            <choiceReferences>Addendum</choiceReferences>
+            <choiceReferences>RFP_Pitch</choiceReferences>
+            <choiceReferences>Escalation</choiceReferences>
+            <choiceReferences>Other</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Type of Customer Request</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LegalCategory</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Related_To_Account</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>TypeofPartnerRequestLegal</name>
+            <choiceReferences>Referral_rev_share_partner</choiceReferences>
+            <choiceReferences>Card_scheme</choiceReferences>
+            <choiceReferences>Other_payment_partner</choiceReferences>
+            <choiceReferences>Vendors_third_parties</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Type of Partner Request</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LegalCategory</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Partner_Related_Legal_Question</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>TypeOfGeneralRequest</name>
+            <choiceReferences>Legal_Document_Received</choiceReferences>
+            <choiceReferences>Escalation</choiceReferences>
+            <choiceReferences>Other</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Type of General Request</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LegalCategory</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>General_Legal_Question</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>DescriptionLegal</name>
+            <fieldText>Description</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>AdyenOffice</name>
+            <choiceReferences>AdyenOfficeLegal</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Adyen&apos;s Office</fieldText>
+            <fieldType>MultiSelectPicklist</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Pick_type_of_Case</name>
+        <label>Pick type of Case</label>
+        <locationX>776</locationX>
+        <locationY>350</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>What_is_the_RecordType_of_the_Case</targetReference>
+        </connector>
+        <fields>
+            <name>Type_of_Case</name>
+            <choiceReferences>AvailableUsedRecordTypes</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>What type of Case would you like to create?</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>RecordTypeDescription</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0); font-size: 13.5px; background-color: rgb(255, 255, 255);&quot;&gt;Service Case&lt;/strong&gt;&lt;span style=&quot;color: rgb(0, 0, 0); font-size: 13.5px; background-color: rgb(255, 255, 255);&quot;&gt; &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;i&lt;/span&gt;s used for Adyen Support Teams e.g.: Technical Support, Operational Support, Account Setup Operations, Disputes, Platform Monitoring. These cases are subject to auto-closure rules (if no answer is received from the merchant in 7 days) and are visible in the portal by default.&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 13.5px; font-family: &amp;quot;Open Sans&amp;quot;, sans-serif; color: rgb(0, 0, 0);&quot;&gt;Internal Case&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 13.5px; font-family: &amp;quot;Open Sans&amp;quot;, sans-serif; color: rgb(63, 67, 80);&quot;&gt; &lt;/span&gt;is used for Non-Support teams e.g.: Merchant Operations, Risk, Warehousing &amp;amp; Logistics, Lead Qualification, Nonprofits, AM Pool. These cases are not subject to auto-closure rules (if no answer is received from the merchant in 7 days) and are not visible in the portal by default.&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 13.5px; color: rgb(0, 0, 0);&quot;&gt;Tooling Support&lt;/strong&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 13.5px; font-family: &amp;quot;Open Sans&amp;quot;, sans-serif; color: rgb(63, 67, 80);&quot;&gt; &lt;/strong&gt;is used to submit Requests, Issues, Feedback, Feature Requests or Questions about DocuSign, Salesforce, SalesNavigator and ZoomInfo.&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(0, 0, 0);&quot;&gt;Legal Cases&lt;/strong&gt;&amp;nbsp;is used to request the Legal team to review contracts, be part of a negotiation or answer merchant questions.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Upload_Files</name>
+        <label>Upload Files</label>
+        <locationX>182</locationX>
+        <locationY>1298</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>setCaseId</targetReference>
+        </connector>
+        <fields>
+            <name>UploadingFilesInfoText</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; If you upload any files, a preview of them will not be shown in this screen, but they will be added to your Case when clicking &apos;Next&apos;. Also click &apos;Next&apos; if you don&apos;t want to upload any files.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>UploadFiles</name>
+            <extensionName>forceContent:fileUpload</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Upload Files</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accept</name>
+                <value>
+                    <stringValue>.jpg, .xcl, .pdf, .doc, .docx, .png, .csv</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>multiple</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>disabled</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>forCaseId</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>uploadedFileIds</assignToReference>
+                <name>contentDocIds</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>uploadedFilesNames</assignToReference>
+                <name>fileNames</name>
+            </outputParameters>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>650</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>RecordTypesPerUser</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>CreateCase</name>
+        <label>Create a Case</label>
+        <locationX>1106</locationX>
+        <locationY>566</locationY>
+        <flowName>CASE_SERVICE_SubflowManualCaseCreation</flowName>
+        <inputAssignments>
+            <name>recordId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>recordTypeDeveloperName</name>
+            <value>
+                <elementReference>Type_of_Case</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>AvailabeRecordTypeCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>RecordType</objectType>
+    </variables>
+    <variables>
+        <name>caseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>recordId</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>currentItem_FilterRecordTypes</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>RecordType</objectType>
+    </variables>
+    <variables>
+        <name>currentItem_GetRecordTypeID_0</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>RecordType</objectType>
+    </variables>
+    <variables>
+        <name>currentItemFromSourceCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>RecordType</objectType>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>recordTypeDeveloperName</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>UploadButton</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Upload</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>uploadedFileIds</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>uploadedFilesNames</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varFileTitleResultsRow</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varLPMRecordType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>LPM</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>varLPMRecordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>0121w000000A9ASAA0</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>varOther</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Other</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>varSupportRecordType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Support</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>varSupportRecordTypeId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>0121w0000009uQ1AAI</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>varURL</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

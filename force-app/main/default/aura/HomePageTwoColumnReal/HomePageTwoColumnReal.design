@@ -1,0 +1,7 @@
+<design:component label="Two Equal Columns">
+<flexipage:template>
+        <flexipage:region name="left" defaultWidth="XLARGE"/> 
+        <flexipage:region name="right" defaultWidth="XLARGE"/> 
+    </flexipage:template>
+    
+</design:component>

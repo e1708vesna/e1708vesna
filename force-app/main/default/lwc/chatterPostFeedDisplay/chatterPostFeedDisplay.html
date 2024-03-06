@@ -1,0 +1,64 @@
+<template>
+    <lightning-layout multiple-rows="false">
+        <lightning-layout-item size="12">
+            <article class="slds-card">
+                <div class="slds-card__header slds-grid cardHeader">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-standard-case-comment">
+                                <lightning-icon
+                                        icon-name="standard:case_comment"
+                                        size="small">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">case comments</span>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title slds-p-around_x-small">
+                                <a href="#" class="slds-card__header-link slds-truncate" title="Accounts">
+                                    <span>{cardTitle}</span>
+                                </a>
+                            </h2>
+                        </div>
+                    </header>
+                </div>
+                <div class="slds-card__body slds-card__body_inner">
+                    <!--Spinner-->
+                    <template lwc:if={loadSpinner}>
+                        <div class="spinner">
+                            <lightning-spinner
+                                    class="slds-align_absolute-center"
+                                    alternative-text="Loading"
+                                    size="medium">
+                            </lightning-spinner>
+                        </div>
+                    </template>
+                    <!--Spinner-->
+
+                    <!--Data Table-->
+                    <template lwc:if={data}>
+                        <!--<div class="slds-table slds-table_bordered">-->
+                            <c-custom-data-types
+                                    key-field="id"
+                                    data={data}
+                                    hide-checkbox-column
+                                    columns={columns}>
+                            </c-custom-data-types>
+                        <!--</div>-->
+                    </template>
+                    <!--Data Table-->
+
+                    <!--Error Panel-->
+                    <template lwc:if={error}>
+                        <c-reusable-empty-state
+                                heading={label.ChatterFeedNoPostsFoundHeading}
+                                message-body={label.ChatterFeedNoPostsFoundMessage}
+                                text-only=true
+                        ></c-reusable-empty-state>
+                    </template>
+                    <!--Error Panel-->
+                </div>
+            </article>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

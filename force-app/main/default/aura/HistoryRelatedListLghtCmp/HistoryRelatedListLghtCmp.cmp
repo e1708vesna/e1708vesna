@@ -1,0 +1,56 @@
+<aura:component controller="HistoryRelatedListLghtCtrl" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInitialization}"/>
+    <aura:handler event="force:refreshView" action="{!c.doInitialization}" />
+        
+    <aura:attribute name="noRecordsAddition" type="String" default=""/>
+    <aura:attribute name="relatedListLabel" type="String" default="History"/>
+    <aura:attribute name="historyType" type="String" default=""/>
+    <aura:attribute name="includeStandardHistory" type="boolean" default="false"/>
+    
+    
+    <aura:attribute name="headerTitle" type="Aura.Component[]">
+        <div >
+            <h2 class="cardheader">
+                <b><lightning:formattedUrl class="blackLink" value="{! '/lightning/cmp/c__HistoryViewAllLghtCmp?c__recordId=' + v.recordId + '&amp;c__historyType=' + v.historyType + '&amp;c__includeStandardHistory=' + v.includeStandardHistory}" label="{!v.relatedListLabel + ' (' + v.records.length + v.noRecordsAddition + ')'}"/></b>
+            </h2>
+        </div>
+    </aura:attribute>
+    
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="records" type="Object[]"/>
+    <aura:attribute name="maxItems" type="Integer" default="6"/>
+    
+    
+    <div>
+        <lightning:card class="slds-card_boundary forceRelatedListCardHeader" title="{!v.headerTitle}" iconName="standard:file">
+            <aura:if isTrue="{!v.records.length > 0}">
+            <p class="slds-p-horizontal_small">
+                <div class="slds-grid slds-wrap">
+                    <div>
+                        <lightning:datatable
+                             resizeColumnDisabled="true"
+                             keyField="id"
+                             data="{!v.records}"
+                             columns="{!v.columns}"
+                             hideCheckboxColumn="true"
+                             showRowNumberColumn="false"
+                             suppressBottomBar="true"
+                             />
+                    </div>
+                </div>
+                </p>
+                <aura:set attribute="else">
+                    <div >
+                        <p>Nothing to show here.</p>
+                    </div>
+                </aura:set>
+            </aura:if>
+            <aura:set attribute="footer">
+                <aura:if isTrue="{!v.records.length > 0}">
+                    <lightning:formattedUrl value="{! '/lightning/cmp/c__HistoryViewAllLghtCmp?c__recordId=' + v.recordId + '&amp;c__historyType=' + v.historyType + '&amp;c__includeStandardHistory=' + v.includeStandardHistory}" label="View All"/>
+                </aura:if>
+            </aura:set>
+        </lightning:card>
+    </div> 
+    
+</aura:component>

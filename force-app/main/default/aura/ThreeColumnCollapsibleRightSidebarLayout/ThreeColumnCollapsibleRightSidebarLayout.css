@@ -1,0 +1,10 @@
+.THIS div.collapseButton {
+    width: 1em;
+    height: 100%;
+    border-left:0.2em solid rgb(230, 230, 230);
+    cursor: pointer;
+}
+.THIS .noScroll {
+    /* prevent items like chatter feed increase in width */
+    overflow: hidden;
+}

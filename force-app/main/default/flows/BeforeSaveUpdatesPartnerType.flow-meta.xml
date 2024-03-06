@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <assignments>
+        <description>To ensure no duplicate Channel Partner Types are created.</description>
+        <name>PopulateUniqueIdentifier</name>
+        <label>Populate Unique Identifier</label>
+        <locationX>182</locationX>
+        <locationY>311</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.UniqueIdentifier__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forUniqueIdentifier</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.PartnerTypeName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>forName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>StatusSetOrChanged</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Populates the field &apos;Last Status Change&apos; with the current date.</description>
+        <name>SetLastStatusChangeDate</name>
+        <label>Set &apos;Last Status Change&apos; Date</label>
+        <locationX>50</locationX>
+        <locationY>551</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.LastStatusChange__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>StatusSetOrChanged</name>
+        <label>Status Set or Changed?</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesStatusSetOrChanged</name>
+            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>forIsNewRecord</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.LastStatusChange__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SetLastStatusChangeDate</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Populates Unique Identifier, Name &amp; Last Status Change on Channel Partner Type</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>forIsNewRecord</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <formulas>
+        <name>forName</name>
+        <dataType>String</dataType>
+        <expression>IF( 
+AND(
+ISBLANK( {!$Record.Account__c} ), 
+NOT( ISBLANK( {!$Record.Lead__c} ) ) 
+), 
+{!$Record.Lead__r.FirstName} + &quot; &quot; + {!$Record.Lead__r.LastName} +&quot; - &quot;+TEXT({!$Record.SubType__c}),
+{!$Record.Account__r.Name}+&quot; - &quot;+TEXT({!$Record.SubType__c}) )</expression>
+    </formulas>
+    <formulas>
+        <description>Formula that is stored in a unique identifier field on Channel Partner Type to ensure no double types are created for one Account.</description>
+        <name>forUniqueIdentifier</name>
+        <dataType>String</dataType>
+        <expression>IF(
+NOT(ISBLANK({!$Record.Account__c})),
+{!$Record.Account__c} &amp; &quot; - &quot; &amp; TEXT({!$Record.Type__c}) &amp; &quot; - &quot; &amp; TEXT({!$Record.SubType__c}),
+{!$Record.Lead__c} &amp; &quot; - &quot; &amp; TEXT({!$Record.Type__c}) &amp; &quot; - &quot; &amp; TEXT({!$Record.SubType__c})
+)</expression>
+    </formulas>
+    <interviewLabel>Before-Save Updates Partner Type {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Before-Save Updates Partner Type</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>PopulateUniqueIdentifier</targetReference>
+        </connector>
+        <object>PartnerType__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

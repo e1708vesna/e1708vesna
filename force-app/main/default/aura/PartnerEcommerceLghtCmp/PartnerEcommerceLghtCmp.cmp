@@ -1,0 +1,71 @@
+<aura:component controller="PartnerEcommerceLghtCtrl" implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.doInit}" />
+    <aura:attribute name="data" type="List"/>
+    <aura:attribute name="partner404" type="List"/>
+    <aura:attribute name="partnerExisting" type="List"/>
+    <aura:attribute name="leadId" type="List"/>
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="done" type="boolean" default="false"/>
+    <aura:attribute name="error" type="String" default=""/>
+    <aura:attribute name="showSpinner" type="boolean" default="true"/>
+    
+    <div>
+        <div class="slds-is-relative">
+            <aura:if isTrue="{!v.showSpinner}">
+                <lightning:spinner variant="brand" size="large" />
+            </aura:if>
+            <aura:if isTrue="{!v.error.length > 0}">
+                <div class="slds-notify slds-notify_toast slds-theme_error">
+                    <span class="slds-assistive-text">error</span>
+                    <div class="slds-notify__content">
+                        <h5 class="slds-text-heading_small slds-align_absolute-center">Error Message </h5>
+                        <p class="slds-align_absolute-center">{!v.error}</p>                
+                    </div>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.done}">
+                <p>The partners have been created, you can close this window...</p>
+                <aura:set attribute="else">
+                    <aura:if isTrue="{!v.data.length > 0}">
+                        <div style="height: 180px">
+                            <lightning:datatable
+                                                 aura:id="dataTable"
+                                                 columns="{! v.columns }"
+                                                 data="{! v.data }"
+                                                 keyField="partnerName"
+                                                 showRowNumberColumn="True"
+                                                 />
+                        </div>
+                        <lightning:button variant="brand" label="Insert partner(s)" title="Insert partner(s)" onclick="{! c.getSelectedRows }"/>
+                        <aura:set attribute="else">
+                            <p>There are no partners that can be added to the lead.</p>
+                        </aura:set>
+                    </aura:if>
+                    
+                    <aura:if isTrue="{!v.partner404.length > 0}">
+                        <br/>
+                        <br/>
+                        <h1>The following partners have not been found: </h1>
+                        <aura:iteration items="{!v.partner404}" var="partner">
+                            <p><b>- {!partner}</b></p>
+                        </aura:iteration>
+                        <p>If you think (one of) these values should have, or has a matching Partner Account, please open a case.</p>
+                    </aura:if>
+                    
+                    <aura:if isTrue="{!v.partnerExisting.length > 0}">
+                        <br/>
+                        <br/>
+                        <h1>The following partners are already a partner on this lead: </h1>
+                        <aura:iteration items="{!v.partnerExisting}" var="partner">
+                            <p><b>- {!partner}</b></p><br/>
+                        </aura:iteration>
+                        
+                    </aura:if>
+                </aura:set>
+                
+            </aura:if>
+            
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,20 @@
+lightning-card {
+    display: block; 
+    position: relative;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #dddbda;
+    border-radius: .25rem;
+    background-clip: padding-box;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,.1);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.1);
+    padding: 10px;
+}
+
+.spinnerWrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+}

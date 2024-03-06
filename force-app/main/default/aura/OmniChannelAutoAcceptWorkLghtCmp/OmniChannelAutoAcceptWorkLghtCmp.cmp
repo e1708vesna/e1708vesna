@@ -1,0 +1,4 @@
+<aura:component implements="lightning:backgroundUtilityItem" controller="OmniChannelAutoAcceptWorkLghtCmpCtrl">
+    <lightning:omniToolkitAPI aura:id="omniToolkit" />  
+    <aura:handler event="lightning:omniChannelWorkAssigned" action="{! c.onWorkAssigned }"/>
+</aura:component>
